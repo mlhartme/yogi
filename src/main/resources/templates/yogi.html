@@ -15,6 +15,7 @@
     <div class="row">
         <div class="col-12">
             <h5>Welcome</h5>
+            <p th:each="line:${lines}" th:text="${line}"></p>
         </div>
     </div>
 </div>
