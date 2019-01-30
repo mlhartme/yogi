@@ -15,19 +15,23 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @Controller
 public class YogiController {
     private World world;
+    private Random random = new Random();
 
     public YogiController(World world) {
         this.world = world;
     }
 
     @RequestMapping("/{file}")
-    public String hello(Model model, @PathVariable("file") String file) throws IOException {
+    public String ask(Model model, @PathVariable("file") String file) throws IOException {
         Map<String, String> lines;
         Node<?> root;
+        int idx;
+        String word;
 
         try {
             // started with spring-boot:run
@@ -37,10 +41,13 @@ public class YogiController {
             // TODO: doesn't work yet ...
             root = world.resource("BOOT-INF/classes/data");
         }
-        System.out.println("root: " + root);
         lines = load(root.join("english", file));
-        model.addAttribute("lines", lines);
-        return "yogi";
+        idx = random.nextInt(lines.size());
+        word = new ArrayList<>(lines.keySet()).get(idx);
+        model.addAttribute(word);
+        model.addAttribute("idx", idx);
+        model.addAttribute("word", word);
+        return "ask";
     }
 
     private static Map<String, String> load(Node<?>... files) throws IOException {
