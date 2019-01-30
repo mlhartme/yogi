@@ -47,7 +47,15 @@ public class YogiController {
         model.addAttribute(word);
         model.addAttribute("idx", idx);
         model.addAttribute("word", word);
+
+        model.addAttribute("file", file);
         return "ask";
+    }
+
+    @RequestMapping("/{file}/answer.html")
+    public String answer(Model model, @PathVariable("file") String file, @RequestParam("answer") String answer) throws IOException {
+        model.addAttribute("anwser", answer);
+        return "answer";
     }
 
     private static Map<String, String> load(Node<?>... files) throws IOException {
