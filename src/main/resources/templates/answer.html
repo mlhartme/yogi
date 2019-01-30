@@ -14,7 +14,8 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
-            <h5>Answer</h5>
+            <h5 th:text="${'Your answer: ' + answer}"></h5>
+            <h5 th:text="${'Correct: ' + correct}"></h5>
         </div>
     </div>
 </div>

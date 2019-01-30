@@ -27,58 +27,29 @@ public class YogiController {
     }
 
     @RequestMapping("/{file}")
-    public String ask(Model model, @PathVariable("file") String file) throws IOException {
-        Map<String, String> lines;
-        Node<?> root;
+    public String question(Model model, @PathVariable("file") String file) throws IOException {
+        Vocabulary vocabulary;
         int idx;
         String word;
 
-        try {
-            // started with spring-boot:run
-            root = world.resource("data");
-        } catch (FileNotFoundException e) {
-            // started as executable jar
-            // TODO: doesn't work yet ...
-            root = world.resource("BOOT-INF/classes/data");
-        }
-        lines = load(root.join("english", file));
-        idx = random.nextInt(lines.size());
-        word = new ArrayList<>(lines.keySet()).get(idx);
+        vocabulary = Vocabulary.load(world, file);
+        idx = random.nextInt(vocabulary.size());
+        word = vocabulary.left(idx);
         model.addAttribute(word);
         model.addAttribute("idx", idx);
         model.addAttribute("word", word);
-
         model.addAttribute("file", file);
-        return "ask";
+        return "question";
     }
 
     @RequestMapping("/{file}/answer.html")
-    public String answer(Model model, @PathVariable("file") String file, @RequestParam("answer") String answer) throws IOException {
-        model.addAttribute("anwser", answer);
+    public String answer(Model model, @PathVariable("file") String file, @RequestParam("answer") String answer,
+                         @RequestParam("idx") int idx) throws IOException {
+        Vocabulary vocabulary;
+
+        vocabulary = Vocabulary.load(world, file);
+        model.addAttribute("answer", answer);
+        model.addAttribute("correct", vocabulary.right(idx));
         return "answer";
     }
-
-    private static Map<String, String> load(Node<?>... files) throws IOException {
-        List<String> lines;
-        Map<String, String> map;
-        int idx;
-
-        lines = new ArrayList<>();
-        for (Node<?> file : files) {
-            lines.addAll(file.readLines());
-        }
-        map = new LinkedHashMap<>();
-        for (String line : lines) {
-            if (line.trim().isEmpty()) {
-                continue;
-            }
-            idx = line.indexOf('=');
-            if (idx == -1) {
-                throw new IOException("syntax error: " + line);
-            }
-            map.put(line.substring(0, idx).trim(), line.substring(idx + 1).trim());
-        }
-        return map;
-    }
-
 }
