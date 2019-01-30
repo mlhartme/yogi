@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -26,8 +27,18 @@ public class YogiController {
     @RequestMapping("/{file}")
     public String hello(Model model, @PathVariable("file") String file) throws IOException {
         Map<String, String> lines;
+        Node<?> root;
 
-        lines = load(world.resource("BOOT-INF/classes/data/english/test.yogi"));
+        try {
+            // started with spring-boot:run
+            root = world.resource("data");
+        } catch (FileNotFoundException e) {
+            // started as executable jar
+            // TODO: doesn't work yet ...
+            root = world.resource("BOOT-INF/classes/data");
+        }
+        System.out.println("root: " + root);
+        lines = load(root.join("english", file));
         model.addAttribute("lines", lines);
         return "yogi";
     }
