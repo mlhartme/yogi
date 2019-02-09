@@ -1,0 +1,33 @@
+Guten Tag! = Bonjour!
+Paris = Paris
+und = et
+Komm! = Viens!
+Papa = papa
+schnell = vite
+Wie geht's? = Ça va?
+ich heiße = je m'appelle
+Wer ist das? = Qui est-ce?
+Achtung!, Vorsicht! = Attention!
+nein = non
+Entschuldigung. = Pardon.
+Hallo/Grüß dich! = Salut!
+wie? = comment?
+Wie heißt du? = Tu t'appelles comment?
+das ist = c'est
+ich = moi
+du = toi
+ich bin = je suis
+
+da ist, da sind = voilà
+komisch, merkwürdig = bizarre
+eine Katze = un chat
+ein Hund = un chien
+aber = mais
+ja = oui
+gut = bien
+danke = merci
+hier, hierher = ici
+du bist = tu es
+von, aus = de
+auch = aussi
+

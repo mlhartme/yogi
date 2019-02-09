@@ -11,21 +11,7 @@ import java.util.List;
 
 @Controller
 public class Vocabulary {
-    public static Vocabulary load(World world, String file) throws IOException {
-        Node<?> root;
-
-        try {
-            // started with spring-boot:run
-            root = world.resource("data");
-        } catch (FileNotFoundException e) {
-            // started as executable jar
-            // TODO: doesn't work yet ...
-            root = world.resource("BOOT-INF/classes/data");
-        }
-        return load(root.join("english", file));
-    }
-
-    private static Vocabulary load(Node<?>... files) throws IOException {
+    public static Vocabulary load(Node<?>... files) throws IOException {
         List<String> lines;
         Vocabulary result;
         int idx;

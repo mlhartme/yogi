@@ -1,0 +1,32 @@
+super, toll = super
+ein Junge = un garçon
+ein Mädchen, eine Tochter = une fille
+er ist = il est
+sie ist = elle est
+fantastisch, toll = fantastique
+
+ein Freund = un copain
+eine Freundin = une copine
+eine Dame, eine Frau = une dame
+ein Herr, ein Mann = un monsieur
+Toulouse = Toulouse
+Straßburg = Strasbourg
+Brest = Brest
+Nizza = Nice
+Frau ... = madame ...
+Na ja., Ach. = Bof!
+Auf Wiedersehen! = Au revoir!
+
+0 = zero
+1 = un
+2 = deux
+3 = trois
+4 = quatre
+5 = cinq
+6 = six
+7 = sept
+8 = huit
+9 = neuf
+10 = dix
+11 = once
+12 = douze
