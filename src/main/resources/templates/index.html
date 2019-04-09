@@ -4,10 +4,11 @@
       layout:decorate="~{layout.html}">
 <th:block layout:fragment="content">
     <div class="col-12">
-        <h2>Yogi</h2>
-        <h5>Vokabel Trainer</h5>
+        <h3>Yogi</h3>
+        <p>Vokabel Trainer</p>
 
-        <p><a th:each="file:${files}" th:href="${file.replace('/', '=')}" th:text="${file}"></a></p>
+        <h5>Units</h5>
+        <p th:each="file:${files}" ><a th:href="${file.replace('/', '=')}" th:text="${file}"></a></p>
     </div>
 </th:block>
 </html>

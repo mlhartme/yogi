@@ -1,5 +1,6 @@
 package net.mlhartme.yogi;
 
+import net.oneandone.sushi.fs.Node;
 import net.oneandone.sushi.fs.World;
 import net.oneandone.sushi.fs.file.FileNode;
 import net.oneandone.sushi.util.Strings;
@@ -11,20 +12,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 @Controller
 public class YogiController {
-    private World world;
-    private FileNode base;
+    private Node<?> base;
     private Random random = new Random();
 
-    public YogiController(World world) {
-        this.world = world;
-
-        // TODO
-        base = world.getHome().join("Projects/github.com/net/mlhartme/yogi/src/data");
+    public YogiController(World world) throws IOException {
+        this.base = world.resource("data/english");
     }
 
     @RequestMapping("/")
@@ -32,9 +30,10 @@ public class YogiController {
         List<String> files;
 
         files = new ArrayList<>();
-        for (FileNode node : base.find("**/*.txt")) {
+        for (Node<?> node : base.find("**/*.txt")) {
             files.add(Strings.removeRight(node.getRelative(base), ".txt"));
         }
+        Collections.sort(files);
         model.addAttribute("files", files);
         return "index";
     }
