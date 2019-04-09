@@ -8,7 +8,9 @@
         <p>Vokabel Trainer</p>
 
         <h5>Units</h5>
-        <p th:each="file:${files}" ><a th:href="${file.replace('/', '=')}" th:text="${file}"></a></p>
+        <ul class="list-group">
+            <li th:each="file:${files}" class="list-group-item"><a th:href="${file.replace('/', '=')}" th:text="${file}"></a></li>
+        </ul>
     </div>
 </th:block>
 </html>
