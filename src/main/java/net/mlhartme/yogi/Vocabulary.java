@@ -8,9 +8,22 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 public class Vocabulary {
+    private static final Random random = new Random();
+
+    public static Vocabulary create(String ... leftRights) {
+        Vocabulary result;
+
+        result = new Vocabulary();
+        for (int i = 0; i < leftRights.length; i+=2) {
+            result.add(leftRights[i], leftRights[i + 1]);
+        }
+        return result;
+    }
+
     public static Vocabulary load(Node<?>... files) throws IOException {
         List<String> lines;
         Vocabulary result;
@@ -46,6 +59,28 @@ public class Vocabulary {
     public void add(String left, String right) {
         this.lefts.add(left);
         this.rights.add(right);
+    }
+
+    public int next(List<Integer> done) {
+        int vocabularySize;
+        int doneSize;
+        int rnd;
+
+        vocabularySize = size();
+        doneSize = done.size();
+        if (doneSize >= vocabularySize) {
+            throw new IllegalStateException("all done");
+        }
+        rnd = random.nextInt(vocabularySize - doneSize);
+        for (int idx = 0; idx < vocabularySize; idx++) {
+            if (!done.contains(idx)) {
+                if (rnd == 0) {
+                    return idx;
+                }
+                rnd--;
+            }
+        }
+        throw new IllegalStateException();
     }
 
     public int size() {

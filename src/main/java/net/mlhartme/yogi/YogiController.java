@@ -3,6 +3,7 @@ package net.mlhartme.yogi;
 import net.oneandone.sushi.fs.Node;
 import net.oneandone.sushi.fs.World;
 import net.oneandone.sushi.fs.file.FileNode;
+import net.oneandone.sushi.util.Separator;
 import net.oneandone.sushi.util.Strings;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +20,6 @@ import java.util.Random;
 @Controller
 public class YogiController {
     private Node<?> base;
-    private Random random = new Random();
 
     public YogiController(World world) throws IOException {
         this.base = world.resource("data/english");
@@ -38,21 +38,32 @@ public class YogiController {
         return "index";
     }
     @RequestMapping("/{unit}")
-    public String question(Model model, @PathVariable("unit") String unit) throws IOException {
+    public String question(Model model, @PathVariable("unit") String unit, @RequestParam(value = "done", required = false) String doneParam) throws IOException {
         Vocabulary vocabulary;
         int idx;
         String word;
+        List<Integer> done;
 
-        unit = unit.replace("=", "/");
+        done = toInt(doneParam == null ? new ArrayList<>() : Separator.COMMA.split(doneParam));
         vocabulary = Vocabulary.load(base.join(unit + ".txt"));
-
-        idx = random.nextInt(vocabulary.size());
+        idx = vocabulary.next(done);
         word = vocabulary.left(idx);
         model.addAttribute(word);
         model.addAttribute("idx", idx);
         model.addAttribute("word", word);
         model.addAttribute("unit", unit);
+        model.addAttribute("done", done);
         return "question";
+    }
+
+    private static List<Integer> toInt(List<String> strings) {
+        List<Integer> result;
+
+        result = new ArrayList<>(strings.size());
+        for (String str : strings) {
+            result.add(Integer.parseInt(str));
+        }
+        return result;
     }
 
     @RequestMapping("/{file}/answer.html")
