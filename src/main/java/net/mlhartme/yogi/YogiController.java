@@ -27,31 +27,31 @@ public class YogiController {
 
     @RequestMapping("/")
     public String index(Model model) throws IOException {
-        List<String> files;
+        List<String> units;
 
-        files = new ArrayList<>();
-        for (Node<?> node : base.find("**/*.txt")) {
-            files.add(Strings.removeRight(node.getRelative(base), ".txt"));
+        units = new ArrayList<>();
+        for (Node<?> node : base.find("*.txt")) {
+            units.add(Strings.removeRight(node.getRelative(base), ".txt"));
         }
-        Collections.sort(files);
-        model.addAttribute("files", files);
+        Collections.sort(units);
+        model.addAttribute("units", units);
         return "index";
     }
-    @RequestMapping("/{file}")
-    public String question(Model model, @PathVariable("file") String file) throws IOException {
+    @RequestMapping("/{unit}")
+    public String question(Model model, @PathVariable("unit") String unit) throws IOException {
         Vocabulary vocabulary;
         int idx;
         String word;
 
-        file = file.replace("=", "/") + ".txt";
-        vocabulary = Vocabulary.load(base.join(file));
+        unit = unit.replace("=", "/");
+        vocabulary = Vocabulary.load(base.join(unit + ".txt"));
 
         idx = random.nextInt(vocabulary.size());
         word = vocabulary.left(idx);
         model.addAttribute(word);
         model.addAttribute("idx", idx);
         model.addAttribute("word", word);
-        model.addAttribute("file", file);
+        model.addAttribute("unit", unit);
         return "question";
     }
 

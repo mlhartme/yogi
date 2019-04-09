@@ -4,8 +4,10 @@
       layout:decorate="~{layout.html}">
 <th:block layout:fragment="content">
     <div class="col-12">
+        <h3 th:text="${unit}"></h3>
+
         <h5 th:text="${word}"></h5>
-        <form accept-charset="utf-8" action="#" th:action="${file + '/answer.html'}" method="post">
+        <form accept-charset="utf-8" action="#" th:action="answer.html" method="post">
            <input name="answer"/>
             <input name="idx" th:value="${idx}" type="hidden"/>
         </form>
