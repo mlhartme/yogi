@@ -4,8 +4,14 @@
       layout:decorate="~{layout.html}">
 <th:block layout:fragment="content">
 <div class="col-12">
-    <h5 th:text="${'Your answer: ' + answer}"></h5>
-    <h5 th:text="${'Correct: ' + correct}"></h5>
+    <div th:if=${correct}>
+        <h5 th:text="${'Correct: ' + expected}"></h5>
+    </div>
+    <div th:unless=${correct}>
+        <h5 th:text="${'Your answer: ' + answer}"></h5>
+        <h5 th:text="${'Correct: ' + expected}"></h5>
+        <button th:href="@{/{unit}/question(unit=unit,done=done,idx=idx)}"></button>
+    </div>
 </div>
 </th:block>
 </html>
