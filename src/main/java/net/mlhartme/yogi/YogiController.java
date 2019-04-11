@@ -107,6 +107,7 @@ public class YogiController {
         model.addAttribute("answer", answer);
         model.addAttribute("expected", expected);
         model.addAttribute("correct", correct);
+        model.addAttribute("allDone", done.size() == vocabulary.size());
         model.addAttribute("idx", idx);
         model.addAttribute("done", toString(done));
         return "answer";
