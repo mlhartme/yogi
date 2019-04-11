@@ -9,7 +9,7 @@
 
         <h5>Units</h5>
         <ul class="list-group">
-            <li th:each="unit:${units}" class="list-group-item"><a th:href="${unit}" th:text="${unit}"></a></li>
+            <li th:each="unit:${units}" class="list-group-item"><a th:href="${unit + '/question.html'}" th:text="${unit}"></a></li>
         </ul>
     </div>
 </th:block>

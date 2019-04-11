@@ -37,7 +37,7 @@ public class YogiController {
         model.addAttribute("units", units);
         return "index";
     }
-    @RequestMapping("/{unit}")
+    @RequestMapping("/{unit}/question.html")
     public String question(Model model, @PathVariable("unit") String unit,
                            @RequestParam(value = "idx", required = false) Integer idxParam,
                            @RequestParam(value = "done", required = false) String doneParam) throws IOException {
@@ -107,6 +107,7 @@ public class YogiController {
         model.addAttribute("answer", answer);
         model.addAttribute("expected", expected);
         model.addAttribute("correct", correct);
+        model.addAttribute("idx", idx);
         model.addAttribute("done", toString(done));
         return "answer";
     }

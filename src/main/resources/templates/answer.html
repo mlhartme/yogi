@@ -6,11 +6,12 @@
 <div class="col-12">
     <div th:if=${correct}>
         <h5 th:text="${'Correct: ' + expected}"></h5>
+        <a class="btn btn-primary" role="button" th:href="@{/{unit}/question.html(unit=${unit},done=${done})}">Weiter</a>
     </div>
     <div th:unless=${correct}>
         <h5 th:text="${'Your answer: ' + answer}"></h5>
         <h5 th:text="${'Correct: ' + expected}"></h5>
-        <button th:href="@{/{unit}/question(unit=unit,done=done,idx=idx)}"></button>
+        <button th:href="@{/{unit}/question.html(unit=${unit},done=${done},idx=${idx})}">Continue</button>
     </div>
 </div>
 </th:block>
