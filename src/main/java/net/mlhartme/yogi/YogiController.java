@@ -44,12 +44,12 @@ public class YogiController {
         Vocabulary vocabulary;
         int idx;
         String word;
-        List<Integer> done;
+        Exercise exercise;
 
-        done = doneParam(doneParam);
+        exercise = Exercise.forRequest(doneParam);
         vocabulary = Vocabulary.load(base.join(unit + ".txt"));
         if (idxParam == null) {
-            idx = vocabulary.next(done);
+            idx = vocabulary.next(exercise.done);
         } else {
             idx = idxParam;
         }
@@ -58,58 +58,31 @@ public class YogiController {
         model.addAttribute("idx", idx);
         model.addAttribute("word", word);
         model.addAttribute("unit", unit);
-        model.addAttribute("done", toString(done));
+        model.addAttribute("done", exercise.doneParam());
         return "question";
-    }
-
-    private static List<Integer> doneParam(String doneParam) {
-        return toInt(doneParam == null ? new ArrayList<>() : Separator.COMMA.split(doneParam));
-    }
-
-    private static String toString(List<Integer> done) {
-        StringBuilder result;
-
-        result = new StringBuilder();
-        for (Integer i : done) {
-            if (result.length() > 0) {
-                result.append(',');
-            }
-            result.append(i);
-        }
-        return result.toString();
-    }
-
-    private static List<Integer> toInt(List<String> strings) {
-        List<Integer> result;
-
-        result = new ArrayList<>(strings.size());
-        for (String str : strings) {
-            result.add(Integer.parseInt(str));
-        }
-        return result;
     }
 
     @RequestMapping("/{unit}/answer.html")
     public String answer(Model model, @PathVariable("unit") String unit, @RequestParam("answer") String answer,
                          @RequestParam("idx") int idx, @RequestParam("done") String doneParam) throws IOException {
         Vocabulary vocabulary;
-        List<Integer> done;
+        Exercise exercise;
         String expected;
         boolean correct;
 
-        done = doneParam(doneParam);
+        exercise = Exercise.forRequest(doneParam);
         vocabulary = Vocabulary.load(base.join(unit + ".txt"));
         expected = vocabulary.right(idx);
         correct = answer.equals(expected);
         if (correct) {
-            done.add(idx);
+            exercise.done.add(idx);
         }
         model.addAttribute("answer", answer);
         model.addAttribute("expected", expected);
         model.addAttribute("correct", correct);
-        model.addAttribute("allDone", done.size() == vocabulary.size());
+        model.addAttribute("allDone", exercise.done.size() == vocabulary.size());
         model.addAttribute("idx", idx);
-        model.addAttribute("done", toString(done));
+        model.addAttribute("done", exercise.doneParam());
         return "answer";
     }
 }
