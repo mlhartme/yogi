@@ -7,10 +7,11 @@
         <h3 th:text="${unit}"></h3>
 
         <h5 th:text="${word}"></h5>
-        <form accept-charset="utf-8" action="#" th:action="@{/{unit}/answer.html(unit=${unit})}" method="post">
+        <form accept-charset="utf-8" action="#" th:action="@{/answer.html}" method="post">
             <input name="answer"/>
             <input name="idx" th:value="${idx}" type="hidden"/>
-            <input name="done" th:value="${exercise.doneParam()}" type="hidden"/>
+
+            <input name="e" th:value="${exercise.toParam()}" type="hidden"/>
         </form>
     </div>
 </th:block>

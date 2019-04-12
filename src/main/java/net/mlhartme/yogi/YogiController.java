@@ -37,15 +37,14 @@ public class YogiController {
         model.addAttribute("units", units);
         return "index";
     }
-    @RequestMapping("/{unit}/question.html")
-    public String question(Model model, @PathVariable("unit") String unit,
-                           @RequestParam(value = "idx", required = false) Integer idxParam,
-                           @RequestParam(value = "done", required = false) String doneParam) throws IOException {
+    @RequestMapping("/question.html")
+    public String question(Model model, @RequestParam(value = "idx", required = false) Integer idxParam,
+                           @RequestParam(value = "e", required = false) String e) throws IOException {
         int idx;
         String word;
         Exercise exercise;
 
-        exercise = Exercise.forRequest(base, unit, doneParam);
+        exercise = Exercise.forParam(base, e);
         if (idxParam == null) {
             idx = exercise.vocabulary.next(exercise.done);
         } else {
@@ -57,18 +56,16 @@ public class YogiController {
 
         model.addAttribute("idx", idx);
         model.addAttribute("word", word);
-        model.addAttribute("unit", unit);
         return "question";
     }
 
-    @RequestMapping("/{unit}/answer.html")
-    public String answer(Model model, @PathVariable("unit") String unit, @RequestParam("answer") String answer,
-                         @RequestParam("idx") int idx, @RequestParam("done") String doneParam) throws IOException {
+    @RequestMapping("//answer.html")
+    public String answer(Model model, @RequestParam("e") String e, @RequestParam("answer") String answer, @RequestParam("idx") int idx) throws IOException {
         Exercise exercise;
         String expected;
         boolean correct;
 
-        exercise = Exercise.forRequest(base, unit, doneParam);
+        exercise = Exercise.forParam(base, e);
         expected = exercise.vocabulary.right(idx);
         correct = answer.equals(expected);
         if (correct) {
