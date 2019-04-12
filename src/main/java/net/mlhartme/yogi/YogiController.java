@@ -30,7 +30,7 @@ public class YogiController {
         List<String> units;
 
         units = new ArrayList<>();
-        for (Node<?> node : base.find("*.txt")) {
+        for (Node<?> node : base.find("**/*.txt")) {
             units.add(Strings.removeRight(node.getRelative(base), ".txt"));
         }
         Collections.sort(units);

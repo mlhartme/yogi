@@ -10,45 +10,59 @@ import java.util.List;
 public class Exercise {
     public static Exercise forParam(Node<?> base, String param) throws IOException {
         int idx;
-        String done;
         String unit;
+        String ok;
+        String wrong;
 
         idx = param.indexOf(':');
         if (idx == -1) {
             unit = param;
-            done = null;
+            ok = null;
+            wrong = null;
         } else {
             unit = param.substring(0, idx);
-            done = param.substring(idx + 1);
+            param = param.substring(idx + 1);
+            idx = param.indexOf(':');
+            if (idx == -1) {
+                ok = param;
+                wrong = null;
+            } else {
+                ok = param.substring(0, idx);
+                wrong = param.substring(idx + 1);
+            }
         }
-        return create(base, unit, done);
+        return create(base, unit, ok, wrong);
     }
 
     public static Exercise create(Node<?> base, String unit) throws IOException {
-        return create(base, unit, null);
+        return create(base, unit, null, null);
     }
 
-    public static Exercise create(Node<?> base, String unit, String doneParam) throws IOException {
-        List<Integer> done;
+    public static Exercise create(Node<?> base, String unit, String okParam, String wrongParam) throws IOException {
+        List<Integer> ok;
+        List<Integer> wrong;
         Vocabulary vocabulary;
 
         vocabulary = Vocabulary.load(base.join(unit + ".txt"));
-        done = toInt(doneParam == null ? new ArrayList<>() : Separator.COMMA.split(doneParam));
-        return new Exercise(unit, vocabulary, done);
+        ok = toInt(okParam == null ? new ArrayList<>() : Separator.COMMA.split(okParam));
+        wrong = toInt(wrongParam == null ? new ArrayList<>() : Separator.COMMA.split(wrongParam));
+        return new Exercise(unit, vocabulary, ok, wrong);
     }
 
     public final String unit;
     public final Vocabulary vocabulary;
-    public final List<Integer> done;
+    public final List<Integer> ok;
+    public final List<Integer> wrong;
 
-    public Exercise(String unit, Vocabulary vocabulary, List<Integer> done) {
+    public Exercise(String unit, Vocabulary vocabulary, List<Integer> ok, List<Integer> wrong) {
         this.unit = unit;
         this.vocabulary = vocabulary;
-        this.done = done;
+        this.ok = ok;
+        this.wrong = wrong;
     }
 
     public String question() {
-        return vocabulary.left(vocabulary.next(done));
+        return vocabulary.left(vocabulary.next(ok));
     }
 
     /** null if anwser is correct; otherwise the correct answer */
@@ -60,7 +74,7 @@ public class Exercise {
             throw new IllegalArgumentException(question);
         }
         if (answer.equals(vocabulary.right(idx))) {
-            done.add(idx);
+            ok.add(idx);
             return null;
         } else {
             return vocabulary.right(idx);
@@ -68,11 +82,11 @@ public class Exercise {
     }
 
     public String toParam() {
-        return unit + ":" + toString(done);
+        return unit + ":" + toString(ok) + ":" + toString(wrong);
     }
 
     public boolean allDone() {
-        return done.size() == vocabulary.size();
+        return ok.size() == vocabulary.size();
     }
 
     //--
