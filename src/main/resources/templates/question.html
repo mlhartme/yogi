@@ -10,7 +10,7 @@
         <form accept-charset="utf-8" action="#" th:action="@{/{unit}/answer.html(unit=${unit})}" method="post">
             <input name="answer"/>
             <input name="idx" th:value="${idx}" type="hidden"/>
-            <input name="done" th:value="${done}" type="hidden"/>
+            <input name="done" th:value="${exercise.doneParam()}" type="hidden"/>
         </form>
     </div>
 </th:block>
