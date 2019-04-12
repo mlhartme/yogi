@@ -89,7 +89,9 @@ public class Exercise {
             throw new IllegalArgumentException(question);
         }
         if (answer.equals(vocabulary.right(idx))) {
-            ok.add(idx);
+            if (!wrong.contains(idx)) {
+                ok.add(idx);
+            }
             return null;
         } else {
             if (!wrong.contains(idx)) {
