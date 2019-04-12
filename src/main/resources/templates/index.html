@@ -9,7 +9,8 @@
 
         <h5>Units</h5>
         <ul class="list-group">
-            <li th:each="unit:${units}" class="list-group-item"><a th:href="${/question.html(e=${Exercise.start(unit).toParam()})'}" th:text="${unit}"></a></li>
+
+            <li th:each="unit:${units}" class="list-group-item"><a th:href="@{/question.html(e=${T(net.mlhartme.yogi.Exercise).create(base, unit).toParam()})}" th:text="${unit}"></a></li>
         </ul>
     </div>
 </th:block>

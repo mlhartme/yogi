@@ -34,49 +34,36 @@ public class YogiController {
             units.add(Strings.removeRight(node.getRelative(base), ".txt"));
         }
         Collections.sort(units);
+        model.addAttribute("base", base);
         model.addAttribute("units", units);
         return "index";
     }
+
     @RequestMapping("/question.html")
-    public String question(Model model, @RequestParam(value = "idx", required = false) Integer idxParam,
-                           @RequestParam(value = "e", required = false) String e) throws IOException {
-        int idx;
-        String word;
+    public String question(Model model, @RequestParam(value = "e") String e,
+                           @RequestParam(value = "question", required = false) String question) throws IOException {
         Exercise exercise;
 
         exercise = Exercise.forParam(base, e);
-        if (idxParam == null) {
-            idx = exercise.vocabulary.next(exercise.done);
-        } else {
-            idx = idxParam;
+        if (question == null) {
+            question = exercise.question();
         }
-        word = exercise.vocabulary.left(idx);
-        model.addAttribute(word);
         model.addAttribute("exercise", exercise);
-
-        model.addAttribute("idx", idx);
-        model.addAttribute("word", word);
+        model.addAttribute("question", question);
         return "question";
     }
 
     @RequestMapping("//answer.html")
-    public String answer(Model model, @RequestParam("e") String e, @RequestParam("answer") String answer, @RequestParam("idx") int idx) throws IOException {
+    public String answer(Model model, @RequestParam("e") String e, @RequestParam("question") String question, @RequestParam("answer") String answer) throws IOException {
         Exercise exercise;
-        String expected;
-        boolean correct;
+        String correction;
 
         exercise = Exercise.forParam(base, e);
-        expected = exercise.vocabulary.right(idx);
-        correct = answer.equals(expected);
-        if (correct) {
-            exercise.done.add(idx);
-        }
+        correction = exercise.answer(question, answer);
         model.addAttribute("exercise", exercise);
-
+        model.addAttribute("question", question);
         model.addAttribute("answer", answer);
-        model.addAttribute("expected", expected);
-        model.addAttribute("correct", correct);
-        model.addAttribute("idx", idx);
+        model.addAttribute("correction", correction);
         return "answer";
     }
 }

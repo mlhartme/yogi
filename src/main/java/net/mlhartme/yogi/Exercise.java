@@ -37,7 +37,7 @@ public class Exercise {
         return new Exercise(unit, vocabulary, done);
     }
 
-    private final String unit;
+    public final String unit;
     public final Vocabulary vocabulary;
     public final List<Integer> done;
 
@@ -45,6 +45,26 @@ public class Exercise {
         this.unit = unit;
         this.vocabulary = vocabulary;
         this.done = done;
+    }
+
+    public String question() {
+        return vocabulary.left(vocabulary.next(done));
+    }
+
+    /** null if anwser is correct; otherwise the correct answer */
+    public String answer(String question, String answer) {
+        int idx;
+
+        idx = vocabulary.lookupLeft(question);
+        if (idx == -1) {
+            throw new IllegalArgumentException(question);
+        }
+        if (answer.equals(vocabulary.right(idx))) {
+            done.add(idx);
+            return null;
+        } else {
+            return vocabulary.right(idx);
+        }
     }
 
     public String toParam() {

@@ -4,15 +4,16 @@
       layout:decorate="~{layout.html}">
 <th:block layout:fragment="content">
 <div class="col-12">
-    <div th:if=${correct}>
-        <h5 th:text="${'Correct: ' + expected}"></h5>
+    <h5 th:text="${question}"/>
+    <div th:unless=${correction}>
+        <h5 th:text="${'Correct: ' + answer}"></h5>
         <a th:if="${exercise.allDone()}" class="btn btn-primary" role="button" th:href="@{/}">Fertig</a>
-        <a th:unless="${exercise.allDone()}" class="btn btn-primary" role="button" th:href="@{/{unit}/question.html(unit=${unit},done=${exercise.doneParam()})}">Weiter</a>
+        <a th:unless="${exercise.allDone()}" class="btn btn-primary" role="button" th:href="@{/question.html(e=${exercise.toParam()})}">Weiter</a>
     </div>
-    <div th:unless=${correct}>
+    <div th:if=${correction}>
         <h5 th:text="${'Your answer: ' + answer}"></h5>
-        <h5 th:text="${'Correct: ' + expected}"></h5>
-        <a class="btn btn-primary" role="button" th:href="@{/{unit}/question.html(unit=${unit},done=${exercise.doneParam()},idx=${idx})}">Weiter</a>
+        <h5 th:text="${'Correct: ' + correction}"></h5>
+        <a class="btn btn-primary" role="button" th:href="@{/question.html(e=${exercise.toParam()},question=${question})}">Weiter</a>
     </div>
 </div>
 </th:block>

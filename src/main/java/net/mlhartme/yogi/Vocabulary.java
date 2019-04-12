@@ -91,7 +91,22 @@ public class Vocabulary {
         return lefts.get(idx);
     }
 
+    public int lookupLeft(String left) {
+        return lefts.indexOf(left);
+    }
+
+
     public String right(int idx) {
+        return rights.get(idx);
+    }
+
+    public String right(String left) {
+        int idx;
+
+        idx = lefts.indexOf(left);
+        if (idx == -1) {
+            throw new IllegalArgumentException(left);
+        }
         return rights.get(idx);
     }
 }

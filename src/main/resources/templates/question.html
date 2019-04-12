@@ -4,13 +4,12 @@
       layout:decorate="~{layout.html}">
 <th:block layout:fragment="content">
     <div class="col-12">
-        <h3 th:text="${unit}"></h3>
+        <h3 th:text="${exercise.unit}"></h3>
 
-        <h5 th:text="${word}"></h5>
+        <h5 th:text="${question}"></h5>
         <form accept-charset="utf-8" action="#" th:action="@{/answer.html}" method="post">
+            <input name="question" th:value="${question}" type="hidden"/>
             <input name="answer"/>
-            <input name="idx" th:value="${idx}" type="hidden"/>
-
             <input name="e" th:value="${exercise.toParam()}" type="hidden"/>
         </form>
     </div>
