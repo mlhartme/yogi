@@ -17,14 +17,16 @@ public class Exercise {
 
         String unit;
         int round;
+        int ofs;
         String ok;
         String wrong;
 
         unit = eat(args, "");
         round = Integer.parseInt(eat(args, "1"));
+        ofs = Integer.parseInt(eat(args, "0"));
         ok = eat(args, null);
         wrong = eat(args, null);
-        return create(base, unit, round, ok, wrong);
+        return create(base, unit, round, ofs, ok, wrong);
     }
 
     private static String eat(List<String> lst, String dflt) {
@@ -36,10 +38,10 @@ public class Exercise {
     }
 
     public static Exercise create(Node<?> base, String unit) throws IOException {
-        return create(base, unit, 1, null, null);
+        return create(base, unit, 1, 0, null, null);
     }
 
-    public static Exercise create(Node<?> base, String unit, int round, String okParam, String wrongParam) throws IOException {
+    public static Exercise create(Node<?> base, String unit, int round, int ofs, String okParam, String wrongParam) throws IOException {
         List<Integer> ok;
         List<Integer> wrong;
         Vocabulary vocabulary;
@@ -47,40 +49,48 @@ public class Exercise {
         vocabulary = Vocabulary.load(base.join(unit + ".txt"));
         ok = toInt(okParam == null ? new ArrayList<>() : Separator.COMMA.split(okParam));
         wrong = toInt(wrongParam == null ? new ArrayList<>() : Separator.COMMA.split(wrongParam));
-        return new Exercise(unit, vocabulary, round, ok, wrong);
+        return new Exercise(unit, vocabulary, round, ofs, ok, wrong);
     }
 
     public final String unit;
     public final Vocabulary vocabulary;
     public int round;
+    public int ofs;
     public final List<Integer> ok;
     public final List<Integer> wrong;
 
-    public Exercise(String unit, Vocabulary vocabulary, int round, List<Integer> ok, List<Integer> wrong) {
+    public Exercise(String unit, Vocabulary vocabulary, int round, int ofs, List<Integer> ok, List<Integer> wrong) {
         if (vocabulary.size() == 0) {
             throw new IllegalArgumentException();
         }
         this.unit = unit;
         this.vocabulary = vocabulary;
         this.round = round;
+        this.ofs = ofs;
         this.ok = ok;
         this.wrong = wrong;
+    }
+
+    public int roundSize() {
+        return vocabulary.size() - ofs;
     }
 
     public int number(String question) {
         int idx;
 
         idx = vocabulary.lookupLeft(question);
-        return ok.size() + wrong.size() + (wrong.contains(idx) ? 0 : 1);
+        return ok.size() + wrong.size() + (wrong.contains(idx) ? 0 : 1) - ofs;
     }
 
     public String question() {
         if (ok.size() + wrong.size() == vocabulary.size()) {
             round++;
             if (wrong.isEmpty()) {
+                ofs = 0;
                 ok.clear();
                 // start from beginning
             } else {
+                ofs = ok.size();
                 wrong.clear();
             }
         }
@@ -109,7 +119,7 @@ public class Exercise {
     }
 
     public String toParam() {
-        return unit + ":" + round + ":" + toString(ok) + ":" + toString(wrong);
+        return unit + ":" + round + ":" + ofs + ":" + toString(ok) + ":" + toString(wrong);
     }
 
     public boolean allDone() {
