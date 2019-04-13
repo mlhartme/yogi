@@ -67,6 +67,13 @@ public class Exercise {
         this.wrong = wrong;
     }
 
+    public int number(String question) {
+        int idx;
+
+        idx = vocabulary.lookupLeft(question);
+        return ok.size() + wrong.size() + (wrong.contains(idx) ? 0 : 1);
+    }
+
     public String question() {
         if (ok.size() + wrong.size() == vocabulary.size()) {
             round++;
