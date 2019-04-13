@@ -11,8 +11,8 @@
         <a th:unless="${exercise.allDone()}" class="btn btn-primary" role="button" th:href="@{/question.html(e=${exercise.toParam()})}">Weiter</a>
     </div>
     <div th:if=${correction}>
-        <h5 th:text="${'Your answer: ' + answer}"></h5>
-        <h5 th:text="${'Correct: ' + correction}"></h5>
+        <h5 th:text="${'Deine Eingabe: ' + answer}"></h5>
+        <h5 th:text="${'Richtig ist: ' + correction}"></h5>
         <a class="btn btn-primary" role="button" th:href="@{/question.html(e=${exercise.toParam()},question=${question})}">Weiter</a>
     </div>
 </div>
