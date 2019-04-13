@@ -7,13 +7,26 @@
     <h5 th:text="${question}"/>
     <div th:unless=${correction}>
         <h5 th:text="${'Correct: ' + answer}"></h5>
-        <a th:if="${exercise.allDone()}" class="btn btn-primary" role="button" th:href="@{/}">Fertig</a>
-        <a th:unless="${exercise.allDone()}" class="btn btn-primary" role="button" th:href="@{/question.html(e=${exercise.toParam()})}">Weiter</a>
+        <div th:if="${exercise.allDone()}">
+            <form action="/" method="get">
+                <button class="btn btn-primary" autofocus role="button">Fertig</button>
+            </form>
+        </div>
+        <div th:unless="${exercise.allDone()}">
+            <form action="/question.html" method="get">
+                <input name="e" th:value="${exercise.toParam()}" type="hidden"/>
+                <button class="btn btn-primary" autofocus role="button">Weiter</button>
+            </form>
+        </div>
     </div>
     <div th:if=${correction}>
         <h5 th:text="${'Deine Eingabe: ' + answer}"></h5>
         <h5 th:text="${'Richtig ist: ' + correction}"></h5>
-        <a class="btn btn-primary" role="button" th:href="@{/question.html(e=${exercise.toParam()},question=${question})}">Weiter</a>
+        <form action="/question.html" method="get">
+            <input name="e" th:value="${exercise.toParam()}" type="hidden"/>
+            <input name="question" th:value="${question}" type="hidden"/>
+            <button class="btn btn-primary" autofocus role="button">Weiter</button>
+        </form>
     </div>
 </div>
 </th:block>
