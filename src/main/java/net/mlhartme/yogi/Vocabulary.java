@@ -43,7 +43,7 @@ public class Vocabulary {
             if (idx == -1) {
                 throw new IOException("syntax error: " + line);
             }
-            result.add(line.substring(0, idx).trim(), line.substring(idx + 1).trim());
+            result.add(line.substring(idx + 1).trim(), line.substring(0, idx).trim());
         }
         return result;
     }
