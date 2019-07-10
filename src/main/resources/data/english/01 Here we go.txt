@@ -1,5 +1,5 @@
-los gehts = here we go
-hallo = hello
+los geht's = here we go
+Hallo = hello
 ich bin eine Robbe = I'm a seal
 eine Robbe = a seal
 ich heiße Silky = my name is Silky
