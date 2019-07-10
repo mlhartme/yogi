@@ -27,27 +27,3 @@ What's for homework? = Was haben wir als Hausaufgabe auf?
 homework = Hausaufgabe(n)
 There aren't any ... = Es gibt keine ...
 in German = auf Deutsch
-
-
-chaos = Chaos
-corner shop = Laden an der Ecke
-master = Meister/in
-yoghurt = Joghurt
-little = klein
-always = immer
-group (of) = Gruppe (von)
-that group = die Gruppe (dort); jene Gruppe
-(to) swim = schwimmen
-like boys = wie jungen
-swimmer = Schwimmer/in
-(to) be goot at kung fu = gut sein in Kung-Fu
-feeling = Gefühl
-angry = wütend
-happy = glücklich, froh
-surprised = überrascht
-(to) act out = vorspielen
-the next question = das nächste Frage
-man = Mann
-men = Männer
-woman = Frau
-women = Frauen
