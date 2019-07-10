@@ -1,8 +1,8 @@
-welcome to Plymouth = willkommen in Plymouth
-Silky's tour of Plymouth = Silkys Rundgang/Rundfahrt/Reise durch Plymouth
+welcome to Plymouth. = Willkommen in Plymouth.
+Silky's tour of Plymouth. = Silkys Rundgang/Rundfahrt/Reise durch Plymouth.
 river = Fluss
-castle = Burg, Schloß
-swimming pool = Schwimmbecken
+castle = Burg, Schloss
+(swimming) pool = Schwimmbecken
 tower = Turm
 hill = Hügel
 boat = Boot
@@ -10,9 +10,9 @@ sea = Meer
 big wheel = Riesenrad
 big = groß
 can = können
-on the map = auf der Landkarte
+on the map = auf der Landkarte / auf dem Stadtplan
 Silky's song = Silky's Lied
-is it Monday? = ist es Montag?
+Is it Monday? = ist es Montag?
 
 Monday = Montag
 Tuesday = Dienstag
