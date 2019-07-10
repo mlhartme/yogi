@@ -14,7 +14,7 @@ public class Swap {
         int idx;
 
         world = World.create();
-        for (FileNode file : world.getWorking().join("src/main/resources/data/english").find("*.txt")) {
+        for (FileNode file : world.getWorking().join("src/main/resources/data/english").find("15-*.txt")) {
             lines = file.readLines();
             for (int i = 0; i < lines.size(); i++) {
                 line = lines.get(i);
