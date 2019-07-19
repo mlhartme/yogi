@@ -1,0 +1,22 @@
+talk = Vortrag, Referat, Rede
+sleepover = Schlafparty
+bad = schlecht, schlimm
+shark = Hai
+at last = endlich, schließlich
+blond = blond
+(to) take photos = fotografieren, Fotos machen
+first = zuerst, als Erstes
+interesting = interessant
+line = Zeile
+the UK = das Vereinigte Königreich
+the biggest ... = der/die/das größte ...
+coast = Küste
+planet = Planet
+ocean = Ozean
+centre = Zentrum; Mitte
+snack = Snack, Imbiss
+price = (Kauf) Preis
+important = wichtig
+sign = Schild, Zeichen
+the same as ... = der- / die- /dasselbe wie ...
+
