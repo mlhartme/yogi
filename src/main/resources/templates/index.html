@@ -7,10 +7,9 @@
         <h3>Yogi</h3>
         <p>Vokabel Trainer</p>
 
-        <h5>Units</h5>
+        <h5>Files</h5>
         <ul class="list-group">
-
-            <li th:each="unit:${units}" class="list-group-item"><a th:href="@{/question.html(e=${T(net.mlhartme.yogi.Exercise).create(base, unit).toParam()})}" th:text="${unit}"></a></li>
+            <li th:each="file:${files}" class="list-group-item"><a th:href="@{/question.html(e=${T(net.mlhartme.yogi.Exercise).create(base, file).toParam()})}" th:text="${file}"></a></li>
         </ul>
     </div>
 </th:block>

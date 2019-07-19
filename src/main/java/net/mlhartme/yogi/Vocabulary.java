@@ -18,7 +18,7 @@ public class Vocabulary {
         Vocabulary result;
 
         result = new Vocabulary();
-        for (int i = 0; i < leftRights.length; i+=2) {
+        for (int i = 0; i < leftRights.length; i += 2) {
             result.add(leftRights[i], leftRights[i + 1]);
         }
         return result;

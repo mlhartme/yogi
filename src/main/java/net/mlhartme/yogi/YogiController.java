@@ -27,15 +27,15 @@ public class YogiController {
 
     @RequestMapping("/")
     public String index(Model model) throws IOException {
-        List<String> units;
+        List<String> files;
 
-        units = new ArrayList<>();
+        files = new ArrayList<>();
         for (Node<?> node : base.find("**/*.txt")) {
-            units.add(Strings.removeRight(node.getRelative(base), ".txt"));
+            files.add(Strings.removeRight(node.getRelative(base), ".txt"));
         }
-        Collections.sort(units);
+        Collections.sort(files);
         model.addAttribute("base", base);
-        model.addAttribute("units", units);
+        model.addAttribute("files", files);
         return "index";
     }
 
@@ -53,7 +53,7 @@ public class YogiController {
         return "question";
     }
 
-    @RequestMapping("//answer.html")
+    @RequestMapping("/answer.html")
     public String answer(Model model, @RequestParam("e") String e, @RequestParam("question") String question, @RequestParam("answer") String answer) throws IOException {
         Exercise exercise;
         String correction;

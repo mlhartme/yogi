@@ -4,7 +4,7 @@
       layout:decorate="~{layout.html}">
 <th:block layout:fragment="content">
     <div class="col-12">
-        <h3 th:text="${exercise.unit + ' - Runde ' + exercise.round + ' (' + exercise.number(question) + '/' + exercise.roundSize() + ')'}"></h3>
+        <h3 th:text="${exercise.file + ' - Runde ' + exercise.round + ' (' + exercise.number(question) + '/' + exercise.roundSize() + ')'}"></h3>
 
         <h5 th:text="${question}"></h5>
         <form accept-charset="utf-8" action="#" th:action="@{/answer.html}" method="post">

@@ -15,18 +15,18 @@ public class Exercise {
 
         args = COLON.split(param);
 
-        String unit;
+        String file;
         int round;
         int ofs;
         String ok;
         String wrong;
 
-        unit = eat(args, "");
+        file = eat(args, "");
         round = Integer.parseInt(eat(args, "1"));
         ofs = Integer.parseInt(eat(args, "0"));
         ok = eat(args, null);
         wrong = eat(args, null);
-        return create(base, unit, round, ofs, ok, wrong);
+        return create(base, file, round, ofs, ok, wrong);
     }
 
     private static String eat(List<String> lst, String dflt) {
@@ -37,33 +37,33 @@ public class Exercise {
         }
     }
 
-    public static Exercise create(Node<?> base, String unit) throws IOException {
-        return create(base, unit, 1, 0, null, null);
+    public static Exercise create(Node<?> base, String file) throws IOException {
+        return create(base, file, 1, 0, null, null);
     }
 
-    public static Exercise create(Node<?> base, String unit, int round, int ofs, String okParam, String wrongParam) throws IOException {
+    public static Exercise create(Node<?> base, String file, int round, int ofs, String okParam, String wrongParam) throws IOException {
         List<Integer> ok;
         List<Integer> wrong;
         Vocabulary vocabulary;
 
-        vocabulary = Vocabulary.load(base.join(unit + ".txt"));
+        vocabulary = Vocabulary.load(base.join(file + ".txt"));
         ok = toInt(okParam == null ? new ArrayList<>() : Separator.COMMA.split(okParam));
         wrong = toInt(wrongParam == null ? new ArrayList<>() : Separator.COMMA.split(wrongParam));
-        return new Exercise(unit, vocabulary, round, ofs, ok, wrong);
+        return new Exercise(file, vocabulary, round, ofs, ok, wrong);
     }
 
-    public final String unit;
+    public final String file;
     public final Vocabulary vocabulary;
     public int round;
     public int ofs;
     public final List<Integer> ok;
     public final List<Integer> wrong;
 
-    public Exercise(String unit, Vocabulary vocabulary, int round, int ofs, List<Integer> ok, List<Integer> wrong) {
+    public Exercise(String file, Vocabulary vocabulary, int round, int ofs, List<Integer> ok, List<Integer> wrong) {
         if (vocabulary.size() == 0) {
             throw new IllegalArgumentException();
         }
-        this.unit = unit;
+        this.file = file;
         this.vocabulary = vocabulary;
         this.round = round;
         this.ofs = ofs;
@@ -119,7 +119,7 @@ public class Exercise {
     }
 
     public String toParam() {
-        return unit + ":" + round + ":" + ofs + ":" + toString(ok) + ":" + toString(wrong);
+        return file + ":" + round + ":" + ofs + ":" + toString(ok) + ":" + toString(wrong);
     }
 
     public boolean allDone() {
