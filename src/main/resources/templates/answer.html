@@ -14,7 +14,8 @@
         <div class="col-12">
             <h5 th:text="${question}"/>
             <div th:unless=${correction}>
-                <h5 th:text="${'Correct: ' + answer}"></h5>
+                <h5 class="text-success" th:text="${'Deine Eingabe: ' + answer}"></h5>
+                <h5 class="text-success" th:text="${'Richtig ist: ' + correction}"></h5>
                 <div th:if="${exercise.allDone()}">
                     <form action="/" method="get">
                         <button class="btn btn-primary" autofocus role="button">Fertig</button>
@@ -28,8 +29,8 @@
                 </div>
             </div>
             <div th:if=${correction}>
-                <h5 th:text="${'Deine Eingabe: ' + answer}"></h5>
-                <h5 th:text="${'Richtig ist: ' + correction}"></h5>
+                <h5 class="text-warning" th:text="${'Deine Eingabe: ' + answer}"></h5>
+                <h5 class="text-warning" th:text="${'Richtig ist: ' + anwer}"></h5>
                 <form action="/question.html" method="get">
                     <input name="e" th:value="${exercise.toParam()}" type="hidden"/>
                     <input name="question" th:value="${question}" type="hidden"/>
