@@ -55,9 +55,9 @@ public class Exercise {
     public final String file;
     public final Vocabulary vocabulary;
     public int round;
-    public int ofs;
-    public final List<Integer> ok;
-    public final List<Integer> wrong;
+    public int ofs;  // number of oks when this round started
+    public final List<Integer> ok;  // oks in this and previous rounds
+    public final List<Integer> wrong; // wrong answers in this round
 
     public Exercise(String file, Vocabulary vocabulary, int round, int ofs, List<Integer> ok, List<Integer> wrong) {
         if (vocabulary.size() == 0) {
@@ -86,9 +86,9 @@ public class Exercise {
         if (ok.size() + wrong.size() == vocabulary.size()) {
             round++;
             if (wrong.isEmpty()) {
+                // all correct - start from beginning
                 ofs = 0;
                 ok.clear();
-                // start from beginning
             } else {
                 ofs = ok.size();
                 wrong.clear();
@@ -108,6 +108,8 @@ public class Exercise {
         if (answer.equals(vocabulary.right(idx))) {
             if (!wrong.contains(idx)) {
                 ok.add(idx);
+            } else {
+                // question was re-asked
             }
             return null;
         } else {

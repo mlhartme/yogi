@@ -9,11 +9,26 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.2.1/css/bootstrap.min.css}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
           integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <style>
+body {
+  /* Margin top/bottom by top/footer height */
+  margin-top: 56px;
+  margin-bottom: 56px;
+}
+  </style>
 </head>
 <body>
+
 <div class="container-fluid">
+    <th:block layout:fragment="content"/>
     <div class="row">
-        <th:block layout:fragment="content"/>
+        <div class="col-12">
+            <nav class="navbar fixed-bottom navbar-light bg-light">
+                <small>
+                    <p>Yogi - Vokabel Trainer</p>
+                </small>
+            </nav>
+        </div>
     </div>
 </div>
 

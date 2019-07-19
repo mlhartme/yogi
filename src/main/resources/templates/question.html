@@ -3,16 +3,23 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout.html}">
 <th:block layout:fragment="content">
-    <div class="col-12">
-        <h3 th:text="${exercise.file + ' - Runde ' + exercise.round + ' (' + exercise.number(question) + '/' + exercise.roundSize() + ')'}"></h3>
-
-        <h5 th:text="${question}"></h5>
-        <form accept-charset="utf-8" action="#" th:action="@{/answer.html}" method="post">
-            <input name="question" th:value="${question}" type="hidden"/>
-            <input name="answer" type="text" autocapitalize="none" />
-            <input name="e" th:value="${exercise.toParam()}" type="hidden"/>
-            <button class="btn btn-primary" type="submit">Ok</button>
-        </form>
+    <div class="row">
+        <div class="col-12">
+            <nav class="navbar fixed-top navbar-light bg-light">
+                <p th:text="${exercise.file + ' - Runde ' + exercise.round + ' (' + exercise.number(question) + '/' + exercise.roundSize() + ')'}"></p>
+            </nav>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h5 th:text="${question}"></h5>
+            <form accept-charset="utf-8" action="#" th:action="@{/answer.html}" method="post">
+                <input name="question" th:value="${question}" type="hidden"/>
+                <input name="answer" type="text" autocapitalize="none" />
+                <input name="e" th:value="${exercise.toParam()}" type="hidden"/>
+                <button class="btn btn-primary" type="submit">Ok</button>
+            </form>
+        </div>
     </div>
 </th:block>
 </html>
