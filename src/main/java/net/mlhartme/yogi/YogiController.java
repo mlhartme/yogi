@@ -20,9 +20,11 @@ import java.util.Random;
 @Controller
 public class YogiController {
     private Node<?> base;
+    private FileNode logBase;
 
     public YogiController(World world) throws IOException {
         this.base = world.resource("data/english");
+        this.logBase = world.getWorking().join("logs").mkdirOpt();
     }
 
     @RequestMapping("/")
@@ -60,6 +62,7 @@ public class YogiController {
 
         exercise = Exercise.forParam(base, e);
         correction = exercise.answer(question, answer);
+        exercise.log(logBase, question, answer, correction);
         model.addAttribute("exercise", exercise);
         model.addAttribute("question", question);
         model.addAttribute("answer", answer);

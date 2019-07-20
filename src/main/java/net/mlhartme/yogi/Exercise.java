@@ -1,10 +1,14 @@
 package net.mlhartme.yogi;
 
 import net.oneandone.sushi.fs.Node;
+import net.oneandone.sushi.fs.file.FileNode;
 import net.oneandone.sushi.util.Separator;
 
 import java.io.IOException;
+import java.io.Writer;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Exercise {
@@ -15,18 +19,20 @@ public class Exercise {
 
         args = COLON.split(param);
 
+        Long id;
         String file;
         int round;
         int ofs;
         String ok;
         String wrong;
 
+        id = Long.parseLong(eat(args, Long.toHexString(System.currentTimeMillis())), 16);
         file = eat(args, "");
         round = Integer.parseInt(eat(args, "1"));
         ofs = Integer.parseInt(eat(args, "0"));
         ok = eat(args, null);
         wrong = eat(args, null);
-        return create(base, file, round, ofs, ok, wrong);
+        return create(id, base, file, round, ofs, ok, wrong);
     }
 
     private static String eat(List<String> lst, String dflt) {
@@ -38,10 +44,12 @@ public class Exercise {
     }
 
     public static Exercise create(Node<?> base, String file) throws IOException {
-        return create(base, file, 1, 0, null, null);
+        return create(System.currentTimeMillis(), base, file, 1, 0, null, null);
     }
 
-    public static Exercise create(Node<?> base, String file, int round, int ofs, String okParam, String wrongParam) throws IOException {
+    private static final SimpleDateFormat FMT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    public static Exercise create(Long id, Node<?> base, String file, int round, int ofs, String okParam, String wrongParam) throws IOException {
         List<Integer> ok;
         List<Integer> wrong;
         Vocabulary vocabulary;
@@ -49,9 +57,10 @@ public class Exercise {
         vocabulary = Vocabulary.load(base.join(file + ".txt"));
         ok = toInt(okParam == null ? new ArrayList<>() : Separator.COMMA.split(okParam));
         wrong = toInt(wrongParam == null ? new ArrayList<>() : Separator.COMMA.split(wrongParam));
-        return new Exercise(file, vocabulary, round, ofs, ok, wrong);
+        return new Exercise(id, file, vocabulary, round, ofs, ok, wrong);
     }
 
+    public final Long id;
     public final String file;
     public final Vocabulary vocabulary;
     public int round;
@@ -59,16 +68,23 @@ public class Exercise {
     public final List<Integer> ok;  // oks in this and previous rounds
     public final List<Integer> wrong; // wrong answers in this round
 
-    public Exercise(String file, Vocabulary vocabulary, int round, int ofs, List<Integer> ok, List<Integer> wrong) {
+    public Exercise(Long id, String file, Vocabulary vocabulary, int round, int ofs, List<Integer> ok, List<Integer> wrong) {
         if (vocabulary.size() == 0) {
             throw new IllegalArgumentException();
         }
+        this.id = id;
         this.file = file;
         this.vocabulary = vocabulary;
         this.round = round;
         this.ofs = ofs;
         this.ok = ok;
         this.wrong = wrong;
+    }
+
+    public void log(FileNode base, String question, String answer, String correction) throws IOException {
+        try (Writer writer = base.join(Long.toHexString(id) + ".log").newAppender()) {
+            writer.append(FMT.format(new Date()) + " " + question + " -> " + answer + " " + correction + "\n");
+        }
     }
 
     public int roundSize() {
@@ -121,7 +137,7 @@ public class Exercise {
     }
 
     public String toParam() {
-        return file + ":" + round + ":" + ofs + ":" + toString(ok) + ":" + toString(wrong);
+        return Long.toHexString(id) + ":" + file + ":" + round + ":" + ofs + ":" + toString(ok) + ":" + toString(wrong);
     }
 
     public boolean allDone() {
