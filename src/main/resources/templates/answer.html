@@ -5,6 +5,11 @@
 <th:block layout:fragment="content">
     <div class="row">
         <div class="col-12">
+            <p th:text="${exercise.file + ' - Runde ' + exercise.round + ' (' + exercise.number(question) + '/' + exercise.roundSize() + ')'}"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
             <h5 th:text="${question}"/>
             <div th:unless=${correction}>
                 <h5 class="text-success" th:text="${answer}"></h5>

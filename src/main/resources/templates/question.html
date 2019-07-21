@@ -6,6 +6,11 @@
     <form accept-charset="utf-8" action="#" th:action="@{/answer.html}" method="post">
         <div class="row">
             <div class="col-12">
+              <p th:text="${exercise.file + ' - Runde ' + exercise.round + ' (' + exercise.number(question) + '/' + exercise.roundSize() + ')'}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
                 <p th:text="${question}"></p>
             </div>
         </div>
