@@ -2,7 +2,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout.html}">
-<th:block layout:fragment="content">
+<th:block layout:fragment="navigation">
     <div id="comment" class="modal fade" >
         <div class="modal-dialog">
             <form class="form-horizontal" accept-charset="utf-8" action="#comment">
@@ -62,6 +62,8 @@
             </nav>
         </div>
     </div>
+</th:block>
+<th:block layout:fragment="content">
     <div class="row">
         <div class="col-12">
             <h5 th:text="${question}"/>
