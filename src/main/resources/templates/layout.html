@@ -22,9 +22,9 @@ body {
 <div class="container-fluid">
     <th:block th:if="${exercise == null}">
         <th:block layout:fragment="navigation">
-                    <nav class="navbar fixed-top navbar-light bg-light">
-                        <p>Auswahl</p>
-                    </nav>
+            <nav class="navbar fixed-top navbar-light bg-light">
+                <p>Auswahl</p>
+            </nav>
         </th:block>
     </th:block>
     <th:block th:if="${exercise != null}">
@@ -74,15 +74,13 @@ body {
                 </div>
             </div>
         </div>
-
-                <nav class="navbar navbar-sm navbar-expand-lg fixed-top navbar-light bg-light">
-                <span class="navbar-text">Übung</span>
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item"><a class="nav-link" href="#comment" data-toggle="modal" data-target="#comment"><i class="fa fa-comments"></i> Anmerkung</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#quit" data-toggle="modal" data-target="#quit"><i class="fa fa-door-open"></i> Beenden</a></li>
-                    </ul>
-                </nav>
-
+        <nav class="navbar navbar-expand-sm fixed-top navbar-light bg-light">
+        <span class="navbar-text">Übung</span>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" href="#comment" data-toggle="modal" data-target="#comment"><i class="fa fa-comments"></i> Anmerkung</a></li>
+                <li class="nav-item"><a class="nav-link" href="#quit" data-toggle="modal" data-target="#quit"><i class="fa fa-door-open"></i> Beenden</a></li>
+            </ul>
+        </nav>
     </th:block>
     <th:block layout:fragment="content"/>
     <div class="row">
