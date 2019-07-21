@@ -81,12 +81,22 @@ public class Exercise {
         this.wrong = wrong;
     }
 
-    public void log(FileNode base, String question, String answer, String correction) throws IOException {
-        try (Writer writer = base.join(Long.toHexString(id) + ".log").newAppender()) {
-            writer.append(FMT.format(new Date()) + " " + question + " -> " + answer + " " + correction + "\n");
-        }
+    public void logComment(FileNode base, String comment) throws IOException {
+        doLog(base, "# " + comment);
     }
 
+    public void logAnswer(FileNode base, String question, String answer, String correction) throws IOException {
+        doLog(base, question + " -> " + answer + " " + correction);
+    }
+
+    private void doLog(FileNode base, String line) throws IOException {
+        try (Writer writer = base.join(Long.toHexString(id) + ".log").newAppender()) {
+            writer.append(FMT.format(new Date()));
+            writer.append(' ');
+            writer.append(line);
+            writer.append('\n');
+        }
+    }
     public int roundSize() {
         return vocabulary.size() - ofs;
     }

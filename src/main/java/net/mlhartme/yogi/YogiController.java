@@ -3,19 +3,20 @@ package net.mlhartme.yogi;
 import net.oneandone.sushi.fs.Node;
 import net.oneandone.sushi.fs.World;
 import net.oneandone.sushi.fs.file.FileNode;
-import net.oneandone.sushi.util.Separator;
 import net.oneandone.sushi.util.Strings;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import java.util.Map;
 
 @Controller
 public class YogiController {
@@ -41,6 +42,14 @@ public class YogiController {
         return "index";
     }
 
+    @PostMapping("/comment") @ResponseStatus(value = HttpStatus.OK)
+    public void question(Model model, @RequestParam Map<String, String> body) throws IOException {
+        Exercise exercise;
+
+        exercise = Exercise.forParam(base, body.get("e"));
+        exercise.logComment(logBase, body.get("comment"));
+    }
+
     @RequestMapping("/question.html")
     public String question(Model model, @RequestParam(value = "e") String e,
                            @RequestParam(value = "question", required = false) String question) throws IOException {
@@ -62,7 +71,7 @@ public class YogiController {
 
         exercise = Exercise.forParam(base, e);
         correction = exercise.answer(question, answer);
-        exercise.log(logBase, question, answer, correction);
+        exercise.logAnswer(logBase, question, answer, correction);
         model.addAttribute("exercise", exercise);
         model.addAttribute("question", question);
         model.addAttribute("answer", answer);
