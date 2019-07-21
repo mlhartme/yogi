@@ -24,7 +24,7 @@ public class YogiController {
     private FileNode logBase;
 
     public YogiController(World world) throws IOException {
-        this.base = world.resource("data/english");
+        this.base = world.resource("data");
         this.logBase = world.getWorking().join("logs").mkdirOpt();
     }
 
