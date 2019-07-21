@@ -17,7 +17,7 @@ madame ... = Frau ...
 Bof! = Na ja., Ach.
 Au revoir! = Auf Wiedersehen!
 
-zero = 0
+zéro = 0
 un = 1
 deux = 2
 trois = 3
@@ -28,5 +28,5 @@ sept = 7
 huit = 8
 neuf = 9
 dix = 10
-once = 11
+onze = 11
 douze = 12
