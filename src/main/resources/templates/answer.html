@@ -2,67 +2,6 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout.html}">
-<th:block layout:fragment="navigation">
-    <div id="comment" class="modal fade" >
-        <div class="modal-dialog">
-            <form class="form-horizontal" accept-charset="utf-8" action="#comment">
-                <fieldset>
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Anmerkung</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="comment-text" class="col-lg-2 control-label">Anmerkung</label>
-
-                                <div class="col-lg-10">
-                                    <input id="exercise" th:value="${exercise.toParam()}" hidden>
-                                    <textarea class="form-control" rows="3" id="comment-text"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <div class="form-group">
-                                <div class="col-lg-10 col-lg-offset-2">
-                                    <button class="btn btn-primary close" data-dismiss="modal" onclick="e = $('#exercise').val(); comment = $('#comment-text').val(); $.post('comment', { e: e, comment: comment })" id="comment-submit">Abschicken</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </fieldset>
-            </form>
-        </div>
-    </div>
-    <div id="quit" class="modal fade" >
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <h5 class="modal-title">Übung wirklich beenden?</h5>
-                    <a href="/" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Ja</a>
-                    <button type="button" class="close btn btn-primary btn-sm active" data-dismiss="modal" aria-label="Close">
-                        Nein
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <nav class="navbar navbar-sm navbar-expand-lg fixed-top navbar-light bg-light">
-                <span class="navbar-text"
-                      th:text="${exercise.file + ' - Runde ' + exercise.round + ' (' + exercise.number(question) + '/' + exercise.roundSize() + ')'}">
-                </span>
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item"><a class="nav-link" href="#comment" data-toggle="modal" data-target="#comment"><i class="fa fa-comments"></i> Anmerkung</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#quit" data-toggle="modal" data-target="#quit"><i class="fa fa-door-open"></i> Beenden</a></li>
-                </ul>
-            </nav>
-        </div>
-    </div>
-</th:block>
 <th:block layout:fragment="content">
     <div class="row">
         <div class="col-12">
