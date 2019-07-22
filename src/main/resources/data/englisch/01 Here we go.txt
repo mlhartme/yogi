@@ -20,7 +20,7 @@ twelve = 12
 thirteen = 13
 fourteen = 14
 
-I'm from Plymouth = Ich bin aus Plymouth./Ich komme aus Plymouth.
+I'm from Plymouth. = Ich bin aus Plymouth./Ich komme aus Plymouth.
 in England = in England
 What about you? = Und du?
 what? = was?

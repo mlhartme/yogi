@@ -1,4 +1,4 @@
-welcome to Plymouth. = Willkommen in Plymouth.
+Welcome to Plymouth. = Willkommen in Plymouth.
 Silky's tour of Plymouth. = Silkys Rundgang/Rundfahrt/Reise durch Plymouth.
 river = Fluss
 castle = Burg, Schloss
