@@ -109,6 +109,8 @@ public class Exercise {
     }
 
     public String question() {
+        int next;
+
         if (ok.size() + wrong.size() == vocabulary.size()) {
             round++;
             if (wrong.isEmpty()) {
@@ -120,10 +122,17 @@ public class Exercise {
                 wrong.clear();
             }
         }
-        return vocabulary.left(vocabulary.next(union(ok, wrong)));
+        next = vocabulary.next(union(ok, wrong));
+        if (ok.contains(next)) {
+            throw new IllegalStateException(ok.toString() + " vs " + next);
+        }
+        if (wrong.contains(next)) {
+            throw new IllegalStateException(wrong.toString() + " vs " + next);
+        }
+        return vocabulary.left(next);
     }
 
-    /** null if anwser is correct; otherwise the correct answer */
+    /** null if answer is correct; otherwise the correct answer */
     public String answer(String question, String answer) {
         int idx;
 
@@ -132,10 +141,10 @@ public class Exercise {
             throw new IllegalArgumentException(question);
         }
         if (answer.equals(vocabulary.right(idx))) {
-            if (!wrong.contains(idx)) {
-                ok.add(idx);
-            } else {
+            if (wrong.contains(idx)) {
                 // question was re-asked
+            } else {
+                ok.add(idx);
             }
             return null;
         } else {
@@ -156,7 +165,7 @@ public class Exercise {
 
     //--
 
-    private static List<Integer> union(List<Integer> left, List<Integer> right) {
+    public static List<Integer> union(List<Integer> left, List<Integer> right) {
         List<Integer> result;
 
         result = new ArrayList<>(left.size() + right.size());

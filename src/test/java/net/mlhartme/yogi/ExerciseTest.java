@@ -20,6 +20,6 @@ public class ExerciseTest {
         world = World.create();
         Exercise ex = Exercise.forParam(world.resource("data"), URLDecoder.decode(e));
         System.out.println(ex);
-
+        System.out.println("next: " + ex.vocabulary.next(Exercise.union(ex.ok, ex.wrong)));
     }
 }
