@@ -43,7 +43,7 @@ public class YogiController {
     }
 
     @PostMapping("/comment") @ResponseStatus(value = HttpStatus.OK)
-    public void question(Model model, @RequestParam Map<String, String> body) throws IOException {
+    public void comment(@RequestParam Map<String, String> body) throws IOException {
         Exercise exercise;
 
         exercise = Exercise.forParam(base, body.get("e"));
