@@ -21,10 +21,22 @@ body {
 
 <div class="container-fluid">
     <th:block th:if="${exercise == null}">
-        <th:block layout:fragment="navigation">
-            <nav class="navbar fixed-top navbar-light bg-light">
-                <p>Auswahl</p>
-            </nav>
+        <th:block th:if="${protocol == null}">
+            <th:block layout:fragment="navigation">
+                <nav class="navbar fixed-top navbar-light bg-light">
+                    <p>Auswahl</p>
+                </nav>
+            </th:block>
+        </th:block>
+        <th:block th:unless="${protocol == null}">
+            <th:block layout:fragment="navigation">
+                <nav class="navbar navbar-expand fixed-top navbar-light bg-light">
+                    <span class="navbar-text">Protocol</span>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item"><a class="nav-link" href="/"><i class="fa fa-comments"></i> Zurück zur Auswahl</a></li>
+                    </ul>
+                </nav>
+            </th:block>
         </th:block>
     </th:block>
     <th:block th:if="${exercise != null}">
