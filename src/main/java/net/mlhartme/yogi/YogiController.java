@@ -71,11 +71,11 @@ public class YogiController {
 
         exercise = Exercise.forParam(base, e);
         correction = exercise.answer(question, answer);
-        exercise.logAnswer(logBase, question, answer, correction);
         model.addAttribute("exercise", exercise);
         model.addAttribute("question", question);
         model.addAttribute("answer", answer);
         model.addAttribute("correction", correction);
+        exercise.logAnswer(logBase, question, answer, exercise.lookup(question) /* not correction - it might be null */);
         return "answer";
     }
 }

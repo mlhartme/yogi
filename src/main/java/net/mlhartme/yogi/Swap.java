@@ -11,18 +11,35 @@ public class Swap {
         World world;
         List<String> lines;
         String line;
-        int idx;
+        int first;
+        int last;
 
         world = World.create();
-        for (FileNode file : world.getWorking().join("src/main/resources/data/english").find("15-*.txt")) {
+        for (FileNode file : world.getWorking().join("prod-logs").find("*.log")) {
             lines = file.readLines();
             for (int i = 0; i < lines.size(); i++) {
                 line = lines.get(i);
-                idx = line.indexOf('=');
-                if (idx != -1) {
-                    lines.set(i, line.substring(idx + 1).trim() + " = " + line.substring(0, idx).trim());
+                if (line.endsWith("null")) {
+                    first = line.indexOf(" -> ");
+                    if (first == -1) {
+                        throw new IOException("invalid line: " + line);
+                    }
+                    last = line.lastIndexOf(" -> ");
+                    if (last == -1) {
+                        throw new IOException("invalid line: " + line);
+                    }
+                    if (first == last) {
+                        throw new IOException("invalid line: " + line);
+                    }
+                    try {
+                        line = line.substring(0, last + 4) + line.substring(first + 4, last);
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    lines.set(i, line);
                 }
             }
+            //file.getParent().join(file.getName() + ".null").
             file.writeLines(lines);
         }
     }

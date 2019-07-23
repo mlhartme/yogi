@@ -46,9 +46,6 @@ public class Exercise {
     public static Exercise create(Node<?> base, String file) throws IOException {
         return create(System.currentTimeMillis(), base, file, 1, 0, null, null);
     }
-
-    private static final SimpleDateFormat FMT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
     public static Exercise create(Long id, Node<?> base, String file, int round, int ofs, String okParam, String wrongParam) throws IOException {
         List<Integer> ok;
         List<Integer> wrong;
@@ -85,15 +82,15 @@ public class Exercise {
         doLog(base, "# " + comment);
     }
 
-    public void logAnswer(FileNode base, String question, String answer, String correction) throws IOException {
-        doLog(base, question + " -> " + answer + " " + correction);
+    public void logAnswer(FileNode base, String question, String answer, String correct) throws IOException {
+        doLog(base, question + " -> " + answer + " -> " + correct);
     }
 
     private void doLog(FileNode base, String line) throws IOException {
         try (Writer writer = base.join(Long.toHexString(id) + ".log").newAppender()) {
-            writer.append(FMT.format(new Date()));
+            writer.append(Protocol.FMT.format(new Date()));
             writer.append(' ');
-            writer.append(line);
+            writer.append(line.replace("\n", " // "));
             writer.append('\n');
         }
     }
@@ -151,6 +148,17 @@ public class Exercise {
             if (!wrong.contains(idx)) {
                 wrong.add(idx);
             }
+            return vocabulary.right(idx);
+        }
+    }
+
+    public String lookup(String question) {
+        int idx;
+
+        idx = vocabulary.lookupLeft(question);
+        if (idx == -1) {
+            return null;
+        } else {
             return vocabulary.right(idx);
         }
     }
