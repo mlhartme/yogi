@@ -65,6 +65,18 @@ public class YogiController {
         return "question";
     }
 
+    @RequestMapping("/protocols")
+    public String protocols(Model model) throws IOException {
+        List<String> ids;
+
+        ids = new ArrayList<>();
+        for (Node<?> node : logBase.find("*.log")) {
+            ids.add("" + Long.parseLong(Strings.removeRight(node.getName(), ".log"), 16));
+        }
+        model.addAttribute("ids", ids);
+        return "protocols";
+    }
+
     @RequestMapping("/protocols/{id}")
     public String protocol(Model model, @PathVariable(value = "id") long id) throws IOException {
         model.addAttribute("protocol", Protocol.load(logBase.join(Long.toHexString(id) + ".log")));
