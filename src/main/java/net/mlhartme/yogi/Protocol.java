@@ -40,7 +40,7 @@ public class Protocol {
         if (idx == -1) {
             throw new IOException("invalid line: " + raw);
         }
-        idx = raw.indexOf(' ', idx);
+        idx = raw.indexOf(' ', idx + 1);
         if (idx == -1) {
             throw new IOException("invalid line: " + raw);
         }
@@ -52,13 +52,29 @@ public class Protocol {
         lines.put(date, raw.substring(idx + 1));
     }
 
-    public Map<String, Integer> histogram() {
+    public Map<Integer, Integer> histogram() {
+        Map<Integer, Integer> result;
+        Integer n;
+
+        result = new HashMap<>();
+        for (Integer count : questionCount().values()) {
+            n = result.get(count);
+            n = n == null ? 1 : n + 1;
+            result.put(count, n);
+        }
+        return result;
+    }
+
+    public Map<String, Integer> questionCount() {
+        String again;
         Map<String, Integer> result;
         int idx;
         String question;
         String answer;
         String correct;
+        Integer count;
 
+        again = null;
         result = new HashMap<>();
         for (String line : lines.values()) {
             if (!line.startsWith("# ")) {
@@ -68,12 +84,27 @@ public class Protocol {
                 }
                 question = line.substring(0, idx);
                 answer = line.substring(idx + 4);
-                idx = line.indexOf(" -> ");
+                idx = answer.indexOf(" -> ");
                 if (idx == -1) {
                     throw new IllegalStateException(line);
                 }
                 correct = answer.substring(idx + 4);
                 answer = answer.substring(0, idx);
+
+                if (again == null) {
+                    count = result.get(question);
+                    if (count == null) {
+                        count = 1;
+                    } else {
+                        count++;
+                    }
+                    result.put(question, count);
+                }
+                if (answer.equals(correct)) {
+                    again = null;
+                } else {
+                    again = question;
+                }
             }
         }
         return result;

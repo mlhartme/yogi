@@ -7,6 +7,7 @@ import net.oneandone.sushi.util.Strings;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,6 +63,12 @@ public class YogiController {
         model.addAttribute("exercise", exercise);
         model.addAttribute("question", question);
         return "question";
+    }
+
+    @RequestMapping("/protocols/{id}")
+    public String protocol(Model model, @PathVariable(value = "id") long id) throws IOException {
+        model.addAttribute("protocol", Protocol.load(logBase.join(Long.toHexString(id) + ".log")));
+        return "protocol";
     }
 
     @RequestMapping("/answer.html")
