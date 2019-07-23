@@ -54,7 +54,7 @@ public class Exercise {
         List<Integer> wrong;
         Vocabulary vocabulary;
 
-        vocabulary = Vocabulary.load(base.join(file + ".txt"));
+        vocabulary = Vocabulary.loadInv(base.join(file + ".txt"));
         ok = toInt(okParam == null ? new ArrayList<>() : Separator.COMMA.split(okParam));
         wrong = toInt(wrongParam == null ? new ArrayList<>() : Separator.COMMA.split(wrongParam));
         return new Exercise(id, file, vocabulary, round, ofs, ok, wrong);

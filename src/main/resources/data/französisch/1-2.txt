@@ -4,7 +4,6 @@ et = und
 Viens! = Komm!
 papa = Papa
 vite = schnell
-Ça va? = Wie geht's?
 Miaou! = Miau!
 Ouah, ouah! = Wau, wau!
 S.P.A. = die S.P.A.

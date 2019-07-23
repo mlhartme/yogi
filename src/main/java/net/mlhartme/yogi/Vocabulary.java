@@ -24,26 +24,27 @@ public class Vocabulary {
         return result;
     }
 
-    public static Vocabulary load(Node<?>... files) throws IOException {
-        List<String> lines;
+    public static Vocabulary loadInv(Node<?>... files) throws IOException {
         Vocabulary result;
         int idx;
 
-        lines = new ArrayList<>();
-        for (Node<?> file : files) {
-            lines.addAll(file.readLines());
-        }
         result = new Vocabulary();
-        for (String line : lines) {
-            line = line.trim();
-            if (line.isEmpty() || line.startsWith("#")) {
-                continue;
+        for (Node<?> file : files) {
+            for (String line : file.readLines()) {
+                line = line.trim();
+                if (line.isEmpty() || line.startsWith("#")) {
+                    continue;
+                }
+                idx = line.indexOf('=');
+                if (idx == -1) {
+                    throw new IOException("syntax error: " + line);
+                }
+                try {
+                    result.add(line.substring(idx + 1).trim(), line.substring(0, idx).trim());
+                } catch (IllegalArgumentException e) {
+                    throw new IOException(file.getPath() + ": " + e.getMessage());
+                }
             }
-            idx = line.indexOf('=');
-            if (idx == -1) {
-                throw new IOException("syntax error: " + line);
-            }
-            result.add(line.substring(idx + 1).trim(), line.substring(0, idx).trim());
         }
         return result;
     }
@@ -57,6 +58,9 @@ public class Vocabulary {
     }
 
     public void add(String left, String right) {
+        if (lookupLeft(left) >= 0) {
+            throw new IllegalArgumentException("duplicate word: " + left);
+        }
         this.lefts.add(left);
         this.rights.add(right);
     }
