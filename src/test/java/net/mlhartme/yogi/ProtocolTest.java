@@ -33,6 +33,6 @@ public class ProtocolTest {
         hist.put(1, 1);
         hist.put(2, 1);
         hist.put(3, 1);
-        assertEquals(hist, p.histogram());
+        assertEquals(hist, p.histogramRaw());
     }
 }

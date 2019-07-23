@@ -5,9 +5,20 @@
 <th:block layout:fragment="content">
     <div class="row">
         <div class="col-12">
-            <ul class="list-group" th:with="h=${protocol.histogram()}">
-                <li th:each="key:${h.keySet()}" class="list-group-item py+2"><p th:text="${key + ' ' + h.get(key)}"></p></li>
-            </ul>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Benötigte Versuche</th>
+                        <th>% der Wort</th>
+                    </tr>
+                </thead>
+                <tbody th:with="h=${protocol.histogram()}">
+                    <tr th:each="key:${h.keySet()}">
+                        <td th:text="${key}"></td>
+                        <td th:text="${h.get(key)}"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </th:block>

@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class Protocol {
 
@@ -52,7 +54,24 @@ public class Protocol {
         lines.put(date, raw.substring(idx + 1));
     }
 
-    public Map<Integer, Integer> histogram() {
+    public Map<Integer, String> histogram() {
+        int count;
+        Map<Integer, Integer> raw;
+        Map<Integer, String> result;
+
+        raw = histogramRaw();
+        count = 0;
+        for (Integer i : raw.values()) {
+            count += i;
+        }
+        result = new TreeMap<>();
+        for (Map.Entry<Integer, Integer> entry : raw.entrySet()) {
+            result.put(entry.getKey(), Integer.toString(entry.getValue() * 100 / count));
+        }
+        return result;
+    }
+
+    public Map<Integer, Integer> histogramRaw() {
         Map<Integer, Integer> result;
         Integer n;
 
