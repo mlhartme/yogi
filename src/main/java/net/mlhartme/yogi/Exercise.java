@@ -3,10 +3,10 @@ package net.mlhartme.yogi;
 import net.oneandone.sushi.fs.Node;
 import net.oneandone.sushi.fs.file.FileNode;
 import net.oneandone.sushi.util.Separator;
+import net.oneandone.sushi.util.Strings;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,25 +14,44 @@ import java.util.List;
 public class Exercise {
     private static final Separator COLON = Separator.on(':');
 
-    public static Exercise forParam(Node<?> base, String param) throws IOException {
+    public static Exercise forParam(Node<?> base, FileNode logbase, String param) throws IOException {
         List<String> args;
 
         args = COLON.split(param);
 
-        Long id;
+        int id;
         String file;
         int round;
         int ofs;
         String ok;
         String wrong;
 
-        id = Long.parseLong(eat(args, Long.toHexString(System.currentTimeMillis())), 16);
+        id = Integer.parseInt(eat(args, "-1"));
+        if (id == -1) {
+            id = next(logbase);
+        }
         file = eat(args, "");
         round = Integer.parseInt(eat(args, "1"));
         ofs = Integer.parseInt(eat(args, "0"));
         ok = eat(args, null);
         wrong = eat(args, null);
         return create(id, base, file, round, ofs, ok, wrong);
+    }
+
+    private static int next(Node<?> logbase) throws IOException {
+        int id;
+        int max;
+
+        max = 0;
+        for (Node<?> file : logbase.list()) {
+            try {
+                id = Integer.parseInt(Strings.removeRight(file.getName(), ".log"));
+            } catch (NumberFormatException e) {
+                throw new IOException("unexpected name: " + file.getName());
+            }
+            max = Math.max(id, max);
+        }
+        return max + 1;
     }
 
     private static String eat(List<String> lst, String dflt) {
@@ -43,10 +62,11 @@ public class Exercise {
         }
     }
 
-    public static Exercise create(Node<?> base, String file) throws IOException {
-        return create(System.currentTimeMillis(), base, file, 1, 0, null, null);
+    public static Exercise create(Node<?> base, FileNode logbase, String file) throws IOException {
+        return create(next(logbase), base, file, 1, 0, null, null);
     }
-    public static Exercise create(Long id, Node<?> base, String file, int round, int ofs, String okParam, String wrongParam) throws IOException {
+
+    public static Exercise create(int id, Node<?> base, String file, int round, int ofs, String okParam, String wrongParam) throws IOException {
         List<Integer> ok;
         List<Integer> wrong;
         Vocabulary vocabulary;
@@ -57,7 +77,7 @@ public class Exercise {
         return new Exercise(id, file, vocabulary, round, ofs, ok, wrong);
     }
 
-    public final Long id;
+    public final int id;
     public final String file;
     public final Vocabulary vocabulary;
     public int round;
@@ -65,7 +85,7 @@ public class Exercise {
     public final List<Integer> ok;  // oks in this and previous rounds
     public final List<Integer> wrong; // wrong answers in this round
 
-    public Exercise(Long id, String file, Vocabulary vocabulary, int round, int ofs, List<Integer> ok, List<Integer> wrong) {
+    public Exercise(int id, String file, Vocabulary vocabulary, int round, int ofs, List<Integer> ok, List<Integer> wrong) {
         if (vocabulary.size() == 0) {
             throw new IllegalArgumentException();
         }
@@ -87,7 +107,7 @@ public class Exercise {
     }
 
     private void doLog(FileNode base, String line) throws IOException {
-        try (Writer writer = base.join(Long.toHexString(id) + ".log").newAppender()) {
+        try (Writer writer = base.join(id + ".log").newAppender()) {
             writer.append(Protocol.FMT.format(new Date()));
             writer.append(' ');
             writer.append(line.replace("\n", " // "));
@@ -164,7 +184,7 @@ public class Exercise {
     }
 
     public String toParam() {
-        return Long.toHexString(id) + ":" + file + ":" + round + ":" + ofs + ":" + toString(ok) + ":" + toString(wrong);
+        return id + ":" + file + ":" + round + ":" + ofs + ":" + toString(ok) + ":" + toString(wrong);
     }
 
     public boolean allDone() {

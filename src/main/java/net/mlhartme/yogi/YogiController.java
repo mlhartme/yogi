@@ -39,6 +39,7 @@ public class YogiController {
         }
         Collections.sort(files);
         model.addAttribute("base", base);
+        model.addAttribute("logBase", logBase);
         model.addAttribute("files", files);
         return "index";
     }
@@ -47,7 +48,7 @@ public class YogiController {
     public void comment(@RequestParam Map<String, String> body) throws IOException {
         Exercise exercise;
 
-        exercise = Exercise.forParam(base, body.get("e"));
+        exercise = Exercise.forParam(base, logBase, body.get("e"));
         exercise.logComment(logBase, body.get("comment"));
     }
 
@@ -56,7 +57,7 @@ public class YogiController {
                            @RequestParam(value = "question", required = false) String question) throws IOException {
         Exercise exercise;
 
-        exercise = Exercise.forParam(base, e);
+        exercise = Exercise.forParam(base, logBase, e);
         if (question == null) {
             question = exercise.question();
         }
@@ -79,7 +80,7 @@ public class YogiController {
 
     @RequestMapping("/protocols/{id}")
     public String protocol(Model model, @PathVariable(value = "id") long id) throws IOException {
-        model.addAttribute("protocol", Protocol.load(logBase.join(Long.toHexString(id) + ".log")));
+        model.addAttribute("protocol", Protocol.load(logBase.join(id + ".log")));
         return "protocol";
     }
 
@@ -88,7 +89,7 @@ public class YogiController {
         Exercise exercise;
         String correction;
 
-        exercise = Exercise.forParam(base, e);
+        exercise = Exercise.forParam(base, logBase, e);
         correction = exercise.answer(question, answer);
         model.addAttribute("exercise", exercise);
         model.addAttribute("question", question);

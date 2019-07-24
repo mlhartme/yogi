@@ -20,7 +20,7 @@ public class ProtocolTest {
         Map<Integer, Integer> hist;
 
         w = World.create();
-        file = w.guessProjectHome(getClass()).join("src/test/16c1fe80c7c.log");
+        file = w.guessProjectHome(getClass()).join("src/test/1.log");
         p = Protocol.load(file);
 
         tries = new HashMap<>();

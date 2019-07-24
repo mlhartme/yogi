@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-12">
             <ul class="list-group">
-                <li th:each="file:${files}" class="list-group-item py+2"><a th:href="@{/question.html(e=${T(net.mlhartme.yogi.Exercise).create(base, file).toParam()})}" th:text="${file}"></a></li>
+                <li th:each="file:${files}" class="list-group-item py+2"><a th:href="@{/question.html(e=${T(net.mlhartme.yogi.Exercise).create(base, logBase, file).toParam()})}" th:text="${file}"></a></li>
             </ul>
         </div>
     </div>
