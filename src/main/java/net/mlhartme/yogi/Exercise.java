@@ -62,8 +62,11 @@ public class Exercise {
         }
     }
 
-    public static Exercise create(Node<?> base, FileNode logbase, String file) throws IOException {
-        return create(next(logbase), base, file, 1, 0, null, null);
+    public static String start(Node<?> base, String file) throws IOException {
+        Vocabulary vocabulary;
+
+        vocabulary = Vocabulary.loadInv(base.join(file + ".txt"));
+        return new Exercise(-1, file, vocabulary, 1, 0, new ArrayList<>(), new ArrayList<>()).toParam();
     }
 
     public static Exercise create(int id, Node<?> base, String file, int round, int ofs, String okParam, String wrongParam) throws IOException {
