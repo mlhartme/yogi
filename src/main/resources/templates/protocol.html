@@ -5,6 +5,11 @@
 <th:block layout:fragment="content">
     <div class="row">
         <div class="col-12">
+            <p>Datum: <span th:text="${protocol.date()}"/></p>
+            <p>Dauer: <span th:text="${protocol.duration()}"/></p>
+            <p>Vokabeln: <span th:text="${protocol.words()}"/></p>
+        </div>
+        <div class="col-12">
             <table class="table">
                 <thead>
                     <tr>

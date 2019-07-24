@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -68,12 +69,14 @@ public class YogiController {
 
     @RequestMapping("/protocols")
     public String protocols(Model model) throws IOException {
-        List<String> ids;
+        List<Integer> ids;
 
         ids = new ArrayList<>();
         for (Node<?> node : logBase.find("*.log")) {
-            ids.add("" + Long.parseLong(Strings.removeRight(node.getName(), ".log"), 16));
+            ids.add(Integer.parseInt(Strings.removeRight(node.getName(), ".log")));
         }
+        Collections.sort(ids);
+        Collections.reverse(ids);
         model.addAttribute("ids", ids);
         return "protocols";
     }

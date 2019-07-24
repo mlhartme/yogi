@@ -1,6 +1,7 @@
 package net.mlhartme.yogi;
 
 import net.oneandone.sushi.fs.file.FileNode;
+import net.oneandone.sushi.util.Strings;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -54,19 +55,46 @@ public class Protocol {
         lines.put(date, raw.substring(idx + 1));
     }
 
+    public int words() {
+        int result;
+        Map<Integer, Integer> raw;
+
+        raw = histogramRaw();
+        result = 0;
+        for (Integer i : raw.values()) {
+            result += i;
+        }
+        return result;
+    }
+
+    public String date() {
+        return FMT.format(lines.keySet().iterator().next());
+    }
+
+    public String duration() {
+        List<Date> dates;
+        long millis;
+        int seconds;
+        int minutes;
+
+        dates = new ArrayList<>(lines.keySet());
+        millis = dates.get(dates.size() - 1).getTime() - dates.get(0).getTime();
+        seconds = (int) (millis / 1000);
+        minutes = seconds / 60;
+        seconds = seconds % 60;
+        return minutes + ":" + Strings.padLeft(Integer.toString(seconds), 2, '0');
+    }
+
     public Map<Integer, String> histogram() {
-        int count;
+        int words;
         Map<Integer, Integer> raw;
         Map<Integer, String> result;
 
+        words = words();
         raw = histogramRaw();
-        count = 0;
-        for (Integer i : raw.values()) {
-            count += i;
-        }
         result = new TreeMap<>();
         for (Map.Entry<Integer, Integer> entry : raw.entrySet()) {
-            result.put(entry.getKey(), Integer.toString(entry.getValue() * 100 / count));
+            result.put(entry.getKey(), Integer.toString(entry.getValue() * 100 / words));
         }
         return result;
     }
