@@ -92,6 +92,7 @@ public class YogiController {
         Exercise exercise;
         String correction;
 
+        answer = answer.trim();
         exercise = Exercise.forParam(base, logBase, e);
         correction = exercise.answer(question, answer);
         model.addAttribute("exercise", exercise);
