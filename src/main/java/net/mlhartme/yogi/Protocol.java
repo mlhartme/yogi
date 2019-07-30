@@ -27,10 +27,19 @@ public class Protocol {
         return result;
     }
 
-    private final LinkedHashMap<Date, String> lines;
+    private static class Entry {
+        public final Date date;
+        public final String text;
+
+        private Entry(Date date, String text) {
+            this.date = date;
+            this.text = text;
+        }
+    }
+    private final List<Entry> entries; // cannot use a map because of duplicte keys
 
     public Protocol() {
-        lines = new LinkedHashMap<>();
+        entries = new ArrayList<>();
     }
 
     public void addRaw(String raw) throws IOException {
@@ -50,7 +59,7 @@ public class Protocol {
         } catch (ParseException e) {
             throw new IOException("invalid line: " + raw, e);
         }
-        lines.put(date, raw.substring(idx + 1));
+        entries.add(new Entry(date, raw.substring(idx + 1)));
     }
 
     public int words() {
@@ -66,17 +75,15 @@ public class Protocol {
     }
 
     public String date() {
-        return FMT.format(lines.keySet().iterator().next());
+        return FMT.format(entries.get(0).date);
     }
 
     public String duration() {
-        List<Date> dates;
         long millis;
         int seconds;
         int minutes;
 
-        dates = new ArrayList<>(lines.keySet());
-        millis = dates.get(dates.size() - 1).getTime() - dates.get(0).getTime();
+        millis = entries.get(entries.size() - 1).date.getTime() - entries.get(0).date.getTime();
         seconds = (int) (millis / 1000);
         minutes = seconds / 60;
         seconds = seconds % 60;
@@ -118,24 +125,26 @@ public class Protocol {
         String answer;
         String correct;
         Integer count;
+        String text;
 
         again = null;
         result = new HashMap<>();
-        for (String line : lines.values()) {
-            if (line.startsWith("# ")) {
+        for (Entry entry : entries) {
+            text = entry.text;
+            if (text.startsWith("# ")) {
                 // skip
-            } else if (line.startsWith("! ")) {
+            } else if (text.startsWith("! ")) {
                 // skip
             } else {
-                idx = line.indexOf(" -> ");
+                idx = text.indexOf(" -> ");
                 if (idx == -1) {
-                    throw new IllegalStateException(line);
+                    throw new IllegalStateException(text);
                 }
-                question = line.substring(0, idx);
-                answer = line.substring(idx + 4);
+                question = text.substring(0, idx);
+                answer = text.substring(idx + 4);
                 idx = answer.indexOf(" -> ");
                 if (idx == -1) {
-                    throw new IllegalStateException(line);
+                    throw new IllegalStateException(text);
                 }
                 correct = answer.substring(idx + 4);
                 answer = answer.substring(0, idx);
@@ -161,15 +170,17 @@ public class Protocol {
 
     public String title() {
         String result;
+        String text;
 
         result = "";
-        for (String line : lines.values()) {
-            if (line.startsWith("! ")) {
-                line = line.substring(2);
+        for (Entry entry : entries) {
+            text = entry.text;
+            if (text.startsWith("! ")) {
+                text = text.substring(2);
                 if (result.isEmpty()) {
-                    result = line;
+                    result = text;
                 } else {
-                    result = result + "\n" + line;
+                    result = result + "\n" + text;
                 }
             }
         }
@@ -177,11 +188,13 @@ public class Protocol {
     }
     public List<String> comments() {
         List<String> result;
+        String text;
 
         result = new ArrayList<>();
-        for (String line : lines.values()) {
-            if (line.startsWith("# ")) {
-                result.add(line.substring(2));
+        for (Entry entry : entries) {
+            text = entry.text;
+            if (text.startsWith("# ")) {
+                result.add(text.substring(2));
             }
         }
         return result;
