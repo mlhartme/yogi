@@ -205,19 +205,37 @@ public class Protocol {
         return result;
     }
 
-    public String longestBreak() {
+    public static class AnswerTiming {
+        public final String min;
+        public final String max;
+        public final String avg;
+
+        public AnswerTiming(String min, String max, String avg) {
+            this.min = min;
+            this.max = max;
+            this.avg = avg;
+        }
+    }
+    public AnswerTiming answerTiming() {
         long max = -1;
+        long min = Long.MAX_VALUE;
+        long avg = 0;
+        int count;
         long diff;
         Entry prev;
 
         prev = null;
+        count = 0;
         for (Entry entry : entries) {
             if (prev != null) {
+                count++;
                 diff = entry.date.getTime() - prev.date.getTime();
+                avg += diff;
                 max = Math.max(max, diff);
+                min = Math.min(min, diff);
             }
             prev = entry;
         }
-        return durationString(max);
+        return new AnswerTiming(durationString(min), durationString(max), durationString(avg / count));
     }
 }
