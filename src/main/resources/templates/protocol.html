@@ -5,8 +5,10 @@
 <th:block layout:fragment="content">
     <div class="row">
         <div class="col-12">
+            <p>Titel: <span th:text="${protocol.title()}"/></p>
             <p>Datum: <span th:text="${protocol.date()}"/></p>
             <p>Dauer: <span th:text="${protocol.duration()}"/></p>
+            <p>Längste Pause: <span th:text="${protocol.longestBreak()}"/></p>
             <p>Vokabeln: <span th:text="${protocol.words()}"/></p>
         </div>
         <div class="col-12">
@@ -14,7 +16,7 @@
                 <thead>
                     <tr>
                         <th>Benötigte Versuche</th>
-                        <th>% der Worte</th>
+                        <th>% der Vokabeln</th>
                     </tr>
                 </thead>
                 <tbody th:with="h=${protocol.histogram()}">

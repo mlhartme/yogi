@@ -9,7 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -84,6 +83,12 @@ public class Protocol {
         int minutes;
 
         millis = entries.get(entries.size() - 1).date.getTime() - entries.get(0).date.getTime();
+        return durationString(millis);
+    }
+
+    private static String durationString(long millis) {
+        int seconds;
+        int minutes;
         seconds = (int) (millis / 1000);
         minutes = seconds / 60;
         seconds = seconds % 60;
@@ -198,5 +203,21 @@ public class Protocol {
             }
         }
         return result;
+    }
+
+    public String longestBreak() {
+        long max = -1;
+        long diff;
+        Entry prev;
+
+        prev = null;
+        for (Entry entry : entries) {
+            if (prev != null) {
+                diff = entry.date.getTime() - prev.date.getTime();
+                max = Math.max(max, diff);
+            }
+            prev = entry;
+        }
+        return durationString(max);
     }
 }
