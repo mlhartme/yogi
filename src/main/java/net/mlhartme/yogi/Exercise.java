@@ -62,11 +62,11 @@ public class Exercise {
         }
     }
 
-    public static String start(Node<?> base, String file) throws IOException {
+    public static Exercise create(Node<?> base, Node<?> logbase, String file) throws IOException {
         Vocabulary vocabulary;
 
         vocabulary = Vocabulary.loadInv(base.join(file + ".txt"));
-        return new Exercise(-1, file, vocabulary, 1, 0, new ArrayList<>(), new ArrayList<>()).toParam();
+        return new Exercise(next(logbase), file, vocabulary, 1, 0, new ArrayList<>(), new ArrayList<>());
     }
 
     public static Exercise create(int id, Node<?> base, String file, int round, int ofs, String okParam, String wrongParam) throws IOException {
@@ -101,16 +101,20 @@ public class Exercise {
         this.wrong = wrong;
     }
 
-    public void logComment(FileNode base, String comment) throws IOException {
-        doLog(base, "# " + comment);
+    public void logTitle(FileNode logbase, String title) throws IOException {
+        doLog(logbase, "! " + title);
     }
 
-    public void logAnswer(FileNode base, String question, String answer, String correct) throws IOException {
-        doLog(base, question + " -> " + answer + " -> " + correct);
+    public void logComment(FileNode logbase, String comment) throws IOException {
+        doLog(logbase, "# " + comment);
     }
 
-    private void doLog(FileNode base, String line) throws IOException {
-        try (Writer writer = base.join(id + ".log").newAppender()) {
+    public void logAnswer(FileNode logbase, String question, String answer, String correct) throws IOException {
+        doLog(logbase, question + " -> " + answer + " -> " + correct);
+    }
+
+    private void doLog(FileNode logbase, String line) throws IOException {
+        try (Writer writer = logbase.join(id + ".log").newAppender()) {
             writer.append(Protocol.FMT.format(new Date()));
             writer.append(' ');
             writer.append(line.replace("\n", " // "));

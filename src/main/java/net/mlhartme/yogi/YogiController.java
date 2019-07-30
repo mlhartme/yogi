@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -51,6 +53,23 @@ public class YogiController {
 
         exercise = Exercise.forParam(base, logBase, body.get("e"));
         exercise.logComment(logBase, body.get("comment"));
+    }
+
+    @RequestMapping("/begin")
+    public String begin(Model model, @RequestParam(value = "file") String file) throws IOException {
+        Exercise exercise;
+
+        exercise = Exercise.create(base, logBase, file);
+        exercise.logTitle(logBase, file);
+        return "redirect:question.html?e=" + urlencode(exercise.toParam());
+    }
+
+    private static String urlencode(String str) {
+        try {
+            return URLEncoder.encode(str, "utf8");
+        } catch (UnsupportedEncodingException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @RequestMapping("/question.html")

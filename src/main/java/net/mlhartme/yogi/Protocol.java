@@ -12,11 +12,9 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
 import java.util.TreeMap;
 
 public class Protocol {
-
     public static final SimpleDateFormat FMT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public static Protocol load(FileNode src) throws IOException {
@@ -124,7 +122,11 @@ public class Protocol {
         again = null;
         result = new HashMap<>();
         for (String line : lines.values()) {
-            if (!line.startsWith("# ")) {
+            if (line.startsWith("# ")) {
+                // skip
+            } else if (line.startsWith("! ")) {
+                // skip
+            } else {
                 idx = line.indexOf(" -> ");
                 if (idx == -1) {
                     throw new IllegalStateException(line);
@@ -157,10 +159,26 @@ public class Protocol {
         return result;
     }
 
+    public String title() {
+        String result;
+
+        result = "";
+        for (String line : lines.values()) {
+            if (line.startsWith("! ")) {
+                line = line.substring(2);
+                if (result.isEmpty()) {
+                    result = line;
+                } else {
+                    result = result + "\n" + line;
+                }
+            }
+        }
+        return result;
+    }
     public List<String> comments() {
         List<String> result;
 
-        result = new ArrayList<String>();
+        result = new ArrayList<>();
         for (String line : lines.values()) {
             if (line.startsWith("# ")) {
                 result.add(line.substring(2));
