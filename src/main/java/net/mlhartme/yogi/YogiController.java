@@ -19,6 +19,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -89,6 +90,7 @@ public class YogiController {
     @RequestMapping("/protocols")
     public String protocols(Model model) throws IOException {
         List<Integer> ids;
+        LinkedHashMap<Integer, String> map;
 
         ids = new ArrayList<>();
         for (Node<?> node : logBase.find("*.log")) {
@@ -96,7 +98,11 @@ public class YogiController {
         }
         Collections.sort(ids);
         Collections.reverse(ids);
-        model.addAttribute("ids", ids);
+        map = new LinkedHashMap<>();
+        for (int id : ids) {
+            map.put(id, id + ": " + Protocol.load(logBase.join(id + ".log")).title());
+        }
+        model.addAttribute("map", map);
         return "protocols";
     }
 
