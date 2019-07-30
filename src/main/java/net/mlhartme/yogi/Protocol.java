@@ -109,12 +109,17 @@ public class Protocol {
         return result;
     }
 
+    public static final int NOT_ANSWERED = 999;
+
     public Map<Integer, Integer> histogramRaw() {
         Map<Integer, Integer> result;
         Integer n;
 
         result = new HashMap<>();
         for (Integer count : questionCount().values()) {
+            if (count < 0) {
+                count = NOT_ANSWERED;
+            }
             n = result.get(count);
             n = n == null ? 1 : n + 1;
             result.put(count, n);
@@ -157,11 +162,14 @@ public class Protocol {
                 if (again == null) {
                     count = result.get(question);
                     if (count == null) {
-                        count = 1;
+                        count = -1;
                     } else {
-                        count++;
+                        count--;
                     }
                     result.put(question, count);
+                    if (answer.equals(correct)) {
+                        result.put(question, -result.get(question));
+                    }
                 }
                 if (answer.equals(correct)) {
                     again = null;

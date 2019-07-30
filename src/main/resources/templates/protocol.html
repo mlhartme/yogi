@@ -23,7 +23,9 @@
                 </thead>
                 <tbody th:with="h=${protocol.histogram()}">
                     <tr th:each="key:${h.keySet()}">
-                        <td th:text="${key}"></td>
+
+                        <td th:if="${key == 999}">(noch offen)</td>
+                        <td th:unless="${key == 999}" th:text="${key}"></td>
                         <td th:text="${h.get(key)}"></td>
                     </tr>
                 </tbody>

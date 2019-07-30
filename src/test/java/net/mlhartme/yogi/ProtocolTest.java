@@ -35,4 +35,27 @@ public class ProtocolTest {
         hist.put(3, 1);
         assertEquals(hist, p.histogramRaw());
     }
+
+    @Test
+    public void histogramWithMissing() throws IOException {
+        World w;
+        FileNode file;
+        Protocol p;
+        Map<String, Integer> tries;
+        Map<Integer, Integer> hist;
+
+        w = World.create();
+        file = w.guessProjectHome(getClass()).join("src/test/2.log");
+        p = Protocol.load(file);
+
+        tries = new HashMap<>();
+        tries.put("2", 1);
+        tries.put("3", -1);
+        assertEquals(tries, p.questionCount());
+
+        hist = new HashMap<>();
+        hist.put(1, 1);
+        hist.put(Protocol.NOT_ANSWERED, 1);
+        assertEquals(hist, p.histogramRaw());
+    }
 }
