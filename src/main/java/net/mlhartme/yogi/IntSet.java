@@ -3,6 +3,7 @@ package net.mlhartme.yogi;
 import java.util.ArrayList;
 import java.util.List;
 
+/** TODO: not a set yet */
 public class IntSet {
     public static IntSet parse(List<String> strings) {
         IntSet result;

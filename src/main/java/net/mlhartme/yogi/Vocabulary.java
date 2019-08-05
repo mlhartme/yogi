@@ -1,10 +1,8 @@
 package net.mlhartme.yogi;
 
 import net.oneandone.sushi.fs.Node;
-import net.oneandone.sushi.fs.World;
 import org.springframework.stereotype.Controller;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,24 +24,11 @@ public class Vocabulary {
 
     public static Vocabulary loadInv(Node<?>... files) throws IOException {
         Vocabulary result;
-        int idx;
 
         result = new Vocabulary();
         for (Node<?> file : files) {
             for (String line : file.readLines()) {
-                line = line.trim();
-                if (line.isEmpty() || line.startsWith("#")) {
-                    continue;
-                }
-                idx = line.indexOf('=');
-                if (idx == -1) {
-                    throw new IOException("syntax error: " + line);
-                }
-                try {
-                    result.add(line.substring(idx + 1).trim(), line.substring(0, idx).trim());
-                } catch (IllegalArgumentException e) {
-                    throw new IOException(file.getPath() + ": " + e.getMessage());
-                }
+                result.addInvLine(line);
             }
         }
         return result;
@@ -55,6 +40,21 @@ public class Vocabulary {
     public Vocabulary() {
         this.lefts = new ArrayList<>();
         this.rights = new ArrayList<>();
+    }
+
+    public boolean addInvLine(String line) throws IOException {
+        int idx;
+
+        line = line.trim();
+        if (line.isEmpty() || line.startsWith("#")) {
+            return false;
+        }
+        idx = line.indexOf('=');
+        if (idx == -1) {
+            throw new IOException("syntax error: " + line);
+        }
+        add(line.substring(idx + 1).trim(), line.substring(0, idx).trim());
+        return true;
     }
 
     public void add(String left, String right) {
