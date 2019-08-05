@@ -75,8 +75,8 @@ public class Exercise {
         Vocabulary vocabulary;
 
         vocabulary = Vocabulary.loadInv(base.join(file + ".txt"));
-        ok = toInt(okParam == null ? new ArrayList<>() : Separator.COMMA.split(okParam));
-        wrong = toInt(wrongParam == null ? new ArrayList<>() : Separator.COMMA.split(wrongParam));
+        ok = IntSet.parse(okParam == null ? new ArrayList<>() : Separator.COMMA.split(okParam));
+        wrong = IntSet.parse(wrongParam == null ? new ArrayList<>() : Separator.COMMA.split(wrongParam));
         return new Exercise(id, file, vocabulary, round, ofs, ok, wrong);
     }
 
@@ -197,17 +197,4 @@ public class Exercise {
     public boolean allDone() {
         return ok.size() == vocabulary.size();
     }
-
-    //--
-
-    private static IntSet toInt(List<String> strings) {
-        IntSet result;
-
-        result = new IntSet();
-        for (String str : strings) {
-            result.add(Integer.parseInt(str));
-        }
-        return result;
-    }
-
 }

@@ -4,6 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IntSet {
+    public static IntSet parse(List<String> strings) {
+        IntSet result;
+
+        result = new IntSet();
+        for (String str : strings) {
+            result.add(Integer.parseInt(str));
+        }
+        return result;
+    }
+
     private final List<Integer> data;
 
     public IntSet() {
