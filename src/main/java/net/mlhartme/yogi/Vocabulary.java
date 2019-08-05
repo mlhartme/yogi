@@ -65,7 +65,7 @@ public class Vocabulary {
         this.rights.add(right);
     }
 
-    public int next(List<Integer> done) {
+    public int next(IntSet done) {
         int vocabularySize;
         int doneSize;
         int rnd;

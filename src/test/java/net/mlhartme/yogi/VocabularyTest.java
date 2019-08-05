@@ -5,8 +5,6 @@ import net.oneandone.sushi.fs.World;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -25,11 +23,11 @@ public class VocabularyTest {
     @Test
     public void normal() {
         Vocabulary v;
-        List<Integer> done;
+        IntSet done;
         int idx;
 
         v = Vocabulary.create("1", "one", "2", "two");
-        done = new ArrayList<>();
+        done = new IntSet();
         idx = v.next(done);
         done.add(idx);
         idx = v.next(done);

@@ -66,12 +66,12 @@ public class Exercise {
         Vocabulary vocabulary;
 
         vocabulary = Vocabulary.loadInv(base.join(file + ".txt"));
-        return new Exercise(next(logbase), file, vocabulary, 1, 0, new ArrayList<>(), new ArrayList<>());
+        return new Exercise(next(logbase), file, vocabulary, 1, 0, new IntSet(), new IntSet());
     }
 
     public static Exercise create(int id, Node<?> base, String file, int round, int ofs, String okParam, String wrongParam) throws IOException {
-        List<Integer> ok;
-        List<Integer> wrong;
+        IntSet ok;
+        IntSet wrong;
         Vocabulary vocabulary;
 
         vocabulary = Vocabulary.loadInv(base.join(file + ".txt"));
@@ -85,10 +85,10 @@ public class Exercise {
     public final Vocabulary vocabulary;
     public int round;
     public int ofs;  // number of oks when this round started
-    public final List<Integer> ok;  // oks in this and previous rounds
-    public final List<Integer> wrong; // wrong answers in this round
+    public final IntSet ok;  // oks in this and previous rounds
+    public final IntSet wrong; // wrong answers in this round
 
-    public Exercise(int id, String file, Vocabulary vocabulary, int round, int ofs, List<Integer> ok, List<Integer> wrong) {
+    public Exercise(int id, String file, Vocabulary vocabulary, int round, int ofs, IntSet ok, IntSet wrong) {
         if (vocabulary.size() == 0) {
             throw new IllegalArgumentException();
         }
@@ -146,7 +146,7 @@ public class Exercise {
                 wrong.clear();
             }
         }
-        next = vocabulary.next(union(ok, wrong));
+        next = vocabulary.next(IntSet.union(ok, wrong));
         if (ok.contains(next)) {
             throw new IllegalStateException(ok.toString() + " vs " + next);
         }
@@ -191,7 +191,7 @@ public class Exercise {
     }
 
     public String toParam() {
-        return id + ":" + file + ":" + round + ":" + ofs + ":" + toString(ok) + ":" + toString(wrong);
+        return id + ":" + file + ":" + round + ":" + ofs + ":" + ok.toString() + ":" + wrong.toString();
     }
 
     public boolean allDone() {
@@ -200,32 +200,10 @@ public class Exercise {
 
     //--
 
-    public static List<Integer> union(List<Integer> left, List<Integer> right) {
-        List<Integer> result;
+    private static IntSet toInt(List<String> strings) {
+        IntSet result;
 
-        result = new ArrayList<>(left.size() + right.size());
-        result.addAll(left);
-        result.addAll(right);
-        return result;
-    }
-
-    private static String toString(List<Integer> done) {
-        StringBuilder result;
-
-        result = new StringBuilder();
-        for (Integer i : done) {
-            if (result.length() > 0) {
-                result.append(',');
-            }
-            result.append(i);
-        }
-        return result.toString();
-    }
-
-    private static List<Integer> toInt(List<String> strings) {
-        List<Integer> result;
-
-        result = new ArrayList<>(strings.size());
+        result = new IntSet();
         for (String str : strings) {
             result.add(Integer.parseInt(str));
         }
