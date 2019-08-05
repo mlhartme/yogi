@@ -2,7 +2,6 @@ package net.mlhartme.yogi;
 
 import net.oneandone.sushi.fs.Node;
 import net.oneandone.sushi.fs.World;
-import net.oneandone.sushi.util.Strings;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -18,7 +17,7 @@ public class VocabularyTest {
         World world;
 
         world = World.create();
-        for (Node node : world.resource("data").find("**/*.txt")) {
+        for (Node node : world.resource("books").find("**/*.txt")) {
             Vocabulary.loadInv(node);
         }
     }

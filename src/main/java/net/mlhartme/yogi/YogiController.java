@@ -18,7 +18,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +28,7 @@ public class YogiController {
     private FileNode logBase;
 
     public YogiController(World world) throws IOException {
-        this.base = world.resource("data");
+        this.base = world.resource("books");
         this.logBase = world.getWorking().join("logs").mkdirOpt();
     }
 
