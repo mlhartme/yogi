@@ -22,5 +22,4 @@ public class BookTest {
             assertTrue(book.sections.size() > 0);
         }
     }
-
 }

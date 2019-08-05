@@ -34,16 +34,16 @@ public class YogiController {
 
     @RequestMapping("/")
     public String index(Model model) throws IOException {
-        List<String> files;
+        List<Book> books;
 
-        files = new ArrayList<>();
-        for (Node<?> node : base.find("**/*.txt")) {
-            files.add(Strings.removeRight(node.getRelative(base), ".txt"));
+        books = new ArrayList<>();
+        for (Node<?> book : base.find("*.yogi")) {
+            books.add(Book.load(book));
         }
-        Collections.sort(files);
+        Collections.sort(books);
         model.addAttribute("base", base);
         model.addAttribute("logBase", logBase);
-        model.addAttribute("files", files);
+        model.addAttribute("books", books);
         return "index";
     }
 
