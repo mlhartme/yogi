@@ -20,7 +20,8 @@ public class Exercise {
         args = COLON.split(param);
 
         int id;
-        String file;
+        String book;
+        String section;
         int round;
         int ofs;
         String ok;
@@ -30,12 +31,13 @@ public class Exercise {
         if (id == -1) {
             id = next(logbase);
         }
-        file = eat(args, "");
+        book = eat(args, "");
+        section = eat(args, "");
         round = Integer.parseInt(eat(args, "1"));
         ofs = Integer.parseInt(eat(args, "0"));
         ok = eat(args, null);
         wrong = eat(args, null);
-        return create(id, base, file, round, ofs, ok, wrong);
+        return create(id, base, book, section, round, ofs, ok, wrong);
     }
 
     private static int next(Node<?> logbase) throws IOException {
@@ -62,38 +64,44 @@ public class Exercise {
         }
     }
 
-    public static Exercise create(Node<?> base, Node<?> logbase, String file) throws IOException {
+    public static Exercise create(Node<?> base, Node<?> logbase, String book, String section) throws IOException {
+        Book b;
         Vocabulary vocabulary;
 
-        vocabulary = Vocabulary.loadInv(base.join(file + ".txt"));
-        return new Exercise(next(logbase), file, vocabulary, 1, 0, new IntSet(), new IntSet());
+        b = Book.loadByName(base, book);
+        vocabulary = b.sections.get(section);
+        return new Exercise(next(logbase), book, section, vocabulary, 1, 0, new IntSet(), new IntSet());
     }
 
-    public static Exercise create(int id, Node<?> base, String file, int round, int ofs, String okParam, String wrongParam) throws IOException {
+    public static Exercise create(int id, Node<?> base, String book, String section, int round, int ofs, String okParam, String wrongParam) throws IOException {
+        Book b;
+        Vocabulary vocabulary;
         IntSet ok;
         IntSet wrong;
-        Vocabulary vocabulary;
 
-        vocabulary = Vocabulary.loadInv(base.join(file + ".txt"));
+        b = Book.loadByName(base, book);
+        vocabulary = b.sections.get(section);
         ok = IntSet.parse(okParam == null ? new ArrayList<>() : Separator.COMMA.split(okParam));
         wrong = IntSet.parse(wrongParam == null ? new ArrayList<>() : Separator.COMMA.split(wrongParam));
-        return new Exercise(id, file, vocabulary, round, ofs, ok, wrong);
+        return new Exercise(id, book, section, vocabulary, round, ofs, ok, wrong);
     }
 
     public final int id;
-    public final String file;
+    public final String book;
+    public final String section;
     public final Vocabulary vocabulary;
     public int round;
     public int ofs;  // number of oks when this round started
     public final IntSet ok;  // oks in this and previous rounds
     public final IntSet wrong; // wrong answers in this round
 
-    public Exercise(int id, String file, Vocabulary vocabulary, int round, int ofs, IntSet ok, IntSet wrong) {
+    public Exercise(int id, String book, String section, Vocabulary vocabulary, int round, int ofs, IntSet ok, IntSet wrong) {
         if (vocabulary.size() == 0) {
             throw new IllegalArgumentException();
         }
         this.id = id;
-        this.file = file;
+        this.book = book;
+        this.section = section;
         this.vocabulary = vocabulary;
         this.round = round;
         this.ofs = ofs;
@@ -191,7 +199,7 @@ public class Exercise {
     }
 
     public String toParam() {
-        return id + ":" + file + ":" + round + ":" + ofs + ":" + ok.toString() + ":" + wrong.toString();
+        return id + ":" + book + ":" + section + ":" + round + ":" + ofs + ":" + ok.toString() + ":" + wrong.toString();
     }
 
     public boolean allDone() {

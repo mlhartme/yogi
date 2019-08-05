@@ -56,11 +56,11 @@ public class YogiController {
     }
 
     @RequestMapping("/begin")
-    public String begin(Model model, @RequestParam(value = "file") String file) throws IOException {
+    public String begin(Model model, @RequestParam(value = "book") String bookName, String section) throws IOException {
         Exercise exercise;
 
-        exercise = Exercise.create(base, logBase, file);
-        exercise.logTitle(logBase, file);
+        exercise = Exercise.create(base, logBase, bookName, section);
+        exercise.logTitle(logBase, section);
         return "redirect:question.html?e=" + urlencode(exercise.toParam());
     }
 
