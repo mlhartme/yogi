@@ -80,6 +80,7 @@ public class YogiController {
         }
         model.addAttribute("map", map);
         model.addAttribute("book", library.get(book));
+        model.addAttribute("library", library);
         return "protocols";
     }
 
@@ -87,6 +88,7 @@ public class YogiController {
     public String protocol(Model model, @PathVariable(value = "book") String book, @PathVariable(value = "id") long id) throws IOException {
         model.addAttribute("protocol", Protocol.load(protocolBase.join(book, id + ".log")));
         model.addAttribute("book", library.get(book));
+        model.addAttribute("library", library);
         return "protocol";
     }
 

@@ -23,7 +23,12 @@ body {
     <th:block th:if="${exercise == null}">
         <nav class="navbar navbar-expand fixed-top navbar-light bg-light">
             <ul class="navbar-nav mr-auto">'
-                <li class="nav-item"><a class="nav-link" th:href="${'/books/' + book.name + '/'}">Auswahl</a></li>
+                <div class="dropdown nav-item">
+                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${book.name}"></button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a th:each="book:${library}" class="dropdown-item" th:href="${'/books/' + book.name} + '/'" th:text="${book.name}"></a>
+                    </div>
+                </div>
                 <li class="nav-item"><a class="nav-link" th:href="${'/books/' + book.name + '/protocols/'}">Protokolle</a></li>
             </ul>
         </nav>
