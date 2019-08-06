@@ -24,39 +24,33 @@ import java.util.Map;
 
 @Controller
 public class YogiController {
-    private Node<?> base;
-    private FileNode protocolBase;
+    private final FileNode protocolBase;
+    private final Library library;
 
     public YogiController(World world) throws IOException {
-        this.base = world.resource("books");
         this.protocolBase = world.getWorking().join("logs").mkdirOpt();
+        this.library = Library.load(world.resource("books"));
     }
+
+
 
     @RequestMapping("/")
     public String index(Model model) throws IOException {
-        List<Book> books;
-
-        books = new ArrayList<>();
-        for (Node<?> book : base.find("*.yogi")) {
-            books.add(Book.load(book));
-        }
-        Collections.sort(books);
-        model.addAttribute("books", books);
-        return "index";
+        return "redirect:/books/" + library.iterator().next().name + "/";
     }
 
     @RequestMapping("/books/{book}/")
-    public String select(Model model, @PathVariable(value = "book") String book) throws IOException {
-        model.addAttribute("base", base);
-        model.addAttribute("book", Book.loadByName(base, book));
-        return "select";
+    public String book(Model model, @PathVariable(value = "book") String book) throws IOException {
+        model.addAttribute("library", library);
+        model.addAttribute("book", library.get(book));
+        return "book";
     }
 
     @RequestMapping("/books/{book}/begin")
     public String begin(Model model, @PathVariable(value = "book") String bookName, String section) throws IOException {
         Exercise exercise;
 
-        exercise = Exercise.create(base, protocolBase, bookName, section);
+        exercise = Exercise.create(library.get(bookName), protocolBase, section);
         exercise.logTitle(protocolBase, section);
         return "redirect:question?e=" + urlencode(exercise.toParam());
     }
@@ -85,12 +79,14 @@ public class YogiController {
             map.put(id, id + ": " + Protocol.load(protocolBase.join(book, id + ".log")).title());
         }
         model.addAttribute("map", map);
+        model.addAttribute("book", library.get(book));
         return "protocols";
     }
 
     @RequestMapping("/books/{book}/protocols/{id}")
     public String protocol(Model model, @PathVariable(value = "book") String book, @PathVariable(value = "id") long id) throws IOException {
         model.addAttribute("protocol", Protocol.load(protocolBase.join(book, id + ".log")));
+        model.addAttribute("book", library.get(book));
         return "protocol";
     }
 
@@ -100,7 +96,7 @@ public class YogiController {
     public void comment(@PathVariable(value = "book") String book, @RequestParam Map<String, String> body) throws IOException {
         Exercise exercise;
 
-        exercise = Exercise.forParam(base, body.get("e"));
+        exercise = Exercise.forParam(library, body.get("e"));
         exercise.logComment(protocolBase, body.get("comment"));
     }
 
@@ -109,7 +105,7 @@ public class YogiController {
                            @RequestParam(value = "question", required = false) String question) throws IOException {
         Exercise exercise;
 
-        exercise = Exercise.forParam(base, e);
+        exercise = Exercise.forParam(library, e);
         if (question == null) {
             question = exercise.question();
         }
@@ -124,7 +120,7 @@ public class YogiController {
         String correction;
 
         answer = answer.trim();
-        exercise = Exercise.forParam(base, e);
+        exercise = Exercise.forParam(library, e);
         correction = exercise.answer(question, answer);
         model.addAttribute("exercise", exercise);
         model.addAttribute("question", question);

@@ -14,7 +14,7 @@ import java.util.List;
 public class Exercise {
     private static final Separator COLON = Separator.on(':');
 
-    public static Exercise forParam(Node<?> base, String param) throws IOException {
+    public static Exercise forParam(Library library, String param) throws IOException {
         List<String> args;
 
         args = COLON.split(param);
@@ -37,7 +37,7 @@ public class Exercise {
         ofs = Integer.parseInt(eat(args, "0"));
         ok = eat(args, null);
         wrong = eat(args, null);
-        return create(id, base, book, section, round, ofs, ok, wrong);
+        return create(id, library.get(book), section, round, ofs, ok, wrong);
     }
 
     private static int next(Node<?> protocolBase, String book) throws IOException {
@@ -68,26 +68,22 @@ public class Exercise {
         }
     }
 
-    public static Exercise create(Node<?> base, Node<?> protocolBase, String book, String section) throws IOException {
-        Book b;
+    public static Exercise create(Book book, Node<?> protocolBase, String section) throws IOException {
         Vocabulary vocabulary;
 
-        b = Book.loadByName(base, book);
-        vocabulary = b.sections.get(section);
-        return new Exercise(next(protocolBase, book), book, section, vocabulary, 1, 0, new IntSet(), new IntSet());
+        vocabulary = book.sections.get(section);
+        return new Exercise(next(protocolBase, book.name), book.name, section, vocabulary, 1, 0, new IntSet(), new IntSet());
     }
 
-    public static Exercise create(int id, Node<?> base, String book, String section, int round, int ofs, String okParam, String wrongParam) throws IOException {
-        Book b;
+    public static Exercise create(int id, Book book, String section, int round, int ofs, String okParam, String wrongParam) throws IOException {
         Vocabulary vocabulary;
         IntSet ok;
         IntSet wrong;
 
-        b = Book.loadByName(base, book);
-        vocabulary = b.sections.get(section);
+        vocabulary = book.sections.get(section);
         ok = IntSet.parse(okParam == null ? new ArrayList<>() : Separator.COMMA.split(okParam));
         wrong = IntSet.parse(wrongParam == null ? new ArrayList<>() : Separator.COMMA.split(wrongParam));
-        return new Exercise(id, book, section, vocabulary, round, ofs, ok, wrong);
+        return new Exercise(id, book.name, section, vocabulary, round, ofs, ok, wrong);
     }
 
     public final int id;

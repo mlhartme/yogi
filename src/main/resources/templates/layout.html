@@ -22,9 +22,9 @@ body {
 <div class="container-fluid">
     <th:block th:if="${exercise == null}">
         <nav class="navbar navbar-expand fixed-top navbar-light bg-light">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link" href="/">Auswahl</a></li>
-                <li class="nav-item"><a class="nav-link" href="/protocols">Protokolle</a></li>
+            <ul class="navbar-nav mr-auto">'
+                <li class="nav-item"><a class="nav-link" th:href="${'/books/' + book.name + '/'}">Auswahl</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="${'/books/' + book.name + '/protocols/'}">Protokolle</a></li>
             </ul>
         </nav>
     </th:block>
