@@ -5,10 +5,7 @@
 <th:block layout:fragment="content">
     <div th:each="book:${books}" class="row">
         <div class="col-12">
-            <p th:text="${book.name}"></p>
-            <ul class="list-group">
-                <li th:each="section:${book.sections}" class="list-group-item py+2"><a th:href="@{/begin(book=${book.name}, section=${section.key})}" th:text="${section.key}"></a></li>
-            </ul>
+            <p><a th:href="${'/books/' + book.name + '/'}" th:text="${book.name}"/></p>
         </div>
     </div>
 </th:block>

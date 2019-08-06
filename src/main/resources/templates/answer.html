@@ -14,12 +14,12 @@
             <div th:unless=${correction}>
                 <h5 class="text-success" th:text="${answer}"></h5>
                 <div th:if="${exercise.allDone()}">
-                    <form th:action="${'/protocols/' + exercise.book + '/' + exercise.id}" method="get">
+                    <form th:action="${'/books/' + exercise.book + '/protocols/' + exercise.id}" method="get">
                         <button class="btn btn-primary" autofocus role="button">Fertig</button>
                     </form>
                 </div>
                 <div th:unless="${exercise.allDone()}">
-                    <form action="/question.html" method="get">
+                    <form action="question" method="get">
                         <input name="e" th:value="${exercise.toParam()}" type="hidden"/>
                         <button class="btn btn-primary" autofocus role="button">Weiter</button>
                     </form>
@@ -28,7 +28,7 @@
             <div th:if=${correction}>
                 <h5 class="text-warning" th:text="${answer}"></h5>
                 <h5 class="text-success" th:text="${correction}"></h5>
-                <form action="/question.html" method="get">
+                <form action="question" method="get">
                     <input name="e" th:value="${exercise.toParam()}" type="hidden"/>
                     <input name="question" th:value="${question}" type="hidden"/>
                     <button class="btn btn-primary" autofocus role="button">Nochmal</button>

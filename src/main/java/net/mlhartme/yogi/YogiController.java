@@ -41,26 +41,24 @@ public class YogiController {
             books.add(Book.load(book));
         }
         Collections.sort(books);
-        model.addAttribute("base", base);
         model.addAttribute("books", books);
         return "index";
     }
 
-    @PostMapping("/comment") @ResponseStatus(value = HttpStatus.OK)
-    public void comment(@RequestParam Map<String, String> body) throws IOException {
-        Exercise exercise;
-
-        exercise = Exercise.forParam(base, body.get("e"));
-        exercise.logComment(protocolBase, body.get("comment"));
+    @RequestMapping("/books/{book}/")
+    public String select(Model model, @PathVariable(value = "book") String book) throws IOException {
+        model.addAttribute("base", base);
+        model.addAttribute("book", Book.loadByName(base, book));
+        return "select";
     }
 
-    @RequestMapping("/begin")
-    public String begin(Model model, @RequestParam(value = "book") String bookName, String section) throws IOException {
+    @RequestMapping("/books/{book}/begin")
+    public String begin(Model model, @PathVariable(value = "book") String bookName, String section) throws IOException {
         Exercise exercise;
 
         exercise = Exercise.create(base, protocolBase, bookName, section);
         exercise.logTitle(protocolBase, section);
-        return "redirect:question.html?e=" + urlencode(exercise.toParam());
+        return "redirect:question?e=" + urlencode(exercise.toParam());
     }
 
     private static String urlencode(String str) {
@@ -71,21 +69,7 @@ public class YogiController {
         }
     }
 
-    @RequestMapping("/question.html")
-    public String question(Model model, @RequestParam(value = "e") String e,
-                           @RequestParam(value = "question", required = false) String question) throws IOException {
-        Exercise exercise;
-
-        exercise = Exercise.forParam(base, e);
-        if (question == null) {
-            question = exercise.question();
-        }
-        model.addAttribute("exercise", exercise);
-        model.addAttribute("question", question);
-        return "question";
-    }
-
-    @RequestMapping("/protocols/{book}")
+    @RequestMapping("/books/{book}/protocols/")
     public String protocols(Model model, @PathVariable(value = "book") String book) throws IOException {
         List<Integer> ids;
         LinkedHashMap<Integer, String> map;
@@ -104,14 +88,38 @@ public class YogiController {
         return "protocols";
     }
 
-    @RequestMapping("/protocols/{book}/{id}")
+    @RequestMapping("/books/{book}/protocols/{id}")
     public String protocol(Model model, @PathVariable(value = "book") String book, @PathVariable(value = "id") long id) throws IOException {
         model.addAttribute("protocol", Protocol.load(protocolBase.join(book, id + ".log")));
         return "protocol";
     }
 
-    @RequestMapping("/answer.html")
-    public String answer(Model model, @RequestParam("e") String e, @RequestParam("question") String question, @RequestParam("answer") String answer) throws IOException {
+    //-- exercise
+
+    @PostMapping("/books/{book}/comment") @ResponseStatus(value = HttpStatus.OK)
+    public void comment(@PathVariable(value = "book") String book, @RequestParam Map<String, String> body) throws IOException {
+        Exercise exercise;
+
+        exercise = Exercise.forParam(base, body.get("e"));
+        exercise.logComment(protocolBase, body.get("comment"));
+    }
+
+    @RequestMapping("/books/{book}/question")
+    public String question(Model model, @PathVariable(value = "book") String book, @RequestParam(value = "e") String e,
+                           @RequestParam(value = "question", required = false) String question) throws IOException {
+        Exercise exercise;
+
+        exercise = Exercise.forParam(base, e);
+        if (question == null) {
+            question = exercise.question();
+        }
+        model.addAttribute("exercise", exercise);
+        model.addAttribute("question", question);
+        return "question";
+    }
+
+    @RequestMapping("/books/{book}/answer")
+    public String answer(Model model, @PathVariable(value = "book") String book, @RequestParam("e") String e, @RequestParam("question") String question, @RequestParam("answer") String answer) throws IOException {
         Exercise exercise;
         String correction;
 
