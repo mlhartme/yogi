@@ -25,11 +25,11 @@ import java.util.Map;
 @Controller
 public class YogiController {
     private Node<?> base;
-    private FileNode logBase;
+    private FileNode protocolBase;
 
     public YogiController(World world) throws IOException {
         this.base = world.resource("books");
-        this.logBase = world.getWorking().join("logs").mkdirOpt();
+        this.protocolBase = world.getWorking().join("logs").mkdirOpt();
     }
 
     @RequestMapping("/")
@@ -42,7 +42,6 @@ public class YogiController {
         }
         Collections.sort(books);
         model.addAttribute("base", base);
-        model.addAttribute("logBase", logBase);
         model.addAttribute("books", books);
         return "index";
     }
@@ -51,16 +50,16 @@ public class YogiController {
     public void comment(@RequestParam Map<String, String> body) throws IOException {
         Exercise exercise;
 
-        exercise = Exercise.forParam(base, logBase, body.get("e"));
-        exercise.logComment(logBase, body.get("comment"));
+        exercise = Exercise.forParam(base, body.get("e"));
+        exercise.logComment(protocolBase, body.get("comment"));
     }
 
     @RequestMapping("/begin")
     public String begin(Model model, @RequestParam(value = "book") String bookName, String section) throws IOException {
         Exercise exercise;
 
-        exercise = Exercise.create(base, logBase, bookName, section);
-        exercise.logTitle(logBase, section);
+        exercise = Exercise.create(base, protocolBase, bookName, section);
+        exercise.logTitle(protocolBase, section);
         return "redirect:question.html?e=" + urlencode(exercise.toParam());
     }
 
@@ -77,7 +76,7 @@ public class YogiController {
                            @RequestParam(value = "question", required = false) String question) throws IOException {
         Exercise exercise;
 
-        exercise = Exercise.forParam(base, logBase, e);
+        exercise = Exercise.forParam(base, e);
         if (question == null) {
             question = exercise.question();
         }
@@ -86,28 +85,28 @@ public class YogiController {
         return "question";
     }
 
-    @RequestMapping("/protocols")
-    public String protocols(Model model) throws IOException {
+    @RequestMapping("/protocols/{book}")
+    public String protocols(Model model, @PathVariable(value = "book") String book) throws IOException {
         List<Integer> ids;
         LinkedHashMap<Integer, String> map;
 
         ids = new ArrayList<>();
-        for (Node<?> node : logBase.find("*.log")) {
+        for (Node<?> node : protocolBase.find(book + "/*.log")) {
             ids.add(Integer.parseInt(Strings.removeRight(node.getName(), ".log")));
         }
         Collections.sort(ids);
         Collections.reverse(ids);
         map = new LinkedHashMap<>();
         for (int id : ids) {
-            map.put(id, id + ": " + Protocol.load(logBase.join(id + ".log")).title());
+            map.put(id, id + ": " + Protocol.load(protocolBase.join(book, id + ".log")).title());
         }
         model.addAttribute("map", map);
         return "protocols";
     }
 
-    @RequestMapping("/protocols/{id}")
-    public String protocol(Model model, @PathVariable(value = "id") long id) throws IOException {
-        model.addAttribute("protocol", Protocol.load(logBase.join(id + ".log")));
+    @RequestMapping("/protocols/{book}/{id}")
+    public String protocol(Model model, @PathVariable(value = "book") String book, @PathVariable(value = "id") long id) throws IOException {
+        model.addAttribute("protocol", Protocol.load(protocolBase.join(book, id + ".log")));
         return "protocol";
     }
 
@@ -117,13 +116,13 @@ public class YogiController {
         String correction;
 
         answer = answer.trim();
-        exercise = Exercise.forParam(base, logBase, e);
+        exercise = Exercise.forParam(base, e);
         correction = exercise.answer(question, answer);
         model.addAttribute("exercise", exercise);
         model.addAttribute("question", question);
         model.addAttribute("answer", answer);
         model.addAttribute("correction", correction);
-        exercise.logAnswer(logBase, question, answer, exercise.lookup(question) /* not correction - it might be null */);
+        exercise.logAnswer(protocolBase, question, answer, exercise.lookup(question) /* not correction - it might be null */);
         return "answer";
     }
 }

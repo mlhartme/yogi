@@ -14,7 +14,7 @@ import java.util.List;
 public class Exercise {
     private static final Separator COLON = Separator.on(':');
 
-    public static Exercise forParam(Node<?> base, FileNode logbase, String param) throws IOException {
+    public static Exercise forParam(Node<?> base, String param) throws IOException {
         List<String> args;
 
         args = COLON.split(param);
@@ -29,7 +29,7 @@ public class Exercise {
 
         id = Integer.parseInt(eat(args, "-1"));
         if (id == -1) {
-            id = next(logbase);
+            throw new IllegalStateException();
         }
         book = eat(args, "");
         section = eat(args, "");
@@ -40,18 +40,22 @@ public class Exercise {
         return create(id, base, book, section, round, ofs, ok, wrong);
     }
 
-    private static int next(Node<?> logbase) throws IOException {
+    private static int next(Node<?> protocolBase, String book) throws IOException {
+        Node<?> dir;
         int id;
         int max;
 
+        dir = protocolBase.join(book);
         max = 0;
-        for (Node<?> file : logbase.list()) {
-            try {
-                id = Integer.parseInt(Strings.removeRight(file.getName(), ".log"));
-            } catch (NumberFormatException e) {
-                throw new IOException("unexpected name: " + file.getName());
+        if (dir.exists()) {
+            for (Node<?> file : dir.list()) {
+                try {
+                    id = Integer.parseInt(Strings.removeRight(file.getName(), ".log"));
+                } catch (NumberFormatException e) {
+                    throw new IOException("unexpected name: " + file.getName());
+                }
+                max = Math.max(id, max);
             }
-            max = Math.max(id, max);
         }
         return max + 1;
     }
@@ -64,13 +68,13 @@ public class Exercise {
         }
     }
 
-    public static Exercise create(Node<?> base, Node<?> logbase, String book, String section) throws IOException {
+    public static Exercise create(Node<?> base, Node<?> protocolBase, String book, String section) throws IOException {
         Book b;
         Vocabulary vocabulary;
 
         b = Book.loadByName(base, book);
         vocabulary = b.sections.get(section);
-        return new Exercise(next(logbase), book, section, vocabulary, 1, 0, new IntSet(), new IntSet());
+        return new Exercise(next(protocolBase, book), book, section, vocabulary, 1, 0, new IntSet(), new IntSet());
     }
 
     public static Exercise create(int id, Node<?> base, String book, String section, int round, int ofs, String okParam, String wrongParam) throws IOException {
@@ -109,20 +113,20 @@ public class Exercise {
         this.wrong = wrong;
     }
 
-    public void logTitle(FileNode logbase, String title) throws IOException {
-        doLog(logbase, "! " + title);
+    public void logTitle(FileNode protocolBase, String title) throws IOException {
+        doLog(protocolBase, "! " + title);
     }
 
-    public void logComment(FileNode logbase, String comment) throws IOException {
-        doLog(logbase, "# " + comment);
+    public void logComment(FileNode protocolBase, String comment) throws IOException {
+        doLog(protocolBase, "# " + comment);
     }
 
-    public void logAnswer(FileNode logbase, String question, String answer, String correct) throws IOException {
-        doLog(logbase, question + " -> " + answer + " -> " + correct);
+    public void logAnswer(FileNode protocolBase, String question, String answer, String correct) throws IOException {
+        doLog(protocolBase, question + " -> " + answer + " -> " + correct);
     }
 
-    private void doLog(FileNode logbase, String line) throws IOException {
-        try (Writer writer = logbase.join(id + ".log").newAppender()) {
+    private void doLog(FileNode protocolBase, String line) throws IOException {
+        try (Writer writer = protocolBase.join(book).mkdirOpt().join(id + ".log").newAppender()) {
             writer.append(Protocol.FMT.format(new Date()));
             writer.append(' ');
             writer.append(line.replace("\n", " // "));
