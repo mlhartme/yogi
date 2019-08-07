@@ -1,4 +1,10 @@
-# Test
+# Zahlen
 one = 1
 two = 2
 three = 3
+
+# Farben
+red = rot
+blue = blau
+green = grün
+yellow = gelb
