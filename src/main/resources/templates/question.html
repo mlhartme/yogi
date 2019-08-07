@@ -6,7 +6,7 @@
     <form accept-charset="utf-8" action="#" th:action="@{answer}" method="post">
         <div class="row">
             <div class="col-12">
-              <p th:text="${exercise.section + ' - Runde ' + exercise.round + ' (' + exercise.number(question) + '/' + exercise.roundSize() + ')'}"/>
+              <p th:text="${exercise.title + ' - Runde ' + exercise.round + ' (' + exercise.number(question) + '/' + exercise.roundSize() + ')'}"/>
             </div>
         </div>
         <div class="row">

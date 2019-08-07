@@ -87,11 +87,11 @@ public class Book implements Comparable<Book> {
         return lefts.indexOf(left);
     }
 
-    public Vocabulary select(String section) {
+    public Vocabulary select(IntSet selection) {
         Vocabulary result;
 
         result = new Vocabulary();
-        for (Integer i : sections.get(section)) {
+        for (Integer i : selection) {
             result.add(lefts.get(i), rights.get(i));
         }
         return result;

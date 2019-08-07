@@ -20,7 +20,8 @@ public class Exercise {
         args = COLON.split(param);
 
         int id;
-        String section;
+        String selection;
+        String title;
         int round;
         int ofs;
         String ok;
@@ -30,12 +31,16 @@ public class Exercise {
         if (id == -1) {
             throw new IllegalStateException();
         }
-        section = eat(args, "");
+        selection = eat(args, null);
+        if (selection == null) {
+            throw new IllegalStateException();
+        }
+        title = eat(args, "");
         round = Integer.parseInt(eat(args, "1"));
         ofs = Integer.parseInt(eat(args, "0"));
         ok = eat(args, null);
         wrong = eat(args, null);
-        return create(id, book, section, round, ofs, ok, wrong);
+        return create(id, book, selection, title, round, ofs, ok, wrong);
     }
 
     private static int next(Node<?> protocolBase, String book) throws IOException {
@@ -67,32 +72,34 @@ public class Exercise {
     }
 
     public static Exercise create(Book book, Node<?> protocolBase, String section) throws IOException {
-        return new Exercise(next(protocolBase, book.name), book, section, 1, 0, new IntSet(), new IntSet());
+        return new Exercise(next(protocolBase, book.name), book, book.sections.get(section), section, 1, 0, new IntSet(), new IntSet());
     }
 
-    public static Exercise create(int id, Book book, String section, int round, int ofs, String okParam, String wrongParam) throws IOException {
+    public static Exercise create(int id, Book book, String selectionParam, String title, int round, int ofs, String okParam, String wrongParam) throws IOException {
+        IntSet selection;
         IntSet ok;
         IntSet wrong;
 
+        selection = IntSet.parse(Separator.COMMA.split(selectionParam));
         ok = IntSet.parse(okParam == null ? new ArrayList<>() : Separator.COMMA.split(okParam));
         wrong = IntSet.parse(wrongParam == null ? new ArrayList<>() : Separator.COMMA.split(wrongParam));
-        return new Exercise(id, book, section, round, ofs, ok, wrong);
+        return new Exercise(id, book, selection, title, round, ofs, ok, wrong);
     }
 
     public final int id;
     public final Book book;
-    public final String section;
     private final IntSet selection;
+    public final String title;
     public int round;
     public int ofs;  // number of oks when this round started
     public final IntSet ok;  // oks in this and previous rounds
     public final IntSet wrong; // wrong answers in this round
 
-    public Exercise(int id, Book book, String section, int round, int ofs, IntSet ok, IntSet wrong) {
+    public Exercise(int id, Book book, IntSet selection, String title, int round, int ofs, IntSet ok, IntSet wrong) {
         this.id = id;
         this.book = book;
-        this.section = section;
-        this.selection = book.sections.get(section);
+        this.selection = selection;
+        this.title = title;
         this.round = round;
         this.ofs = ofs;
         this.ok = ok;
@@ -126,7 +133,7 @@ public class Exercise {
     public int number(String question) {
         int idx;
 
-        idx = book.select(section).lookupLeft(question);
+        idx = book.select(selection).lookupLeft(question);
         return ok.size() + wrong.size() + (wrong.contains(idx) ? 0 : 1) - ofs;
     }
 
@@ -134,7 +141,7 @@ public class Exercise {
         Vocabulary vocabulary;
         int next;
 
-        vocabulary = book.select(section);
+        vocabulary = book.select(selection);
         if (ok.size() + wrong.size() == selection.size()) {
             round++;
             if (wrong.isEmpty()) {
@@ -161,7 +168,7 @@ public class Exercise {
         Vocabulary vocabulary;
         int idx;
 
-        vocabulary = book.select(section);
+        vocabulary = book.select(selection);
         idx = vocabulary.lookupLeft(question);
         if (idx == -1) {
             throw new IllegalArgumentException(question);
@@ -185,7 +192,7 @@ public class Exercise {
         Vocabulary vocabulary;
         int idx;
 
-        vocabulary = book.select(section);
+        vocabulary = book.select(selection);
         idx = vocabulary.lookupLeft(question);
         if (idx == -1) {
             return null;
@@ -195,7 +202,7 @@ public class Exercise {
     }
 
     public String toParam() {
-        return id + ":" + section + ":" + round + ":" + ofs + ":" + ok.toString() + ":" + wrong.toString();
+        return id + ":" + selection.toString() + ":" + title + ":" + round + ":" + ofs + ":" + ok.toString() + ":" + wrong.toString();
     }
 
     public boolean allDone() {
