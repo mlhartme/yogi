@@ -11,16 +11,6 @@ import static org.junit.Assert.fail;
 
 public class VocabularyTest {
     @Test
-    public void load() throws IOException {
-        World world;
-
-        world = World.create();
-        for (Node node : world.resource("books").find("**/*.txt")) {
-            Vocabulary.loadInv(node);
-        }
-    }
-
-    @Test
     public void normal() {
         Vocabulary v;
         IntSet done;

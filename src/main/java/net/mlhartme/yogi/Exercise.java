@@ -71,7 +71,7 @@ public class Exercise {
     public static Exercise create(Book book, Node<?> protocolBase, String section) throws IOException {
         Vocabulary vocabulary;
 
-        vocabulary = book.sections.get(section);
+        vocabulary = book.select(section);
         return new Exercise(next(protocolBase, book.name), book.name, section, vocabulary, 1, 0, new IntSet(), new IntSet());
     }
 
@@ -80,7 +80,7 @@ public class Exercise {
         IntSet ok;
         IntSet wrong;
 
-        vocabulary = book.sections.get(section);
+        vocabulary = book.select(section);
         ok = IntSet.parse(okParam == null ? new ArrayList<>() : Separator.COMMA.split(okParam));
         wrong = IntSet.parse(wrongParam == null ? new ArrayList<>() : Separator.COMMA.split(wrongParam));
         return new Exercise(id, book.name, section, vocabulary, round, ofs, ok, wrong);

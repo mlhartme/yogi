@@ -1,10 +1,11 @@
 package net.mlhartme.yogi;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /** TODO: not a set yet */
-public class IntSet {
+public class IntSet implements Iterable<Integer> {
     public static IntSet parse(List<String> strings) {
         IntSet result;
 
@@ -64,4 +65,8 @@ public class IntSet {
     }
 
 
+    @Override
+    public Iterator<Integer> iterator() {
+        return data.iterator();
+    }
 }

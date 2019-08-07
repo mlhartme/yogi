@@ -22,39 +22,12 @@ public class Vocabulary {
         return result;
     }
 
-    public static Vocabulary loadInv(Node<?>... files) throws IOException {
-        Vocabulary result;
-
-        result = new Vocabulary();
-        for (Node<?> file : files) {
-            for (String line : file.readLines()) {
-                result.addInvLine(line);
-            }
-        }
-        return result;
-    }
-
     private final List<String> lefts;
     private final List<String> rights;
 
     public Vocabulary() {
         this.lefts = new ArrayList<>();
         this.rights = new ArrayList<>();
-    }
-
-    public boolean addInvLine(String line) throws IOException {
-        int idx;
-
-        line = line.trim();
-        if (line.isEmpty() || line.startsWith("#")) {
-            return false;
-        }
-        idx = line.indexOf('=');
-        if (idx == -1) {
-            throw new IOException("syntax error: " + line);
-        }
-        add(line.substring(idx + 1).trim(), line.substring(0, idx).trim());
-        return true;
     }
 
     public void add(String left, String right) {
