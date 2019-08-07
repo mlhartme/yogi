@@ -14,13 +14,12 @@ import java.util.List;
 public class Exercise {
     private static final Separator COLON = Separator.on(':');
 
-    public static Exercise forParam(Library library, String param) throws IOException {
+    public static Exercise forParam(Book book, String param) throws IOException {
         List<String> args;
 
         args = COLON.split(param);
 
         int id;
-        String book;
         String section;
         int round;
         int ofs;
@@ -31,13 +30,12 @@ public class Exercise {
         if (id == -1) {
             throw new IllegalStateException();
         }
-        book = eat(args, "");
         section = eat(args, "");
         round = Integer.parseInt(eat(args, "1"));
         ofs = Integer.parseInt(eat(args, "0"));
         ok = eat(args, null);
         wrong = eat(args, null);
-        return create(id, library.get(book), section, round, ofs, ok, wrong);
+        return create(id, book, section, round, ofs, ok, wrong);
     }
 
     private static int next(Node<?> protocolBase, String book) throws IOException {
@@ -197,7 +195,7 @@ public class Exercise {
     }
 
     public String toParam() {
-        return id + ":" + book.name + ":" + section + ":" + round + ":" + ofs + ":" + ok.toString() + ":" + wrong.toString();
+        return id + ":" + section + ":" + round + ":" + ofs + ":" + ok.toString() + ":" + wrong.toString();
     }
 
     public boolean allDone() {

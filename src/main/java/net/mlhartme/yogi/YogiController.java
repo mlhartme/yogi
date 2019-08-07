@@ -98,7 +98,7 @@ public class YogiController {
     public void comment(@PathVariable(value = "book") String book, @RequestParam Map<String, String> body) throws IOException {
         Exercise exercise;
 
-        exercise = Exercise.forParam(library, body.get("e"));
+        exercise = Exercise.forParam(library.get(book), body.get("e"));
         exercise.logComment(protocolBase, body.get("comment"));
     }
 
@@ -107,7 +107,7 @@ public class YogiController {
                            @RequestParam(value = "question", required = false) String question) throws IOException {
         Exercise exercise;
 
-        exercise = Exercise.forParam(library, e);
+        exercise = Exercise.forParam(library.get(book), e);
         if (question == null) {
             question = exercise.question();
         }
@@ -122,7 +122,7 @@ public class YogiController {
         String correction;
 
         answer = answer.trim();
-        exercise = Exercise.forParam(library, e);
+        exercise = Exercise.forParam(library.get(book), e);
         correction = exercise.answer(question, answer);
         model.addAttribute("exercise", exercise);
         model.addAttribute("question", question);
