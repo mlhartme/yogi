@@ -3,6 +3,7 @@ package net.mlhartme.yogi;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 /** TODO: not a set yet */
 public class IntSet implements Iterable<Integer> {
@@ -69,4 +70,29 @@ public class IntSet implements Iterable<Integer> {
     public Iterator<Integer> iterator() {
         return data.iterator();
     }
+
+    private static final Random random = new Random();
+
+    public int next(IntSet done) {
+        int selectionSize;
+        int doneSize;
+        int rnd;
+
+        selectionSize = size();
+        doneSize = done.size();
+        if (doneSize >= selectionSize) {
+            throw new IllegalStateException("all done");
+        }
+        rnd = random.nextInt(selectionSize - doneSize);
+        for (Integer i : this) {
+            if (!done.contains(i)) {
+                if (rnd == 0) {
+                    return i;
+                }
+                rnd--;
+            }
+        }
+        throw new IllegalStateException();
+    }
+
 }

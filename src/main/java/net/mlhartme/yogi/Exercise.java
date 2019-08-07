@@ -133,15 +133,13 @@ public class Exercise {
     public int number(String question) {
         int idx;
 
-        idx = book.select(selection).lookupLeft(question);
+        idx = book.lookupLeft(question);
         return ok.size() + wrong.size() + (wrong.contains(idx) ? 0 : 1) - ofs;
     }
 
     public String question() {
-        Vocabulary vocabulary;
         int next;
 
-        vocabulary = book.select(selection);
         if (ok.size() + wrong.size() == selection.size()) {
             round++;
             if (wrong.isEmpty()) {
@@ -153,27 +151,28 @@ public class Exercise {
                 wrong.clear();
             }
         }
-        next = vocabulary.next(IntSet.union(ok, wrong));
+        next = selection.next(IntSet.union(ok, wrong));
         if (ok.contains(next)) {
             throw new IllegalStateException(ok.toString() + " vs " + next);
         }
         if (wrong.contains(next)) {
             throw new IllegalStateException(wrong.toString() + " vs " + next);
         }
-        return vocabulary.left(next);
+        return book.left(next);
     }
 
     /** null if answer is correct; otherwise the correct answer */
     public String answer(String question, String answer) {
-        Vocabulary vocabulary;
         int idx;
 
-        vocabulary = book.select(selection);
-        idx = vocabulary.lookupLeft(question);
+        idx = book.lookupLeft(question);
         if (idx == -1) {
             throw new IllegalArgumentException(question);
         }
-        if (answer.equals(vocabulary.right(idx))) {
+        if (!selection.contains(idx)) {
+            throw new IllegalArgumentException(selection + " " + idx);
+        }
+        if (answer.equals(book.right(idx))) {
             if (wrong.contains(idx)) {
                 // question was re-asked
             } else {
@@ -184,20 +183,18 @@ public class Exercise {
             if (!wrong.contains(idx)) {
                 wrong.add(idx);
             }
-            return vocabulary.right(idx);
+            return book.right(idx);
         }
     }
 
     public String lookup(String question) {
-        Vocabulary vocabulary;
         int idx;
 
-        vocabulary = book.select(selection);
-        idx = vocabulary.lookupLeft(question);
+        idx = book.lookupLeft(question);
         if (idx == -1) {
             return null;
         } else {
-            return vocabulary.right(idx);
+            return book.right(idx);
         }
     }
 

@@ -83,18 +83,16 @@ public class Book implements Comparable<Book> {
         return lefts.size() - 1;
     }
 
-    public int lookupLeft(String left) {
-        return lefts.indexOf(left);
+    public String left(int idx) {
+        return lefts.get(idx);
     }
 
-    public Vocabulary select(IntSet selection) {
-        Vocabulary result;
+    public String right(int idx) {
+        return rights.get(idx);
+    }
 
-        result = new Vocabulary();
-        for (Integer i : selection) {
-            result.add(lefts.get(i), rights.get(i));
-        }
-        return result;
+    public int lookupLeft(String left) {
+        return lefts.indexOf(left);
     }
 
     @Override
