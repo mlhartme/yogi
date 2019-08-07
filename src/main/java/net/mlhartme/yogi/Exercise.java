@@ -69,40 +69,32 @@ public class Exercise {
     }
 
     public static Exercise create(Book book, Node<?> protocolBase, String section) throws IOException {
-        Vocabulary vocabulary;
-
-        vocabulary = book.select(section);
-        return new Exercise(next(protocolBase, book.name), book.name, section, vocabulary, 1, 0, new IntSet(), new IntSet());
+        return new Exercise(next(protocolBase, book.name), book, section, 1, 0, new IntSet(), new IntSet());
     }
 
     public static Exercise create(int id, Book book, String section, int round, int ofs, String okParam, String wrongParam) throws IOException {
-        Vocabulary vocabulary;
         IntSet ok;
         IntSet wrong;
 
-        vocabulary = book.select(section);
         ok = IntSet.parse(okParam == null ? new ArrayList<>() : Separator.COMMA.split(okParam));
         wrong = IntSet.parse(wrongParam == null ? new ArrayList<>() : Separator.COMMA.split(wrongParam));
-        return new Exercise(id, book.name, section, vocabulary, round, ofs, ok, wrong);
+        return new Exercise(id, book, section, round, ofs, ok, wrong);
     }
 
     public final int id;
-    public final String book;
+    public final Book book;
     public final String section;
-    public final Vocabulary vocabulary;
+    private final IntSet selection;
     public int round;
     public int ofs;  // number of oks when this round started
     public final IntSet ok;  // oks in this and previous rounds
     public final IntSet wrong; // wrong answers in this round
 
-    public Exercise(int id, String book, String section, Vocabulary vocabulary, int round, int ofs, IntSet ok, IntSet wrong) {
-        if (vocabulary.size() == 0) {
-            throw new IllegalArgumentException();
-        }
+    public Exercise(int id, Book book, String section, int round, int ofs, IntSet ok, IntSet wrong) {
         this.id = id;
         this.book = book;
         this.section = section;
-        this.vocabulary = vocabulary;
+        this.selection = book.sections.get(section);
         this.round = round;
         this.ofs = ofs;
         this.ok = ok;
@@ -122,7 +114,7 @@ public class Exercise {
     }
 
     private void doLog(FileNode protocolBase, String line) throws IOException {
-        try (Writer writer = protocolBase.join(book).mkdirOpt().join(id + ".log").newAppender()) {
+        try (Writer writer = protocolBase.join(book.name).mkdirOpt().join(id + ".log").newAppender()) {
             writer.append(Protocol.FMT.format(new Date()));
             writer.append(' ');
             writer.append(line.replace("\n", " // "));
@@ -130,20 +122,22 @@ public class Exercise {
         }
     }
     public int roundSize() {
-        return vocabulary.size() - ofs;
+        return selection.size() - ofs;
     }
 
     public int number(String question) {
         int idx;
 
-        idx = vocabulary.lookupLeft(question);
+        idx = book.select(section).lookupLeft(question);
         return ok.size() + wrong.size() + (wrong.contains(idx) ? 0 : 1) - ofs;
     }
 
     public String question() {
+        Vocabulary vocabulary;
         int next;
 
-        if (ok.size() + wrong.size() == vocabulary.size()) {
+        vocabulary = book.select(section);
+        if (ok.size() + wrong.size() == selection.size()) {
             round++;
             if (wrong.isEmpty()) {
                 // all correct - start from beginning
@@ -166,8 +160,10 @@ public class Exercise {
 
     /** null if answer is correct; otherwise the correct answer */
     public String answer(String question, String answer) {
+        Vocabulary vocabulary;
         int idx;
 
+        vocabulary = book.select(section);
         idx = vocabulary.lookupLeft(question);
         if (idx == -1) {
             throw new IllegalArgumentException(question);
@@ -188,8 +184,10 @@ public class Exercise {
     }
 
     public String lookup(String question) {
+        Vocabulary vocabulary;
         int idx;
 
+        vocabulary = book.select(section);
         idx = vocabulary.lookupLeft(question);
         if (idx == -1) {
             return null;
@@ -199,10 +197,10 @@ public class Exercise {
     }
 
     public String toParam() {
-        return id + ":" + book + ":" + section + ":" + round + ":" + ofs + ":" + ok.toString() + ":" + wrong.toString();
+        return id + ":" + book.name + ":" + section + ":" + round + ":" + ofs + ":" + ok.toString() + ":" + wrong.toString();
     }
 
     public boolean allDone() {
-        return ok.size() == vocabulary.size();
+        return ok.size() == selection.size();
     }
 }

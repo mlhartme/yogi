@@ -32,7 +32,7 @@ public class Library implements Iterable<Book> {
                 return book;
             }
         }
-        throw new IOException("book not fount: " + name);
+        throw new IOException("book not found: " + name);
     }
 
     @Override
