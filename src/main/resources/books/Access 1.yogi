@@ -51,7 +51,8 @@ to = zu, nach
 
 hometown = Heimatstadt
 town = Stadt
-# Welcome to Plymouth
+
+# Here we go - Welcome to Plymouth
 Welcome to Plymouth. = Willkommen in Plymouth.
 Silky's tour of Plymouth. = Silkys Rundgang/Rundfahrt/Reise durch Plymouth.
 river = Fluss
@@ -78,7 +79,7 @@ Sunday = Sonntag
 
 every day = jeden Tag
 great = großartig
-# A week in plymouth
+# Here we go - A week in plymouth
 at = an, bei, in
 near = in der Nähe von, nahe (bei)
 on Monday = am Montag
@@ -97,7 +98,7 @@ lot's of ... = viel ..., viele ...
 animal = Tier
 Follow me. = Folge mir.
 me = mich, mir
-# My favourite animal
+# Here we go - My favourite animal
 my favourite animal = mein Lieblingstier
 ant = Ameise
 bear = Bär
@@ -145,7 +146,7 @@ time = Zeit, Uhrzeit
 for = für
 English = Englisch
 lesson = (Unterrichts-) Stunde
-# Our English class
+# Here we go - Our English class
 our = unser/e
 class = (Schul-) Klasse
 Mr Schwarz = Herr Schwarz
@@ -205,6 +206,7 @@ telephone = Telefon
 o = Null (in Telefonnummern)
 double = Doppel-
 See you. = Bis gleich. / Bis bald.
+
 # Unit 1 - The first day at school
 the first day = der erste Tag
 at school = in der Schule
@@ -240,6 +242,7 @@ What time is it? = Wie spät ist es?
 profile = Profil, Beschreibung, Portrait
 library = Bibliothek
 home = Heim, Zuhause
+
 # Unit 1 - Part A
 before school = vor der Schule (vor Schulbeginn)
 before lessons = vor dem Unterricht
@@ -280,6 +283,7 @@ about me = über mich
 about you = über dich
 at 1 o'clock = um 1 Uhr/um 13 Uhr
 appointment = Verabredung, Termin
+
 # Unit 1 - Part B
 Miss Bell = Frau Bell
 Good morning. = Guten Morgen.
@@ -337,6 +341,7 @@ fourth = vierter
 fifth = fünfter
 when? = wann?
 (to) write = schreiben
+
 # Unit 1 - Part C
 (to) find = finden
 Are there any ...? = Gibt es (irgendwelche) ...?
@@ -367,6 +372,7 @@ What's for homework? = Was haben wir als Hausaufgabe auf?
 homework = Hausaufgabe(n)
 There aren't any ... = Es gibt keine ...
 in German = auf Deutsch
+
 # Unit 1 - Chaos at the corner shop
 chaos = Chaos
 corner shop = Laden an der Ecke
@@ -390,6 +396,7 @@ man = Mann
 men = Männer
 woman = Frau
 women = Frauen
+
 # Unit 2 - Homes and families
 family = Familie
 families = Familien
@@ -483,6 +490,7 @@ divorced = geschieden
 married (to) = verheiratet (mit)
 single = ledig, alleinstehend
 twins = Zwillinge
+
 # Unit 2 - Part C
 What's for lunch? = Was gibt es zum Mittagessen?
 roast beef = Rinderbraten
@@ -543,41 +551,8 @@ never = nie, niemals
 story = Geschichte, Erzählung
 stories = Geschichten, Erzählungen
 it shows that ... = es zeigt, dass ...
-# Unit 3-captain
-sound = Geräusch, Klang
-attic = Dachboden
-boring = langweilig
-mouth = Mund, Maul
-diary = Tagebuch, Kalender
-diaries = Tagebücher
-address = Adresse, Anschrift
-sick = krank
-(to) hope = hoffen
-bottle = Flasche
-(to) smell = riechen
-Me too. = Ich auch.
-out of ... = aus ... (heraus/hinaus)
-(to) call = rufen, anrufen, rennen
-moon = Mond
-(to) walk = (zu Fuß) gehen
-along the street = die Straße entlang
-along the river = den Fluß entlang
-Oh, it's you. = Ach, du bist es.
-(to) bark = bellen
-step = Schritt
-voice = Stimme
-thief = Dieb(in
-thieves = Diebe
-hand = Hand
-(to) fight = kämpfen
-coin = Münze
-(to) taste = schmecken
-end = Ende, Schluß
-dream = Traum
-perfect = perfekt, ideal
-(to) understand = verstehen
 
-# Unit 3
+# Unit 3 - Clubs and hobbies
 hobby = Hobby
 hobbies = Hobbys
 some = einige, ein paar, etwas
@@ -602,7 +577,7 @@ instrument = Instrument
 (to) dance = tanzen
 from ... to ... = von ... bis ...
 
-# Unit 3a
+# Unit 3 - Part A
 (to) get angry = wütend werden
 (to) get cold = kalt werden
 wet = nass
@@ -657,7 +632,7 @@ outsise = draußen, nach draußen
 jump = Sprung
 letter = Brief
 
-# Unit 3b
+# Unit 3 - Part B
 (to) finish sth = etwas beenden; mit etwas fertig werden/sein
 Come on, Dad. = Na los, Dad! / Komm, Dad!
 How are you? = Wie geht's? Wie geht es dir/euch?
@@ -684,7 +659,7 @@ age = Alter
 also = auch
 metre = Meter
 
-# Unit 3c
+# Unit 3 - Part C
 on Saturday afternoon = am Samstagnachmittag
 (to) ride a bike = Rad fahren
 bike = Fahrrad
@@ -717,42 +692,41 @@ pound = Pfund (britische Währung)
 life = Leben
 in 1580 = im Jahr 1580
 
-# Unit 4-baby
-bright = strahlend
-eye = Auge
-(to) move = bewegen; sich bewegen
-over = über 
-(to) be hungry = hungrig sein; Hunger haben
-(to) push = drücken, schieben, stoßen
-head = Kopf
-body = Körper
-drink, drank = trinken (simple past)
-find, found = finden (simple past)
-put, put = legen, stellen (simple past)
-sit, sat = sitzen; sich setzen (simple past)
-throw, threw = werfen (simple past)
-wake up, woke up = aufwachen (simple past)
-sun = Sonne
-(to) go down = untergehen (Sonne)
-(to) steer = steuern, lenken
-only = erst
-someone is right = jemand hat Recht
-someone is wrong = jemand hat Unrecht
-front = Vorderseite
-Did you get it? = Hast du es verstanden? / Hast du es mitbekommen?
-slow = langsam
-hit, hit = gegen ... prallen (simple past)
-(to) pull = ziehen
-careful = vorsichtig
-(to) be cold = frieren
-(to) die = sterben
-cage = Käfig
-poor = arm
-get, got = bekommen (simple past)
-before = bevor
-soft = weich
-silky = seidig
-# Unit 4
+# Unit 3 - The captain's ghost
+sound = Geräusch, Klang
+attic = Dachboden
+boring = langweilig
+mouth = Mund, Maul
+diary = Tagebuch, Kalender
+diaries = Tagebücher
+address = Adresse, Anschrift
+sick = krank
+(to) hope = hoffen
+bottle = Flasche
+(to) smell = riechen
+Me too. = Ich auch.
+out of ... = aus ... (heraus/hinaus)
+(to) call = rufen, anrufen, rennen
+moon = Mond
+(to) walk = (zu Fuß) gehen
+along the street = die Straße entlang
+along the river = den Fluß entlang
+Oh, it's you. = Ach, du bist es.
+(to) bark = bellen
+step = Schritt
+voice = Stimme
+thief = Dieb(in
+thieves = Diebe
+hand = Hand
+(to) fight = kämpfen
+coin = Münze
+(to) taste = schmecken
+end = Ende, Schluß
+dream = Traum
+perfect = perfekt, ideal
+(to) understand = verstehen
+
+# Unit 4 - Weekends
 garage = Garage
 invitation (to) = Einladung (zu, nach)
 box = Kasten, Kiste, Kästchen
@@ -775,7 +749,8 @@ parents = Eltern
 shopping mall = (großes) Einkaufszentrum
 zoo = Zoo
 (to) go shoppinh = einkaufen gehen
-# Unit 4a
+
+# Unit 4 - Part A
 we/you/they were = wir/ihr/sie waren
 I/he/she/it was = ich/sie/es war
 yesterday = gestern
@@ -794,7 +769,8 @@ summer = Sommer
 chain = Kette
 Was it fun? = Hat es Spaß gemacht?
 warm = warm
-# Unit 4b
+
+# Unit 4 - Part B
 againt = gegen
 final = Finale, Endspiel
 excited = aufgeregt, gespannt
@@ -820,7 +796,8 @@ around the library = in der Bücherei umher
 aournd the beach = auf dem Strand umher
 between = zwischen
 visit = Besuch
-# Unit 4c
+
+# Unit 4 - Part C
 (to) miss = verpassen
 ride = Fahrt
 over to ... = hinüber zu/nach ...
@@ -859,7 +836,8 @@ say, said = sagen (simple past)
 swim, swam = schwimmen (simple past)
 take, took = nehmen (simple past)
 think, thought = denken (simple past)
-# Unit 4d
+
+# Unit 4 - Part D
 (to) smile = lächeln
 bite, bit = beißen (simple past)
 just = (einfach) nur; bloß
@@ -890,28 +868,44 @@ What is the story about? = Wovon handelt die Geschichte? / Worum geht es in der 
 (to) go with sth = zu etwas passen; zu etwas gehören
 buy, bought = kaufen (simple past)
 enough = genug
-# Unit 5-pepper
-play = Theaterstück
-scene = Szene
-farmer = Bauer/Bäuerin, Landwirt/in
-rich = reich
-soon = bald
-dress = Kleid
-Good luck! = Viel Glück!
-hold, held = halten (simple past)
-no one = niemand
-light = Licht
-cart = Karren
-like that = so (auf diese Weise)
-dangerous = gefählich
-sword = Schwert
-Goodbye. = Auf Wiedersehen.
-market = Markt
-(to) point sth at sb = etwas auf jn richten
-prison = Gefängnis
-fall, fell = fallen, stürzen, hinfallen (simple past)
-(to) sneeze = niesen
-# Unit 5
+
+# Unit 4 - A baby seal
+bright = strahlend
+eye = Auge
+(to) move = bewegen; sich bewegen
+over = über
+(to) be hungry = hungrig sein; Hunger haben
+(to) push = drücken, schieben, stoßen
+head = Kopf
+body = Körper
+drink, drank = trinken (simple past)
+find, found = finden (simple past)
+put, put = legen, stellen (simple past)
+sit, sat = sitzen; sich setzen (simple past)
+throw, threw = werfen (simple past)
+wake up, woke up = aufwachen (simple past)
+sun = Sonne
+(to) go down = untergehen (Sonne)
+(to) steer = steuern, lenken
+only = erst
+someone is right = jemand hat Recht
+someone is wrong = jemand hat Unrecht
+front = Vorderseite
+Did you get it? = Hast du es verstanden? / Hast du es mitbekommen?
+slow = langsam
+hit, hit = gegen ... prallen (simple past)
+(to) pull = ziehen
+careful = vorsichtig
+(to) be cold = frieren
+(to) die = sterben
+cage = Käfig
+poor = arm
+get, got = bekommen (simple past)
+before = bevor
+soft = weich
+silky = seidig
+
+# Unit 5 - By the sea
 by the sea = am Meer
 feel, felt = fühlen (simple past)
 face = Gesicht
@@ -925,7 +919,8 @@ send, sent = schicken, senden (simple past)
 sleep, slept = schlafen (simple past)
 understand, understood = verstehen (simple past)
 wear, wore = tragen (Kleidung) (simple past)
-# Unit 5a
+
+# Unit 5 - Part A
 trip = Ausflug, Reise
 ferry = Fähre
 (to) run after sb = hinter jm herrennen
@@ -939,7 +934,7 @@ almost = fast, beinahe
 It's my turn. = Ich bin dran / an der Reihe.
 (to) smell sth = an etwas riechen
 
-# Unit 5b
+# Unit 5 - Part B
 talk = Vortrag, Referat, Rede
 sleepover = Schlafparty
 bad = schlecht, schlimm
@@ -962,7 +957,7 @@ important = wichtig
 sign = Schild, Zeichen
 the same as ... = der- / die- /dasselbe wie ...
 
-# Unit 5c
+# Unit 5 - Part C
 choose, chose = aussuchen, auswählen (simple past)
 give, gave = geben (simple past)
 know, knew = wissen; kennen (simple past)
@@ -1007,3 +1002,26 @@ phrase = Ausdruck, (Rede-) Wendung
 easy = leicht, einfach
 get off (the bus), got off (the bus) = (aus dem Bus) aussteigen (simple past)
 get, got = gelangen, (hin) bekommen (simple past)
+
+# Unit 5 - The pepper smugglers - a play
+play = Theaterstück
+scene = Szene
+farmer = Bauer/Bäuerin, Landwirt/in
+rich = reich
+soon = bald
+dress = Kleid
+Good luck! = Viel Glück!
+hold, held = halten (simple past)
+no one = niemand
+light = Licht
+cart = Karren
+like that = so (auf diese Weise)
+dangerous = gefählich
+sword = Schwert
+Goodbye. = Auf Wiedersehen.
+market = Markt
+(to) point sth at sb = etwas auf jn richten
+prison = Gefängnis
+fall, fell = fallen, stürzen, hinfallen (simple past)
+(to) sneeze = niesen
+
