@@ -5,7 +5,7 @@
 <th:block layout:fragment="content">
     <div class="col-12">
         <ul class="list-group">
-            <li th:each="section:${book.sections}" class="list-group-item py+2"><a th:href="@{/books/{book}/begin(book=${book.name}, section=${section.key})}" th:text="${section.key}"></a></li>
+            <li th:each="entry:${book.sectionsWithNew(protocolBase)}" class="list-group-item py+2"><a th:href="@{/books/{book}/begin(book=${book.name}, title=${entry.key}, selection=${entry.value})}" th:text="${entry.key}"></a></li>
         </ul>
     </div>
 </th:block>

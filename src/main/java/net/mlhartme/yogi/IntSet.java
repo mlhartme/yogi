@@ -95,4 +95,9 @@ public class IntSet implements Iterable<Integer> {
         throw new IllegalStateException();
     }
 
+    public void retain(int count) {
+        while (data.size() > count) {
+            data.remove(data.size() - 1);
+        }
+    }
 }

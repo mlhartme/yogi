@@ -3,6 +3,7 @@ package net.mlhartme.yogi;
 import net.oneandone.sushi.fs.Node;
 import net.oneandone.sushi.fs.World;
 import net.oneandone.sushi.fs.file.FileNode;
+import net.oneandone.sushi.util.Separator;
 import net.oneandone.sushi.util.Strings;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -43,15 +44,17 @@ public class YogiController {
     public String book(Model model, @PathVariable(value = "book") String book) throws IOException {
         model.addAttribute("library", library);
         model.addAttribute("book", library.get(book));
+        model.addAttribute("protocolBase", protocolBase);
         return "book";
     }
 
     @RequestMapping("/books/{book}/begin")
-    public String begin(Model model, @PathVariable(value = "book") String bookName, String section) throws IOException {
+    public String begin(Model model, @PathVariable(value = "book") String bookName, @RequestParam("title") String title,
+                        @RequestParam("selection") String selectionStr) throws IOException {
         Exercise exercise;
 
-        exercise = Exercise.create(library.get(bookName), protocolBase, section);
-        exercise.logTitle(protocolBase, section);
+        exercise = Exercise.create(library.get(bookName), protocolBase, title, IntSet.parse(Separator.COMMA.split(selectionStr)));
+        exercise.logTitle(protocolBase, title);
         return "redirect:question?e=" + urlencode(exercise.toParam());
     }
 

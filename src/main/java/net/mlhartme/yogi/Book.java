@@ -1,12 +1,16 @@
 package net.mlhartme.yogi;
 
 import net.oneandone.sushi.fs.Node;
+import net.oneandone.sushi.fs.file.FileNode;
 import net.oneandone.sushi.util.Strings;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class Book implements Comparable<Book> {
     public static final String EXT = ".yogi";
@@ -54,6 +58,47 @@ public class Book implements Comparable<Book> {
         this.sections = new LinkedHashMap<>();
         this.lefts = new ArrayList<>();
         this.rights = new ArrayList<>();
+    }
+
+    public Map<String, IntSet> sectionsWithNew(FileNode protocolBase) throws IOException {
+        LinkedHashMap<String, IntSet> result;
+        IntSet newWords;
+        int count;
+        int orig;
+
+        result = new LinkedHashMap<>(sections.size() + 1);
+        result.putAll(sections);
+        newWords = newWords(protocolBase);
+        if (newWords.size() > 0) {
+            orig = newWords.size();
+            count = Math.min(20, orig);
+            newWords.retain(count);
+            result.put(count + " neue Worte von " + orig, newWords);
+        }
+        return result;
+    }
+
+    public IntSet newWords(FileNode protocolBase) throws IOException {
+        IntSet result;
+        Protocol protocol;
+        Set<String> questions;
+
+        questions = new HashSet<>();
+        for (FileNode node : protocolBase.find(this.name + "/*.log")) {
+            protocol = Protocol.load(node);
+            for (Map.Entry<Integer, List<String>> entry : protocol.histogramRaw().entrySet()) {
+                if (entry.getKey() > 0) {
+                    questions.addAll(entry.getValue());
+                }
+            }
+        }
+        result = new IntSet();
+        for (int i = 0; i < lefts.size(); i++) {
+            if (!questions.contains(lefts.get(i))) {
+                result.add(i);
+            }
+        }
+        return result;
     }
 
     public int size() {
