@@ -2,10 +2,12 @@ package net.mlhartme.yogi;
 
 import net.oneandone.sushi.fs.World;
 import net.oneandone.sushi.fs.file.FileNode;
+import net.oneandone.sushi.util.Strings;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
@@ -17,7 +19,7 @@ public class ProtocolTest {
         FileNode file;
         Protocol p;
         Map<String, Integer> tries;
-        Map<Integer, Integer> hist;
+        Map<Integer, List<String>> hist;
 
         w = World.create();
         file = w.guessProjectHome(getClass()).join("src/test/1.log");
@@ -30,9 +32,9 @@ public class ProtocolTest {
         assertEquals(tries, p.questionCount());
 
         hist = new HashMap<>();
-        hist.put(1, 1);
-        hist.put(2, 1);
-        hist.put(3, 1);
+        hist.put(1, Strings.toList("2"));
+        hist.put(2, Strings.toList("3"));
+        hist.put(3, Strings.toList("1"));
         assertEquals(hist, p.histogramRaw());
     }
 
@@ -42,7 +44,7 @@ public class ProtocolTest {
         FileNode file;
         Protocol p;
         Map<String, Integer> tries;
-        Map<Integer, Integer> hist;
+        Map<Integer, List<String>> hist;
 
         w = World.create();
         file = w.guessProjectHome(getClass()).join("src/test/2.log");
@@ -54,8 +56,8 @@ public class ProtocolTest {
         assertEquals(tries, p.questionCount());
 
         hist = new HashMap<>();
-        hist.put(1, 1);
-        hist.put(Protocol.NOT_ANSWERED, 1);
+        hist.put(1, Strings.toList("2"));
+        hist.put(Protocol.NOT_ANSWERED, Strings.toList("3"));
         assertEquals(hist, p.histogramRaw());
     }
 }

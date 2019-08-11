@@ -63,12 +63,12 @@ public class Protocol {
 
     public int words() {
         int result;
-        Map<Integer, Integer> raw;
+        Map<Integer, List<String>> raw;
 
         raw = histogramRaw();
         result = 0;
-        for (Integer i : raw.values()) {
-            result += i;
+        for (List<String> lst : raw.values()) {
+            result += lst.size();
         }
         return result;
     }
@@ -97,36 +97,45 @@ public class Protocol {
 
     public Map<Integer, String> histogram() {
         int words;
-        Map<Integer, Integer> raw;
+        Map<Integer, List<String>> raw;
         Map<Integer, String> result;
 
         words = words();
         raw = histogramRaw();
         result = new TreeMap<>();
-        for (Map.Entry<Integer, Integer> entry : raw.entrySet()) {
-            result.put(entry.getKey(), Integer.toString(entry.getValue() * 100 / words));
+        for (Map.Entry<Integer, List<String>> entry : raw.entrySet()) {
+            result.put(entry.getKey(), Integer.toString(entry.getValue().size() * 100 / words));
         }
         return result;
     }
 
     public static final int NOT_ANSWERED = 999;
 
-    public Map<Integer, Integer> histogramRaw() {
-        Map<Integer, Integer> result;
-        Integer n;
+    /** @return maps number of tries to questions with that number */
+    public Map<Integer, List<String>> histogramRaw() {
+        Map<Integer, List<String>> result;
+        int count;
+        String question;
+        List<String> questions;
 
         result = new HashMap<>();
-        for (Integer count : questionCount().values()) {
+        for (Map.Entry<String, Integer> entry : questionCount().entrySet()) {
+            count = entry.getValue();
+            question = entry.getKey();
             if (count < 0) {
                 count = NOT_ANSWERED;
             }
-            n = result.get(count);
-            n = n == null ? 1 : n + 1;
-            result.put(count, n);
+            questions = result.get(count);
+            if (questions == null) {
+                questions = new ArrayList<>();
+                result.put(count, questions);
+            }
+            questions.add(question);
         }
         return result;
     }
 
+    /** @return map question to number of tries */
     public Map<String, Integer> questionCount() {
         String again;
         Map<String, Integer> result;
