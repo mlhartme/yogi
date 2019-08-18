@@ -102,6 +102,16 @@ public class Book implements Comparable<Book> {
         return result;
     }
 
+    public static String style(int percent) {
+        if (percent < 34) {
+            return "color: red;";
+        } else if (percent < 67) {
+            return "color: yellow;";
+        } else {
+            return "color: green;";
+        }
+    }
+
     /** @return question mapped to nummer of tries */
     public Map<String, Integer> lastTries(FileNode protocolBase) throws IOException {
         List<FileNode> logs;
@@ -130,7 +140,7 @@ public class Book implements Comparable<Book> {
         count = 0;
         for (Integer question : selection) {
             tries = lastTries.get(lefts.get(question));
-            if (tries != null && tries == 1) {
+            if (tries != null && tries < 3) {
                 count++;
             }
         }

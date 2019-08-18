@@ -7,8 +7,9 @@
         <ul class="list-group" th:with="lastTries=${book.lastTries(protocolBase)}">
             <li th:each="entry:${book.sectionsWithNew(protocolBase)}" class="list-group-item py+2">
                 <a th:with="first=${book.firstHits(lastTries, entry.value)}"
-                   th:href="@{/books/{book}/begin(book=${book.name}, title=${entry.key}, selection=${entry.value})}"
-                   th:text="${first + ' ' + entry.key}"></a>
+                   th:href="@{/books/{book}/begin(book=${book.name}, title=${entry.key}, selection=${entry.value})}">
+                    <span th:style="${book.style(first)}">&#x25cf; </span><span th:text="${first + ' ' + entry.key}"></span>
+                </a>
             </li>
         </ul>
     </div>
