@@ -103,14 +103,18 @@ public class Book implements Comparable<Book> {
     }
 
     public static String style(int percent) {
-        if (percent < 20) {
+        if (percent < 5) {
             return "color: red;";
+        } else if (percent < 20) {
+            return "color: lightred;";
         } else if (percent < 40) {
             return "color: orange;";
         } else if (percent < 60) {
             return "color: yellow;";
         } else if (percent < 80) {
             return "color: yellowgreen;";
+        } else if (percent < 95) {
+            return "color: lightgreen;";
         } else {
             return "color: green;";
         }
