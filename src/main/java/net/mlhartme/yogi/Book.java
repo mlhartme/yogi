@@ -6,6 +6,7 @@ import net.oneandone.sushi.util.Strings;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -84,7 +85,7 @@ public class Book implements Comparable<Book> {
         Set<String> questions;
 
         questions = new HashSet<>();
-        for (FileNode node : protocolBase.find(this.name + "/*.log")) {
+        for (FileNode node : Protocol.list(protocolBase, name)) {
             protocol = Protocol.load(node);
             for (Map.Entry<Integer, List<String>> entry : protocol.histogramRaw().entrySet()) {
                 if (entry.getKey() > 0) {
@@ -99,6 +100,41 @@ public class Book implements Comparable<Book> {
             }
         }
         return result;
+    }
+
+    /** @return question mapped to nummer of tries */
+    public Map<String, Integer> lastTries(FileNode protocolBase) throws IOException {
+        List<FileNode> logs;
+        Protocol protocol;
+        Map<String, Integer> result;
+        int count;
+
+        result = new HashMap<>();
+        logs = Protocol.list(protocolBase, name);
+        for (FileNode node : logs) {
+            protocol = Protocol.load(node);
+            for (Map.Entry<Integer, List<String>> entry : protocol.histogramRaw().entrySet()) {
+                count = entry.getKey();
+                for (String question : entry.getValue()) {
+                    result.put(question, count);
+                }
+            }
+        }
+        return result;
+    }
+
+    public int firstHits(Map<String, Integer> lastTries, IntSet selection) {
+        Integer tries;
+        int count;
+
+        count = 0;
+        for (Integer question : selection) {
+            tries = lastTries.get(lefts.get(question));
+            if (tries != null && tries == 1) {
+                count++;
+            }
+        }
+        return count * 100 / selection.size();
     }
 
     public int size() {

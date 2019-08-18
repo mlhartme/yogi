@@ -4,8 +4,10 @@
       layout:decorate="~{layout.html}">
 <th:block layout:fragment="content">
     <div class="col-12">
-        <ul class="list-group">
-            <li th:each="entry:${book.sectionsWithNew(protocolBase)}" class="list-group-item py+2"><a th:href="@{/books/{book}/begin(book=${book.name}, title=${entry.key}, selection=${entry.value})}" th:text="${entry.key}"></a></li>
+        <ul class="list-group" th:with="lastTries=${book.lastTries(protocolBase)}">
+            <li th:each="entry:${book.sectionsWithNew(protocolBase)}" class="list-group-item py+2">
+                <a th:href="@{/books/{book}/begin(book=${book.name}, title=${entry.key}, selection=${entry.value})}" th:text="${entry.key  + ' ' + book.firstHits(lastTries, entry.value)}"></a>
+            </li>
         </ul>
     </div>
 </th:block>

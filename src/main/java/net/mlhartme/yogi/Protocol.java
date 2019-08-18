@@ -2,11 +2,14 @@ package net.mlhartme.yogi;
 
 import net.oneandone.sushi.fs.file.FileNode;
 import net.oneandone.sushi.util.Strings;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +17,37 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class Protocol {
+    @RequestMapping("/books/{book}/protocols/")
+    public static List<FileNode> list(FileNode protocolBase, String book) throws IOException {
+        List<FileNode> lst;
+
+        lst = protocolBase.join(book).find("*.log");
+        Collections.sort(lst, new Comparator<FileNode>() {
+            @Override
+            public int compare(FileNode o1, FileNode o2) {
+                Integer left;
+                Integer right;
+
+                try {
+                    left = Integer.parseInt(o1.getName());
+                } catch (NumberFormatException e) {
+                    left = null;
+                }
+                try {
+                    right = Integer.parseInt(o2.getName());
+                } catch (NumberFormatException e) {
+                    right = null;
+                }
+                if (left != null && right != null) {
+                    return left.compareTo(right);
+                } else {
+                    return o1.getName().compareTo(o2.getName());
+                }
+            }
+        });
+        return lst;
+    }
+
     public static final SimpleDateFormat FMT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public static Protocol load(FileNode src) throws IOException {
@@ -135,7 +169,7 @@ public class Protocol {
         return result;
     }
 
-    /** @return map question to number of tries */
+    /** @return map question to number of +/- tries; positive, if the last try was correct */
     public Map<String, Integer> questionCount() {
         String again;
         Map<String, Integer> result;
