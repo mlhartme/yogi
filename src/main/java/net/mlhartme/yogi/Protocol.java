@@ -20,8 +20,13 @@ public class Protocol {
     @RequestMapping("/books/{book}/protocols/")
     public static List<FileNode> list(FileNode protocolBase, String book) throws IOException {
         List<FileNode> lst;
+        FileNode dir;
 
-        lst = protocolBase.join(book).find("*.log");
+        dir = protocolBase.join(book);
+        if (!dir.exists()) {
+            return new ArrayList<>();
+        }
+        lst = dir.find("*.log");
         Collections.sort(lst, new Comparator<FileNode>() {
             @Override
             public int compare(FileNode o1, FileNode o2) {
