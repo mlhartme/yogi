@@ -18,11 +18,11 @@ public class YogiSecurity extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .anyRequest().authenticated()
-                .and()
+              .and()
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
-                .and()
+              .and()
                 .logout()
                 .permitAll();
     }
@@ -30,14 +30,14 @@ public class YogiSecurity extends WebSecurityConfigurerAdapter {
     @Bean
     @Override
     public UserDetailsService userDetailsService() {
-        UserDetails user;
+        return new InMemoryUserDetailsManager(user("Jakob", "3011"), user("Benjamin", "0908"));
+    }
 
-        user = User.withDefaultPasswordEncoder()
-                        .username("mhm")
-                        .password("mhm")
-                        .roles("USER")
-                        .build();
-
-        return new InMemoryUserDetailsManager(user);
+    private static UserDetails user(String name, String pw) {
+        return User.withDefaultPasswordEncoder()
+                .username(name)
+                .password(pw)
+                .roles("USER")
+                .build();
     }
 }
