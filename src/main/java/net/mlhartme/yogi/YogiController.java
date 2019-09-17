@@ -39,7 +39,7 @@ public class YogiController {
 
 
     private FileNode protocolBase() throws MkdirException {
-        return protocolRoot.join(username()).mkdirsOpt();
+        return protocolRoot.join(YogiSecurity.username()).mkdirsOpt();
     }
 
     @RequestMapping("/")
@@ -58,24 +58,6 @@ public class YogiController {
         model.addAttribute("book", library.get(book));
         model.addAttribute("protocolBase", protocolBase());
         return "book";
-    }
-
-    public static String username() {
-        User user;
-
-        user = userOpt();
-        return user == null ? "anonymous" : user.getUsername();
-    }
-
-    /** return null if not authenticated */
-    public static User userOpt() {
-        Authentication authentication;
-
-        authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null) {
-            return null;
-        }
-        return (User) authentication.getPrincipal();
     }
 
     @RequestMapping("/books/{book}/begin")
