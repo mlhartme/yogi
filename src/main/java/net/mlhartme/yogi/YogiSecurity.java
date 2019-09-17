@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 public class YogiSecurity extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.csrf().disable() // TODO: post logout and get rid of this ...
                 .authorizeRequests()
                 .anyRequest().authenticated()
               .and()
@@ -28,6 +28,7 @@ public class YogiSecurity extends WebSecurityConfigurerAdapter {
                 .permitAll()
               .and()
                 .logout()
+                .logoutSuccessUrl("/")
                 .permitAll();
     }
 
