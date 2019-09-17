@@ -40,6 +40,11 @@ public class YogiController {
         return "redirect:/books/" + library.iterator().next().name + "/";
     }
 
+    @RequestMapping("/login")
+    public String login() {
+        return "login";
+    }
+    
     @RequestMapping("/books/{book}/")
     public String book(Model model, @PathVariable(value = "book") String book) throws IOException {
         model.addAttribute("library", library);
