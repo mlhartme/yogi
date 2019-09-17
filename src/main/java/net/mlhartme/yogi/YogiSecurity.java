@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -22,11 +23,20 @@ public class YogiSecurity extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
               .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("/")
+                .successHandler(successHandler())
                 .permitAll()
               .and()
                 .logout()
                 .permitAll();
+    }
+
+    private static SavedRequestAwareAuthenticationSuccessHandler successHandler() {
+        SavedRequestAwareAuthenticationSuccessHandler result;
+
+        result = new SavedRequestAwareAuthenticationSuccessHandler();
+        result.setDefaultTargetUrl("/books");
+        return result;
     }
 
     @Bean

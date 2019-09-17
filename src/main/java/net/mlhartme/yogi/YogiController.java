@@ -43,13 +43,13 @@ public class YogiController {
     }
 
     @RequestMapping("/")
-    public String index(Model model) throws IOException {
-        return "redirect:/books/" + library.iterator().next().name + "/";
+    public String index() {
+        return "index";
     }
 
-    @RequestMapping("/login")
-    public String login() {
-        return "login";
+    @RequestMapping("/books")
+    public String books(Model model) throws IOException {
+        return "redirect:/books/" + library.iterator().next().name + "/";
     }
 
     @RequestMapping("/books/{book}/")
