@@ -5,6 +5,8 @@
 <th:block layout:fragment="content">
     <div class="col-12">
         <h4 th:text="${title}"></h4>
+        <a th:href="@{/books/{book}/begin(book=${book.name}, title=${title}, selection=${selection})}">Üben</a>
+        <a th:href="@{/books/{book}/(book=${book.name})}">Zurück</a>
         <div class="col-12">
             <table class="table">
                 <tbody>
