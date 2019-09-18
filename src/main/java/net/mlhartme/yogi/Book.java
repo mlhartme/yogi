@@ -79,6 +79,16 @@ public class Book implements Comparable<Book> {
         return result;
     }
 
+    public Map<String, String> selection(IntSet selection) {
+        LinkedHashMap<String, String> result;
+
+        result = new LinkedHashMap<>(sections.size());
+        for (Integer integer : selection) {
+            result.put(lefts.get(integer), rights.get(integer));
+        }
+        return result;
+    }
+
     public IntSet newWords(FileNode protocolBase) throws IOException {
         IntSet result;
         Protocol protocol;

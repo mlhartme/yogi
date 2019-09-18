@@ -61,6 +61,19 @@ public class YogiController {
         return "book";
     }
 
+    @RequestMapping("/books/{book}/selection")
+    public String selection(Model model, @PathVariable(value = "book") String bookName, @RequestParam("title") String title,
+                            @RequestParam("selection") String selectionStr) throws IOException {
+        IntSet selection;
+
+        selection = IntSet.parse(Separator.COMMA.split(selectionStr));
+        model.addAttribute("library", library);
+        model.addAttribute("book", library.get(bookName));
+        model.addAttribute("title", title);
+        model.addAttribute("selection", selection);
+        return "selection";
+    }
+
     @RequestMapping("/books/{book}/begin")
     public String begin(Model model, @PathVariable(value = "book") String bookName, @RequestParam("title") String title,
                         @RequestParam("selection") String selectionStr) throws IOException {

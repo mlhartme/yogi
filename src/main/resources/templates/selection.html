@@ -1,0 +1,20 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<th:block layout:fragment="content">
+    <div class="col-12">
+        <h4 th:text="${title}"></h4>
+        <div class="col-12">
+            <table class="table">
+                <tbody>
+                    <tr th:each="entry:${book.selection(selection)}">
+                        <td th:text="${entry.key}"></td>
+                        <td th:text="${entry.value}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</th:block>
+</html>
