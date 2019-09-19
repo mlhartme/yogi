@@ -292,6 +292,7 @@ public class Protocol {
             }
             prev = entry;
         }
-        return new AnswerTiming(durationString(min), durationString(max), durationString(avg / count));
+        return count == 0 ? new AnswerTiming("-", "-", "-")
+                : new AnswerTiming(durationString(min), durationString(max), durationString(avg / count));
     }
 }
