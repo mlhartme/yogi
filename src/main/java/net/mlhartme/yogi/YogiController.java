@@ -1,15 +1,10 @@
 package net.mlhartme.yogi;
 
 import net.oneandone.sushi.fs.MkdirException;
-import net.oneandone.sushi.fs.Node;
 import net.oneandone.sushi.fs.World;
 import net.oneandone.sushi.fs.file.FileNode;
 import net.oneandone.sushi.util.Separator;
-import net.oneandone.sushi.util.Strings;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -94,18 +88,16 @@ public class YogiController {
 
     @RequestMapping("/books/{book}/protocols/")
     public String protocols(Model model, @PathVariable(value = "book") String book) throws IOException {
-        List<Integer> ids;
-        LinkedHashMap<Integer, String> map;
+        List<FileNode> protocols;
+        LinkedHashMap<String, String> map;
+        String basename;
 
-        ids = new ArrayList<>();
-        for (Node<?> node : protocolBase().find(book + "/*.log")) {
-            ids.add(Integer.parseInt(Strings.removeRight(node.getName(), ".log")));
-        }
-        Collections.sort(ids);
-        Collections.reverse(ids);
+        protocols = Protocol.list(protocolBase(), book);
+        Collections.reverse(protocols);
         map = new LinkedHashMap<>();
-        for (int id : ids) {
-            map.put(id, id + ": " + Protocol.load(protocolBase().join(book, id + ".log")).title());
+        for (FileNode log : protocols) {
+            basename = log.getBasename();
+            map.put(basename, basename + ": " + Protocol.load(log).title());
         }
         model.addAttribute("map", map);
         model.addAttribute("book", library.get(book));

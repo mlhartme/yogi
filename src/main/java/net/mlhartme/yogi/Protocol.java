@@ -33,16 +33,8 @@ public class Protocol {
                 Integer left;
                 Integer right;
 
-                try {
-                    left = Integer.parseInt(o1.getName());
-                } catch (NumberFormatException e) {
-                    left = null;
-                }
-                try {
-                    right = Integer.parseInt(o2.getName());
-                } catch (NumberFormatException e) {
-                    right = null;
-                }
+                left = numberOpt(o1);
+                right = numberOpt(o2);
                 if (left != null && right != null) {
                     return left.compareTo(right);
                 } else {
@@ -51,6 +43,14 @@ public class Protocol {
             }
         });
         return lst;
+    }
+
+    private static Integer numberOpt(FileNode log) {
+        try {
+            return Integer.parseInt(log.getBasename());
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
     public static final SimpleDateFormat FMT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

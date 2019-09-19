@@ -3,6 +3,7 @@
 ## 1.0.1 (pending)
 
 * added multi user support
+* fixed protocol sorting
 * fixed IO exception when logs directory is wiped.
 
 

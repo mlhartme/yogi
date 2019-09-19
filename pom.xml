@@ -58,7 +58,7 @@
 		<dependency>
 			<groupId>net.oneandone</groupId>
 			<artifactId>sushi</artifactId>
-			<version>3.2.2</version>
+			<version>3.2.3-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
