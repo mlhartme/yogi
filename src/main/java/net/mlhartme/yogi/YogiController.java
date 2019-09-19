@@ -61,6 +61,7 @@ public class YogiController {
         IntSet selection;
 
         selection = IntSet.parse(Separator.COMMA.split(selectionStr));
+        model.addAttribute("protocolBase", protocolBase());
         model.addAttribute("library", library);
         model.addAttribute("book", library.get(bookName));
         model.addAttribute("title", title);

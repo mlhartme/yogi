@@ -72,7 +72,7 @@ public class Protocol {
             this.text = text;
         }
     }
-    private final List<Entry> entries; // cannot use a map because of duplicte keys
+    private final List<Entry> entries; // cannot use a map because of duplicate keys
 
     public Protocol() {
         entries = new ArrayList<>();
