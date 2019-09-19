@@ -27,7 +27,7 @@ public class YogiController {
     private final Library library;
 
     public YogiController(World world) throws IOException {
-        this.protocolRoot = world.getWorking().join("logs");
+        this.protocolRoot = world.getWorking().join("protocols");
         this.library = Library.load(world.resource("books"));
     }
 

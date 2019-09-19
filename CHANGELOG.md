@@ -3,6 +3,8 @@
 ## 1.0.1 (pending)
 
 * added multi user support
+
+* renamed `logs` directory to `protocols`
 * fixed protocol sorting
 * fixed IO exception when logs directory is wiped.
 * fixed divide by 0 for empty protocols
