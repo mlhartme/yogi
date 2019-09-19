@@ -130,12 +130,13 @@ public class Book implements Comparable<Book> {
         }
     }
 
-    /** @return question mapped to nummer of tries */
-    public Map<String, Integer> lastTries(FileNode protocolBase) throws IOException {
+    /** @return question mapped to number of tries list */
+    public Map<String, List<Integer>> statistics(FileNode protocolBase) throws IOException {
         List<FileNode> logs;
         Protocol protocol;
-        Map<String, Integer> result;
+        Map<String, List<Integer>> result;
         int count;
+        List<Integer> tries;
 
         result = new HashMap<>();
         logs = Protocol.list(protocolBase, name);
@@ -144,21 +145,26 @@ public class Book implements Comparable<Book> {
             for (Map.Entry<Integer, List<String>> entry : protocol.histogramRaw().entrySet()) {
                 count = entry.getKey();
                 for (String question : entry.getValue()) {
-                    result.put(question, count);
+                    tries = result.get(question);
+                    if (tries == null) {
+                        tries = new ArrayList<>();
+                        result.put(question, tries);
+                    }
+                    tries.add(count);
                 }
             }
         }
         return result;
     }
 
-    public int firstHits(Map<String, Integer> lastTries, IntSet selection) {
-        Integer tries;
+    public int fastHits(Map<String, List<Integer>> statistics, IntSet selection) {
+        List<Integer> tries;
         int count;
 
         count = 0;
         for (Integer question : selection) {
-            tries = lastTries.get(lefts.get(question));
-            if (tries != null && tries < 3) {
+            tries = statistics.get(lefts.get(question));
+            if (tries != null && tries.get(tries.size() - 1) < 3) {
                 count++;
             }
         }

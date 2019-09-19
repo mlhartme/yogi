@@ -4,9 +4,9 @@
       layout:decorate="~{layout.html}">
 <th:block layout:fragment="content">
     <div class="col-12">
-        <ul class="list-group" th:with="lastTries=${book.lastTries(protocolBase)}">
+        <ul class="list-group" th:with="statistics=${book.statistics(protocolBase)}">
             <li th:each="entry:${book.sectionsWithNew(protocolBase)}" class="list-group-item py+2">
-                <a th:with="first=${book.firstHits(lastTries, entry.value)}"
+                <a th:with="first=${book.fastHits(statistics, entry.value)}"
                    th:href="@{/books/{book}/selection(book=${book.name}, title=${entry.key}, selection=${entry.value})}">
                     <span data-toggle="tooltip" th:title="${first + ' %'}" th:style="${book.style(first)}">&#x25cf; </span><span th:text="${entry.key}"></span>
                 </a>
