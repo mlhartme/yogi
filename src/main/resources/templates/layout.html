@@ -78,7 +78,7 @@ body {
                 <div class="modal-content">
                     <div class="modal-body">
                         <h5 class="modal-title">Übung wirklich beenden?</h5>
-                        <a href="/" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Ja</a>
+                        <a th:href="${'/books/' + book + '/'}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Ja</a>
                         <button type="button" class="btn btn-primary btn-sm active" data-dismiss="modal" aria-label="Close">
                             Nein
                         </button>
