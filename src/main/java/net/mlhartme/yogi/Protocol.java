@@ -2,7 +2,6 @@ package net.mlhartme.yogi;
 
 import net.oneandone.sushi.fs.file.FileNode;
 import net.oneandone.sushi.util.Strings;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -17,7 +16,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class Protocol {
-    @RequestMapping("/books/{book}/protocols/")
     public static List<FileNode> list(FileNode protocolBase, String book) throws IOException {
         List<FileNode> lst;
         FileNode dir;
