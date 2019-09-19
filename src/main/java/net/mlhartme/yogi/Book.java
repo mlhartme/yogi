@@ -6,7 +6,6 @@ import net.oneandone.sushi.util.Strings;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -59,6 +58,10 @@ public class Book implements Comparable<Book> {
         this.sections = new LinkedHashMap<>();
         this.lefts = new ArrayList<>();
         this.rights = new ArrayList<>();
+    }
+
+    public Statistics statistics(FileNode protocolBase) throws IOException {
+        return Statistics.collect(protocolBase, name);
     }
 
     public Map<String, IntSet> sectionsWithNew(FileNode protocolBase) throws IOException {
@@ -128,47 +131,6 @@ public class Book implements Comparable<Book> {
         } else {
             return "color: green;";
         }
-    }
-
-    /** @return question mapped to number of tries list */
-    public Map<String, List<Integer>> statistics(FileNode protocolBase) throws IOException {
-        List<FileNode> logs;
-        Protocol protocol;
-        Map<String, List<Integer>> result;
-        int count;
-        List<Integer> tries;
-
-        result = new HashMap<>();
-        logs = Protocol.list(protocolBase, name);
-        for (FileNode node : logs) {
-            protocol = Protocol.load(node);
-            for (Map.Entry<Integer, List<String>> entry : protocol.histogramRaw().entrySet()) {
-                count = entry.getKey();
-                for (String question : entry.getValue()) {
-                    tries = result.get(question);
-                    if (tries == null) {
-                        tries = new ArrayList<>();
-                        result.put(question, tries);
-                    }
-                    tries.add(count);
-                }
-            }
-        }
-        return result;
-    }
-
-    public int fastHits(Map<String, List<Integer>> statistics, IntSet selection) {
-        List<Integer> tries;
-        int count;
-
-        count = 0;
-        for (Integer question : selection) {
-            tries = statistics.get(lefts.get(question));
-            if (tries != null && tries.get(tries.size() - 1) < 3) {
-                count++;
-            }
-        }
-        return count * 100 / selection.size();
     }
 
     public int size() {
