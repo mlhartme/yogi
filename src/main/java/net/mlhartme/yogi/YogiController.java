@@ -69,11 +69,14 @@ public class YogiController {
         return "selection";
     }
 
-    @RequestMapping("/books/{book}/begin")
-    public String begin(Model model, @PathVariable(value = "book") String bookName, @RequestParam("title") String title,
-                        @RequestParam("selection") String selectionStr) throws IOException {
+    @RequestMapping("/books/{book}/start")
+    public String start(@PathVariable(value = "book") String bookName,
+                        @RequestParam("title") String title, @RequestParam("selection") String selectionStr,
+                        @RequestParam("count") String countOrAll, @RequestParam("scope") String scope) throws IOException {
         Exercise exercise;
 
+        System.out.println("scope: " + scope);
+        System.out.println("count: " + countOrAll);
         exercise = Exercise.create(library.get(bookName), protocolBase(), title, IntSet.parse(Separator.COMMA.split(selectionStr)));
         exercise.logTitle(protocolBase(), title);
         return "redirect:question?e=" + urlencode(exercise.toParam());
