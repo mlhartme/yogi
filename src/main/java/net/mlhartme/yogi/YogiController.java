@@ -74,10 +74,25 @@ public class YogiController {
                         @RequestParam("title") String title, @RequestParam("selection") String selectionStr,
                         @RequestParam("count") String countOrAll, @RequestParam("scope") String scope) throws IOException {
         Exercise exercise;
+        Book book;
+        IntSet newWords;
+        IntSet selection;
 
         System.out.println("scope: " + scope);
         System.out.println("count: " + countOrAll);
-        exercise = Exercise.create(library.get(bookName), protocolBase(), title, IntSet.parse(Separator.COMMA.split(selectionStr)));
+        book = library.get(bookName);
+        newWords = book.newWords(protocolBase());
+        selection = IntSet.parse(Separator.COMMA.split(selectionStr));
+        if (scope.equals("new")) {
+            selection.retain(newWords);
+        } else {
+            selection.removeAll(newWords);
+        }
+        if (!countOrAll.equals("all")) {
+            selection.retain(Integer.parseInt(countOrAll));
+        }
+        System.out.println("selection: " + selection);
+        exercise = Exercise.create(book, protocolBase(), title, selection);
         exercise.logTitle(protocolBase(), title);
         return "redirect:question?e=" + urlencode(exercise.toParam());
     }

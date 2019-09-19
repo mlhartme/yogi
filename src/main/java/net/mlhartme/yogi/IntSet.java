@@ -100,4 +100,26 @@ public class IntSet implements Iterable<Integer> {
             data.remove(data.size() - 1);
         }
     }
+
+    public void retain(IntSet set) {
+        int value;
+
+        for (int i = data.size() -1; i >= 0; i--) {
+            value = data.get(i);
+            if (!set.contains(value)) {
+                data.remove(i);
+            }
+        }
+    }
+
+    public void removeAll(IntSet set) {
+        int value;
+
+        for (int i = data.size() -1; i >= 0; i--) {
+            value = data.get(i);
+            if (set.contains(value)) {
+                data.remove(i);
+            }
+        }
+    }
 }

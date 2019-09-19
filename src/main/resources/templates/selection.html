@@ -19,15 +19,15 @@
                                 <input name="book" id="book" th:value="${book.name}" type="hidden"/>
                                 <input name="title" id="title" th:value="${title}" type="hidden"/>
                                 <input name="selection" id="selection" th:value="${selection}" type="hidden"/>
-                                <select class="form-control" value="20" name="count" id="count">
+                                <select class="form-control" select="20" name="count" id="count">
                                     <option>15</option>
                                     <option>20</option>
                                     <option>25</option>
-                                    <option>alle</option>
+                                    <option value="all">alle</option>
                                 </select>
                                 <select class="form-control" name="scope" id="scope">
-                                    <option>Bekannte Vokabel</option>
-                                    <option>Neue Vokabeln</option>
+                                    <option value="known">Bekannte Vokabel</option>
+                                    <option value="new">Neue Vokabeln</option>
                                 </select>
                             </div>
                         </div>
