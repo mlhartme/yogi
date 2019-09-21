@@ -44,7 +44,9 @@ public class YogiSecurity extends WebSecurityConfigurerAdapter {
     @Bean
     @Override
     public UserDetailsService userDetailsService() {
-        return new InMemoryUserDetailsManager(user("Jakob", "3011"), user("Benjamin", "0908"));
+        return new InMemoryUserDetailsManager(user("Jakob", "3011"),
+                user("Benjamin", "0908"),
+                user("Michael", "0809"));
     }
 
     private static UserDetails user(String name, String pw) {

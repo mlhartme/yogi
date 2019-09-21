@@ -11,17 +11,14 @@ import java.util.Map;
 
 /** represents the log file for one book */
 public class Statistics {
-    /** @return question mapped to number of tries list */
-    private final Map<String, List<Integer>> map;
-
-    public static Statistics collect(FileNode protocolBase, String book) throws IOException {
+    public static Statistics collect(FileNode protocolBase, Book book) throws IOException {
         List<FileNode> logs;
         Protocol protocol;
         Statistics result;
         int count;
 
-        result = new Statistics();
-        logs = Protocol.list(protocolBase, book);
+        result = new Statistics(book.newWords(protocolBase));
+        logs = Protocol.list(protocolBase, book.name);
         for (FileNode node : logs) {
             protocol = Protocol.load(node);
             for (Map.Entry<Integer, List<String>> entry : protocol.histogramRaw().entrySet()) {
@@ -36,8 +33,32 @@ public class Statistics {
 
     //--
 
-    public Statistics() {
+    /** @return question mapped to number of tries list */
+    private final Map<String, List<Integer>> map;
+
+    public final IntSet newWords;
+
+    public Statistics(IntSet newWords) {
         this.map = new HashMap<>();
+        this.newWords = newWords;
+    }
+
+    public boolean hasKnown(IntSet selection) {
+        for (Integer i : selection) {
+            if (!newWords.contains(i)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasNew(IntSet selection) {
+        for (Integer i : selection) {
+            if (newWords.contains(i)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void add(String question, int count) {

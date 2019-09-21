@@ -61,24 +61,14 @@ public class Book implements Comparable<Book> {
     }
 
     public Statistics statistics(FileNode protocolBase) throws IOException {
-        return Statistics.collect(protocolBase, name);
+        return Statistics.collect(protocolBase, this);
     }
 
-    public Map<String, IntSet> sectionsWithNew(FileNode protocolBase) throws IOException {
+    public Map<String, IntSet> sections() throws IOException {
         LinkedHashMap<String, IntSet> result;
-        IntSet newWords;
-        int count;
-        int orig;
 
         result = new LinkedHashMap<>(sections.size() + 1);
         result.putAll(sections);
-        newWords = newWords(protocolBase);
-        if (newWords.size() > 0) {
-            orig = newWords.size();
-            count = Math.min(20, orig);
-            newWords.retain(count);
-            result.put(count + " neue Worte von " + orig, newWords);
-        }
         return result;
     }
 

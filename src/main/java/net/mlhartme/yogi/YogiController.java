@@ -78,8 +78,6 @@ public class YogiController {
         IntSet newWords;
         IntSet selection;
 
-        System.out.println("scope: " + scope);
-        System.out.println("count: " + countOrAll);
         book = library.get(bookName);
         newWords = book.newWords(protocolBase());
         selection = IntSet.parse(Separator.COMMA.split(selectionStr));
@@ -91,7 +89,6 @@ public class YogiController {
         if (!countOrAll.equals("all")) {
             selection.retain(Integer.parseInt(countOrAll));
         }
-        System.out.println("selection: " + selection);
         exercise = Exercise.create(book, protocolBase(), title, selection);
         exercise.logTitle(protocolBase(), title);
         return "redirect:question?e=" + urlencode(exercise.toParam());
