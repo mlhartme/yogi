@@ -88,20 +88,32 @@ public class Statistics {
 
     public int quality(String question) {
         List<Integer> tries;
-        int count;
 
         tries = map.get(question);
         if (tries == null) {
             return 0;
         } else {
-            count = tries.get(tries.size() - 1);
-            if (count == Protocol.NOT_ANSWERED) {
-                return 0;
-            } else {
-                return Math.max(0, 100 - (count - 1) * 20);
-            }
+            return previousCountQuality(tries, 1) * 100 / 200     // 50%
+                    + previousCountQuality(tries, 2) * 100 / 400  // 25%
+                    + previousCountQuality(tries, 3) * 100 / 400; // 25%
         }
     }
+
+    private int previousCountQuality(List<Integer> tries, int back) {
+        int idx;
+
+        idx = tries.size() - back;
+        return countQuality(tries.get(idx < 0 ? 0 : idx));
+    }
+
+    private int countQuality(int count) {
+        if (count == Protocol.NOT_ANSWERED) {
+            return 0;
+        } else {
+            return Math.max(0, 100 - (count - 1) * 20);
+        }
+    }
+
     public String tries(String question) {
         List<Integer> tries;
         StringBuilder builder;
