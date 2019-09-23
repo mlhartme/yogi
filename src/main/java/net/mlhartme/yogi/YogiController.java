@@ -77,6 +77,8 @@ public class YogiController {
         Book book;
         IntSet newWords;
         IntSet selection;
+        List<Integer> sorted;
+        int count;
 
         book = library.get(bookName);
         newWords = book.newWords(protocolBase());
@@ -87,7 +89,12 @@ public class YogiController {
             selection.removeAll(newWords);
         }
         if (!countOrAll.equals("all")) {
-            selection.retain(Integer.parseInt(countOrAll));
+            sorted = book.statistics(protocolBase()).sort(selection, book); // TODO: expensive
+            count = Integer.parseInt(countOrAll);
+            while (sorted.size() > count) {
+                sorted.remove(sorted.size() - 1);
+            }
+            selection = new IntSet(sorted);;
         }
         exercise = Exercise.create(book, protocolBase(), title, selection);
         exercise.logTitle(protocolBase(), title);

@@ -1,6 +1,7 @@
 package net.mlhartme.yogi;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -21,6 +22,16 @@ public class IntSet implements Iterable<Integer> {
 
     public IntSet() {
         this.data = new ArrayList<>();
+    }
+    public IntSet(Collection<Integer> collection) {
+        this();
+        addAll(collection);
+    }
+
+    public void addAll(Collection<Integer> collection) {
+        for (Integer i : collection) {
+            add(i);
+        }
     }
 
     public void add(int i) {

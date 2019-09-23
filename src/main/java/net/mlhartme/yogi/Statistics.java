@@ -1,10 +1,11 @@
 package net.mlhartme.yogi;
 
 import net.oneandone.sushi.fs.file.FileNode;
-import org.springframework.objenesis.SpringObjenesis;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -122,6 +123,23 @@ public class Statistics {
             }
             return builder.toString();
         }
+    }
+
+    /** sort by quality, lower quality first */
+    public List<Integer> sort(IntSet selection, Book book) {
+        List<Integer> result;
+
+        result = new ArrayList<>(selection.size());
+        for (Integer i : selection) {
+            result.add(i);
+        }
+        Collections.sort(result, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer left, Integer right) {
+                return Integer.compare(quality(book.left(left)), quality(book.left(right)));
+            }
+        });
+        return result;
     }
 
     public static String style(int quality) {
