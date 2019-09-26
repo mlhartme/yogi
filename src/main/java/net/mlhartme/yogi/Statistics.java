@@ -110,7 +110,7 @@ public class Statistics {
         if (count == Protocol.NOT_ANSWERED) {
             return 0;
         } else {
-            return Math.max(0, 100 - (count - 1) * 20);
+            return Math.max(1, 100 - (count - 1) * 20);
         }
     }
 
@@ -155,18 +155,16 @@ public class Statistics {
     }
 
     public static String style(int quality) {
-        if (quality < 5) {
+        if (quality == 0) {
+            return "color: white;";
+        } else if (quality < 30) {
             return "color: red;";
-        } else if (quality < 20) {
-            return "color: lightred;";
-        } else if (quality < 40) {
+        } else if (quality < 50) {
             return "color: orange;";
-        } else if (quality < 60) {
+        } else if (quality < 70) {
             return "color: yellow;";
-        } else if (quality < 80) {
+        } else if (quality < 90) {
             return "color: yellowgreen;";
-        } else if (quality < 95) {
-            return "color: lightgreen;";
         } else {
             return "color: green;";
         }
