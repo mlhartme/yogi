@@ -159,11 +159,11 @@ public class Statistics {
             return "color: white;";
         } else if (quality < 30) {
             return "color: red;";
-        } else if (quality < 50) {
+        } else if (quality < 60) {
             return "color: orange;";
-        } else if (quality < 70) {
+        } else if (quality < 80) {
             return "color: yellow;";
-        } else if (quality < 90) {
+        } else if (quality < 95) {
             return "color: yellowgreen;";
         } else {
             return "color: green;";
