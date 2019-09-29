@@ -46,7 +46,7 @@
         </div>
     </div>
     <div id="select-and-start" class="modal fade" >
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <form class="form-horizontal" th:action="${'/books/' + book.name + '/select-and-start'}" method="post">
                 <fieldset>
                     <div class="modal-content">
@@ -59,7 +59,7 @@
                         <div class="modal-body">
                             <input name="book" th:value="${book.name}" type="hidden"/>
                             <input name="title" th:value="${title}" type="hidden"/>
-                            <table class="table">
+                            <table class="table table-sm">
                                 <tbody>
                                 <tr th:each="idx:${selection}">
                                     <td>
