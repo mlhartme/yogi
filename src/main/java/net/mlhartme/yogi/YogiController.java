@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,11 +71,36 @@ public class YogiController {
         return "selection";
     }
 
+    @RequestMapping("/books/{book}/select-and-start")
+    public String selectAndStart(
+            @PathVariable(value = "book") String book,
+            @RequestParam("title") String title, HttpServletRequest request /* for selection */) throws IOException {
+        IntSet selection;
+
+        selection = getChecked(request, "select_");
+        return doStart(library.get(book), title, selection);
+    }
+
+    private IntSet getChecked(HttpServletRequest request, String prefix) {
+        Enumeration<String> names;
+        String name;
+        IntSet result;
+
+        result = new IntSet();
+        names = request.getParameterNames();
+        while (names.hasMoreElements()) {
+            name = names.nextElement();
+            if (name.startsWith(prefix)) {
+                result.add(Integer.parseInt(request.getParameter(name)));
+            }
+        }
+        return result;
+    }
+
     @RequestMapping("/books/{book}/start")
     public String start(@PathVariable(value = "book") String bookName,
                         @RequestParam("title") String title, @RequestParam("selection") String selectionStr,
                         @RequestParam("count") String countOrAll, @RequestParam("scope") String scope) throws IOException {
-        Exercise exercise;
         Book book;
         IntSet newWords;
         IntSet selection;
@@ -96,6 +123,12 @@ public class YogiController {
             }
             selection = new IntSet(sorted);;
         }
+        return doStart(book, title, selection);
+    }
+
+    private String doStart(Book book, String title, IntSet selection) throws IOException {
+        Exercise exercise;
+
         exercise = Exercise.create(book, protocolBase(), title, selection);
         exercise.logTitle(protocolBase(), title);
         return "redirect:question?e=" + urlencode(exercise.toParam());

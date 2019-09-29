@@ -3,6 +3,7 @@
 ## 1.0.1 (pending)
 
 * added multi user support
+* select excercise count, scope or selection
 
 * renamed `logs` directory to `protocols`
 * fixed protocol sorting
