@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.1 (pending)
+## 1.1.0 (pending)
 
 * added multi user support
 * select excercise count, scope or selection
