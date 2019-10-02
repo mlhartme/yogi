@@ -80,7 +80,7 @@ public class Exercise {
         IntSet ok;
         IntSet wrong;
 
-        selection = IntSet.parse(Separator.COMMA.split(selectionParam));
+        selection = IntSet.parseArg(selectionParam);
         ok = IntSet.parse(okParam == null ? new ArrayList<>() : Separator.COMMA.split(okParam));
         wrong = IntSet.parse(wrongParam == null ? new ArrayList<>() : Separator.COMMA.split(wrongParam));
         return new Exercise(id, book, title, selection, round, ofs, ok, wrong);

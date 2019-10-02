@@ -1,5 +1,7 @@
 package net.mlhartme.yogi;
 
+import net.oneandone.sushi.util.Separator;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -8,6 +10,10 @@ import java.util.Random;
 
 /** TODO: not a set yet */
 public class IntSet implements Iterable<Integer> {
+    public static IntSet parseArg(String arg) {
+        return parse(Separator.COMMA.split(arg));
+    }
+
     public static IntSet parse(List<String> strings) {
         IntSet result;
 
@@ -38,6 +44,7 @@ public class IntSet implements Iterable<Integer> {
     }
 
     public void add(int i) {
+        // TODO: only if not present
         data.add(i);
     }
 
@@ -143,5 +150,15 @@ public class IntSet implements Iterable<Integer> {
                 data.remove(i);
             }
         }
+    }
+
+    public boolean remove(int remove) {
+        for (int i = data.size() -1; i >= 0; i--) {
+            if (data.get(i) == remove) {
+                data.remove(i);
+                return true;
+            }
+        }
+        return false;
     }
 }

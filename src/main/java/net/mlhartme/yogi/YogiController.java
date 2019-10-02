@@ -81,7 +81,16 @@ public class YogiController {
         return doStart(library.get(book), title, selection);
     }
 
-    private IntSet getChecked(HttpServletRequest request, String prefix) {
+    @RequestMapping("/books/{book}/enable")
+    public String enable(@PathVariable(value = "book") String book, @RequestParam(value = "selection") String selection, HttpServletRequest request /* for selection */) throws IOException {
+        IntSet enable;
+
+        enable = getChecked(request, "enable_");
+        library.get(book).enable(userProtocols(), IntSet.parseArg(selection), enable);
+        return "redirect:/books/" + book + "/";
+    }
+
+    private static IntSet getChecked(HttpServletRequest request, String prefix) {
         Enumeration<String> names;
         String name;
         IntSet result;

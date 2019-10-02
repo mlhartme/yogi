@@ -77,6 +77,31 @@ public class Book implements Comparable<Book> {
         return result;
     }
 
+    private FileNode enabledFile(FileNode userProtocols) {
+        return userProtocols.join(name, ".enabled");
+    }
+
+    public void enable(FileNode userProtocols, IntSet selection, IntSet enable) throws IOException {
+        IntSet result;
+        List<String> lst;
+
+        result = enabled(userProtocols);
+        for (int idx : selection) {
+            if (enable.contains(idx)) {
+                if (!result.contains(idx)) {
+                    result.add(idx);
+                }
+            } else {
+                result.remove(idx);
+            }
+        }
+        lst = new ArrayList<>();
+        for (int idx : result) {
+            lst.add(lefts.get(idx));
+        }
+        enabledFile(userProtocols).writeLines(lst);
+    }
+
     public IntSet enabled(FileNode userProtocols) throws IOException {
         FileNode file;
         IntSet result;
@@ -85,7 +110,7 @@ public class Book implements Comparable<Book> {
         List<String> lst;
         int idx;
 
-        file = userProtocols.join(name, ".enabled");
+        file = enabledFile(userProtocols);
         result = new IntSet();
         if (file.exists()) {
             lst = file.readLines();
