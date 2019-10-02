@@ -23,6 +23,9 @@ public class IntSet implements Iterable<Integer> {
     public IntSet() {
         this.data = new ArrayList<>();
     }
+    public IntSet(IntSet orig) {
+        this.data = new ArrayList<>(orig.data);
+    }
     public IntSet(Collection<Integer> collection) {
         this();
         addAll(collection);
@@ -121,6 +124,14 @@ public class IntSet implements Iterable<Integer> {
                 data.remove(i);
             }
         }
+    }
+
+    public IntSet createRetained(IntSet set) {
+        IntSet result;
+
+        result = new IntSet(this);
+        result.retain(set);
+        return result;
     }
 
     public void removeAll(IntSet set) {
