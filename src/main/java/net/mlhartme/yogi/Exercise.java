@@ -51,7 +51,7 @@ public class Exercise {
         dir = userProtocols.join(book);
         max = 0;
         if (dir.exists()) {
-            for (Node<?> file : dir.list()) {
+            for (Node<?> file : dir.find("*.log")) {
                 try {
                     id = Integer.parseInt(Strings.removeRight(file.getName(), ".log"));
                 } catch (NumberFormatException e) {
@@ -75,7 +75,7 @@ public class Exercise {
         return new Exercise(next(userProtocols, book.name), book, title, selection, 1, 0, new IntSet(), new IntSet());
     }
 
-    public static Exercise create(int id, Book book, String title, String selectionParam, int round, int ofs, String okParam, String wrongParam) throws IOException {
+    public static Exercise create(int id, Book book, String title, String selectionParam, int round, int ofs, String okParam, String wrongParam) {
         IntSet selection;
         IntSet ok;
         IntSet wrong;

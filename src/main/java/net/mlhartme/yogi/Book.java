@@ -6,7 +6,6 @@ import net.oneandone.sushi.util.Strings;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,14 +77,49 @@ public class Book implements Comparable<Book> {
         return result;
     }
 
+    public IntSet enabled(FileNode userProtocols) throws IOException {
+        FileNode file;
+        IntSet result;
+        Set<String> asked;
+        String question;
+        List<String> lst;
+        int idx;
+
+        file = userProtocols.join(name, ".enabled");
+        result = new IntSet();
+        if (file.exists()) {
+            lst = file.readLines();
+            for (String active : lst) {
+                idx = lefts.indexOf(active);
+                if (idx < 0) {
+                    throw new IllegalStateException("unknown question: " + active);
+                }
+                result.add(idx);
+            }
+        } else {
+            // TODO: wait until all users/books have an active file; then dump the asked() code
+            lst = new ArrayList<>();
+            asked = Protocol.asked(userProtocols, name);
+            for (int i = 0; i < lefts.size(); i++) {
+                question = lefts.get(i);
+                if (asked.contains(question)) {
+                    result.add(i);
+                    lst.add(question);
+                }
+            }
+            file.writeLines(lst);
+        }
+        return result;
+    }
+
     public IntSet newWords(FileNode userProtocols) throws IOException {
         IntSet result;
-        Set<String> questions;
+        IntSet enabled;
 
-        questions = Protocol.asked(userProtocols, name);
+        enabled = enabled(userProtocols);
         result = new IntSet();
         for (int i = 0; i < lefts.size(); i++) {
-            if (!questions.contains(lefts.get(i))) {
+            if (!enabled.contains(i)) {
                 result.add(i);
             }
         }
