@@ -82,12 +82,12 @@ public class YogiController {
     }
 
     @RequestMapping("/books/{book}/enable")
-    public String enable(@PathVariable(value = "book") String book, @RequestParam(value = "selection") String selection, HttpServletRequest request /* for selection */) throws IOException {
+    public String enable(@PathVariable(value = "book") String book, @RequestParam(value = "selection") String selection, @RequestParam(value = "title") String title, HttpServletRequest request /* for selection */) throws IOException {
         IntSet enable;
 
         enable = getChecked(request, "enable_");
         library.get(book).enable(userProtocols(), IntSet.parseArg(selection), enable);
-        return "redirect:/books/" + book + "/";
+        return "redirect:/books/" + book + "/selection?selection=" + urlencode(selection.toString()) + "&title=" + urlencode(title);
     }
 
     private static IntSet getChecked(HttpServletRequest request, String prefix) {
