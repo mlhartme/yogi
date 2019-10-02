@@ -12,14 +12,14 @@ import java.util.Map;
 
 /** represents the log file for one book */
 public class Statistics {
-    public static Statistics collect(FileNode protocolBase, Book book) throws IOException {
+    public static Statistics collect(FileNode userProtocols, Book book) throws IOException {
         List<FileNode> logs;
         Protocol protocol;
         Statistics result;
         int count;
 
-        result = new Statistics(book.newWords(protocolBase));
-        logs = Protocol.list(protocolBase, book.name);
+        result = new Statistics(book.newWords(userProtocols));
+        logs = Protocol.list(userProtocols, book.name);
         for (FileNode node : logs) {
             protocol = Protocol.load(node);
             for (Map.Entry<Integer, List<String>> entry : protocol.histogramRaw().entrySet()) {

@@ -56,8 +56,8 @@ public class Book implements Comparable<Book> {
         this.rights = new ArrayList<>();
     }
 
-    public Statistics statistics(FileNode protocolBase) throws IOException {
-        return Statistics.collect(protocolBase, this);
+    public Statistics statistics(FileNode userProtocols) throws IOException {
+        return Statistics.collect(userProtocols, this);
     }
 
     public Map<String, IntSet> sections() throws IOException {
@@ -78,13 +78,13 @@ public class Book implements Comparable<Book> {
         return result;
     }
 
-    public IntSet newWords(FileNode protocolBase) throws IOException {
+    public IntSet newWords(FileNode userProtocols) throws IOException {
         IntSet result;
         Protocol protocol;
         Set<String> questions;
 
         questions = new HashSet<>();
-        for (FileNode node : Protocol.list(protocolBase, name)) {
+        for (FileNode node : Protocol.list(userProtocols, name)) {
             protocol = Protocol.load(node);
             for (Map.Entry<Integer, List<String>> entry : protocol.histogramRaw().entrySet()) {
                 if (entry.getKey() > 0) {

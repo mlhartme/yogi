@@ -34,7 +34,7 @@ public class YogiController {
     }
 
 
-    private FileNode protocolBase() throws MkdirException {
+    private FileNode userProtocols() throws MkdirException {
         return protocolRoot.join(YogiSecurity.username()).mkdirsOpt();
     }
 
@@ -53,7 +53,7 @@ public class YogiController {
     public String book(Model model, @PathVariable(value = "book") String book) throws IOException {
         model.addAttribute("library", library);
         model.addAttribute("book", library.get(book));
-        model.addAttribute("protocolBase", protocolBase());
+        model.addAttribute("userProtocols", userProtocols());
         return "book";
     }
 
@@ -63,7 +63,7 @@ public class YogiController {
         IntSet selection;
 
         selection = IntSet.parse(Separator.COMMA.split(selectionStr));
-        model.addAttribute("protocolBase", protocolBase());
+        model.addAttribute("userProtocols", userProtocols());
         model.addAttribute("library", library);
         model.addAttribute("book", library.get(bookName));
         model.addAttribute("title", title);
@@ -108,7 +108,7 @@ public class YogiController {
         int count;
 
         book = library.get(bookName);
-        newWords = book.newWords(protocolBase());
+        newWords = book.newWords(userProtocols());
         selection = IntSet.parse(Separator.COMMA.split(selectionStr));
         if (scope.equals("new")) {
             selection.retain(newWords);
@@ -116,7 +116,7 @@ public class YogiController {
             selection.removeAll(newWords);
         }
         if (!countOrAll.equals("all")) {
-            sorted = book.statistics(protocolBase()).sort(selection, book); // TODO: expensive
+            sorted = book.statistics(userProtocols()).sort(selection, book); // TODO: expensive
             count = Integer.parseInt(countOrAll);
             while (sorted.size() > count) {
                 sorted.remove(sorted.size() - 1);
@@ -129,8 +129,8 @@ public class YogiController {
     private String doStart(Book book, String title, IntSet selection) throws IOException {
         Exercise exercise;
 
-        exercise = Exercise.create(book, protocolBase(), title, selection);
-        exercise.logTitle(protocolBase(), title);
+        exercise = Exercise.create(book, userProtocols(), title, selection);
+        exercise.logTitle(userProtocols(), title);
         return "redirect:question?e=" + urlencode(exercise.toParam());
     }
 
@@ -148,7 +148,7 @@ public class YogiController {
         LinkedHashMap<String, String> map;
         String basename;
 
-        protocols = Protocol.list(protocolBase(), book);
+        protocols = Protocol.list(userProtocols(), book);
         Collections.reverse(protocols);
         map = new LinkedHashMap<>();
         for (FileNode log : protocols) {
@@ -163,7 +163,7 @@ public class YogiController {
 
     @RequestMapping("/books/{book}/protocols/{id}")
     public String protocol(Model model, @PathVariable(value = "book") String book, @PathVariable(value = "id") long id) throws IOException {
-        model.addAttribute("protocol", Protocol.load(protocolBase().join(book, id + ".log")));
+        model.addAttribute("protocol", Protocol.load(userProtocols().join(book, id + ".log")));
         model.addAttribute("book", library.get(book));
         model.addAttribute("library", library);
         return "protocol";
@@ -176,7 +176,7 @@ public class YogiController {
         Exercise exercise;
 
         exercise = Exercise.forParam(library.get(book), body.get("e"));
-        exercise.logComment(protocolBase(), body.get("comment"));
+        exercise.logComment(userProtocols(), body.get("comment"));
     }
 
     @RequestMapping("/books/{book}/question")
@@ -205,7 +205,7 @@ public class YogiController {
         model.addAttribute("question", question);
         model.addAttribute("answer", answer);
         model.addAttribute("correction", correction);
-        exercise.logAnswer(protocolBase(), question, answer, exercise.lookup(question) /* not correction - it might be null */);
+        exercise.logAnswer(userProtocols(), question, answer, exercise.lookup(question) /* not correction - it might be null */);
         return "answer";
     }
 }

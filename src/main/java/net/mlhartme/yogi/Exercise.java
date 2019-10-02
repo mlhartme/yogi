@@ -43,12 +43,12 @@ public class Exercise {
         return create(id, book, title, selection, round, ofs, ok, wrong);
     }
 
-    private static int next(Node<?> protocolBase, String book) throws IOException {
+    private static int next(Node<?> userProtocols, String book) throws IOException {
         Node<?> dir;
         int id;
         int max;
 
-        dir = protocolBase.join(book);
+        dir = userProtocols.join(book);
         max = 0;
         if (dir.exists()) {
             for (Node<?> file : dir.list()) {
@@ -71,8 +71,8 @@ public class Exercise {
         }
     }
 
-    public static Exercise create(Book book, Node<?> protocolBase, String title, IntSet selection) throws IOException {
-        return new Exercise(next(protocolBase, book.name), book, title, selection, 1, 0, new IntSet(), new IntSet());
+    public static Exercise create(Book book, Node<?> userProtocols, String title, IntSet selection) throws IOException {
+        return new Exercise(next(userProtocols, book.name), book, title, selection, 1, 0, new IntSet(), new IntSet());
     }
 
     public static Exercise create(int id, Book book, String title, String selectionParam, int round, int ofs, String okParam, String wrongParam) throws IOException {
@@ -106,20 +106,20 @@ public class Exercise {
         this.wrong = wrong;
     }
 
-    public void logTitle(FileNode protocolBase, String title) throws IOException {
-        doLog(protocolBase, "! " + title);
+    public void logTitle(FileNode userProtocols, String title) throws IOException {
+        doLog(userProtocols, "! " + title);
     }
 
-    public void logComment(FileNode protocolBase, String comment) throws IOException {
-        doLog(protocolBase, "# " + comment);
+    public void logComment(FileNode userProtocols, String comment) throws IOException {
+        doLog(userProtocols, "# " + comment);
     }
 
-    public void logAnswer(FileNode protocolBase, String question, String answer, String correct) throws IOException {
-        doLog(protocolBase, question + " -> " + answer + " -> " + correct);
+    public void logAnswer(FileNode userProtocols, String question, String answer, String correct) throws IOException {
+        doLog(userProtocols, question + " -> " + answer + " -> " + correct);
     }
 
-    private void doLog(FileNode protocolBase, String line) throws IOException {
-        try (Writer writer = protocolBase.join(book.name).mkdirOpt().join(id + ".log").newAppender()) {
+    private void doLog(FileNode userProtocols, String line) throws IOException {
+        try (Writer writer = userProtocols.join(book.name).mkdirOpt().join(id + ".log").newAppender()) {
             writer.append(Protocol.FMT.format(new Date()));
             writer.append(' ');
             writer.append(line.replace("\n", " // "));

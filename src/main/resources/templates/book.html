@@ -4,7 +4,7 @@
       layout:decorate="~{layout.html}">
 <th:block layout:fragment="content">
     <div class="col-12">
-        <ul class="list-group" th:with="statistics=${book.statistics(protocolBase)}">
+        <ul class="list-group" th:with="statistics=${book.statistics(userProtocols)}">
             <li th:each="entry:${book.sections()}" class="list-group-item py+2">
                 <a th:with="quality=${statistics.quality(book, entry.value)}"
                    th:href="@{/books/{book}/selection(book=${book.name}, title=${entry.key}, selection=${entry.value})}">

@@ -16,11 +16,11 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class Protocol {
-    public static List<FileNode> list(FileNode protocolBase, String book) throws IOException {
+    public static List<FileNode> list(FileNode userProtocols, String book) throws IOException {
         List<FileNode> lst;
         FileNode dir;
 
-        dir = protocolBase.join(book);
+        dir = userProtocols.join(book);
         if (!dir.exists()) {
             return new ArrayList<>();
         }
