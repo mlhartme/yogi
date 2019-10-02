@@ -80,18 +80,9 @@ public class Book implements Comparable<Book> {
 
     public IntSet newWords(FileNode userProtocols) throws IOException {
         IntSet result;
-        Protocol protocol;
         Set<String> questions;
 
-        questions = new HashSet<>();
-        for (FileNode node : Protocol.list(userProtocols, name)) {
-            protocol = Protocol.load(node);
-            for (Map.Entry<Integer, List<String>> entry : protocol.histogramRaw().entrySet()) {
-                if (entry.getKey() > 0) {
-                    questions.addAll(entry.getValue());
-                }
-            }
-        }
+        questions = Protocol.asked(userProtocols, name);
         result = new IntSet();
         for (int i = 0; i < lefts.size(); i++) {
             if (!questions.contains(lefts.get(i))) {
