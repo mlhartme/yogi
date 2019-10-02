@@ -15,10 +15,6 @@ import java.util.Set;
 public class Book implements Comparable<Book> {
     public static final String EXT = ".yogi";
 
-    public static Book loadByName(Node<?> base, String name) throws IOException {
-        return load(base.join(name + EXT));
-    }
-
     public static Book load(Node<?> file) throws IOException {
         Book book;
         IntSet current;
