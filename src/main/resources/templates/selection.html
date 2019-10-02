@@ -28,8 +28,8 @@
                                     <option value="all">alle</option>
                                 </select>
                                 <select class="form-control" name="scope" id="scope">
-                                    <option th:if="${statistics.hasKnown(selection)}" value="known">Bekannte Vokabel</option>
-                                    <option th:if="${statistics.hasNew(selection)}" value="new">Neue Vokabeln</option>
+                                    <option th:if="${statistics.hasEnabled(selection)}" value="known">Bekannte Vokabel</option>
+                                    <option th:if="${statistics.hasDisabled(selection)}" value="new">Neue Vokabeln</option>
                                 </select>
                             </div>
                         </div>

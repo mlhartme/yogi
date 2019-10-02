@@ -102,18 +102,18 @@ public class YogiController {
                         @RequestParam("title") String title, @RequestParam("selection") String selectionStr,
                         @RequestParam("count") String countOrAll, @RequestParam("scope") String scope) throws IOException {
         Book book;
-        IntSet newWords;
+        IntSet disabled;
         IntSet selection;
         List<Integer> sorted;
         int count;
 
         book = library.get(bookName);
-        newWords = book.newWords(userProtocols());
+        disabled = book.disabled(userProtocols());
         selection = IntSet.parse(Separator.COMMA.split(selectionStr));
         if (scope.equals("new")) {
-            selection.retain(newWords);
+            selection.retain(disabled);
         } else {
-            selection.removeAll(newWords);
+            selection.removeAll(disabled);
         }
         if (!countOrAll.equals("all")) {
             sorted = book.statistics(userProtocols()).sort(selection, book); // TODO: expensive

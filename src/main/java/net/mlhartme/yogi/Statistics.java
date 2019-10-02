@@ -18,7 +18,7 @@ public class Statistics {
         Statistics result;
         int count;
 
-        result = new Statistics(book.newWords(userProtocols));
+        result = new Statistics(book.enabled(userProtocols), book.disabled(userProtocols));
         logs = Protocol.list(userProtocols, book.name);
         for (FileNode node : logs) {
             protocol = Protocol.load(node);
@@ -37,25 +37,27 @@ public class Statistics {
     /** @return question mapped to number of tries list */
     private final Map<String, List<Integer>> map;
 
-    public final IntSet newWords;
+    public final IntSet enabled;
+    public final IntSet disabled;
 
-    public Statistics(IntSet newWords) {
+    public Statistics(IntSet enabled, IntSet disabled) {
         this.map = new HashMap<>();
-        this.newWords = newWords;
+        this.enabled = enabled;
+        this.disabled = disabled;
     }
 
-    public boolean hasKnown(IntSet selection) {
+    public boolean hasEnabled(IntSet selection) {
         for (Integer i : selection) {
-            if (!newWords.contains(i)) {
+            if (!disabled.contains(i)) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean hasNew(IntSet selection) {
+    public boolean hasDisabled(IntSet selection) {
         for (Integer i : selection) {
-            if (newWords.contains(i)) {
+            if (disabled.contains(i)) {
                 return true;
             }
         }

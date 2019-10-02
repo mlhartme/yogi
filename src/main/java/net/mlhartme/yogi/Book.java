@@ -112,7 +112,7 @@ public class Book implements Comparable<Book> {
         return result;
     }
 
-    public IntSet newWords(FileNode userProtocols) throws IOException {
+    public IntSet disabled(FileNode userProtocols) throws IOException {
         IntSet result;
         IntSet enabled;
 
