@@ -174,4 +174,22 @@ public class Statistics {
         }
     }
 
+
+    public String enableMarker(IntSet selection) {
+        int e;
+        int all;
+
+        e = 0;
+        for (int i : selection) {
+            if (enabled.contains(i)) {
+                e++;
+            }
+        }
+        all = selection.size();
+        if (e == all) {
+            return Integer.toString(all);
+        } else {
+            return Integer.toString(e) + "/" + selection.size();
+        }
+    }
 }

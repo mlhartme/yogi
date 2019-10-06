@@ -10,7 +10,7 @@
                    th:href="@{/books/{book}/selection(book=${book.name}, title=${entry.key}, selection=${entry.value})}">
                     <span data-toggle="tooltip" th:title="${quality + ' %'}" th:style="${statistics.style(quality)}">&#x25cf; </span><span th:text="${entry.key}"></span>
                 </a>
-                <a th:href="@{/books/{book}/enabled(book=${book.name}, title=${entry.key}, selection=${entry.value})}">Freischalten</a>
+                <a th:href="@{/books/{book}/enabled(book=${book.name}, title=${entry.key}, selection=${entry.value})}" th:text="${statistics.enableMarker(entry.value)}"></a>
             </li>
         </ul>
     </div>
