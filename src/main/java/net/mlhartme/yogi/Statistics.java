@@ -77,15 +77,17 @@ public class Statistics {
 
     public int quality(Book book, IntSet selection) {
         int sum;
+        int count;
 
-        if (selection.isEmpty()) {
-            return 0;
-        }
         sum = 0;
+        count = 0;
         for (Integer question : selection) {
-            sum += quality(book.left(question));
+            if (enabled.contains(question)) {
+                sum += quality(book.left(question));
+                count++;
+            }
         }
-        return sum / selection.size();
+        return count == 0 ? 0 : sum / count;
     }
 
     public int quality(String question) {
