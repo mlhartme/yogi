@@ -81,13 +81,29 @@ public class YogiController {
         return doStart(library.get(book), title, selection);
     }
 
-    @RequestMapping("/books/{book}/enable")
-    public String enable(@PathVariable(value = "book") String book, @RequestParam(value = "selection") String selection, @RequestParam(value = "title") String title, HttpServletRequest request /* for selection */) throws IOException {
+    @RequestMapping("/books/{book}/enabled")
+    public String enabled(Model model, @PathVariable(value = "book") String bookName, @RequestParam("title") String title,
+                            @RequestParam("selection") String selectionStr) throws IOException {
+        IntSet selection;
+
+        selection = IntSet.parse(Separator.COMMA.split(selectionStr));
+        model.addAttribute("userProtocols", userProtocols());
+        model.addAttribute("library", library);
+        model.addAttribute("book", library.get(bookName));
+        model.addAttribute("title", title);
+        model.addAttribute("selection", selection);
+        return "enabled";
+    }
+
+    @RequestMapping("/books/{book}/set-enabled")
+    public String setEnableD(@PathVariable(value = "book") String book, @RequestParam(value = "selection") String selection,
+                             HttpServletRequest request /* for selection */)
+            throws IOException {
         IntSet enable;
 
         enable = getChecked(request, "enable_");
         library.get(book).enable(userProtocols(), IntSet.parseArg(selection), enable);
-        return "redirect:/books/" + book + "/selection?selection=" + urlencode(selection.toString()) + "&title=" + urlencode(title);
+        return "redirect:/books/" + book + "/";
     }
 
     private static IntSet getChecked(HttpServletRequest request, String prefix) {

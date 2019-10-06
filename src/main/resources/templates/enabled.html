@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<th:block layout:fragment="content" th:with="statistics=${book.statistics(userProtocols)}">
+    <div class="col-12">
+        <h4 th:text="${title + ' Freischalten'}"></h4>
+        <div class="col-12">
+            <form class="form-horizontal" th:action="${'/books/' + book.name + '/set-enabled'}" method="post">
+                <fieldset>
+                    <input name="book" th:value="${book.name}" type="hidden"/>
+                    <input name="selection" th:value="${selection}" type="hidden"/>
+                    <table class="table">
+                        <tbody>
+                            <tr th:each="idx:${selection}">
+                                <td th:with="enabled=${statistics.enabled.contains(idx)}">
+                                    <input th:if="${enabled}" class="form-check-input" type="checkbox" th:name="${'enable_' + idx}" th:value="${idx}" checked>
+                                    <input th:unless="${enabled}" class="form-check-input" type="checkbox" th:name="${'enable_' + idx}" th:value="${idx}">
+                                </td>
+                                <td th:text="${book.left(idx)}"></td>
+                                <td th:text="${book.right(idx)}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <a class="btn btn-primary" th:href="@{/books/{book}/(book=${book.name})}">Abbrechen</a>
+                    <button type="submit" class="btn btn-primary">Speichern</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</th:block>
+</html>
