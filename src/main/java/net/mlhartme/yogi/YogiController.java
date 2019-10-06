@@ -109,7 +109,7 @@ public class YogiController {
     @RequestMapping("/books/{book}/start")
     public String start(@PathVariable(value = "book") String bookName,
                         @RequestParam("title") String title, @RequestParam("selection") String selectionStr,
-                        @RequestParam("count") String countOrAll, @RequestParam("scope") String scope) throws IOException {
+                        @RequestParam("count") String countOrAll) throws IOException {
         Book book;
         IntSet disabled;
         IntSet selection;
@@ -119,11 +119,7 @@ public class YogiController {
         book = library.get(bookName);
         disabled = book.disabled(userProtocols());
         selection = IntSet.parse(Separator.COMMA.split(selectionStr));
-        if (scope.equals("new")) {
-            selection.retain(disabled);
-        } else {
-            selection.removeAll(disabled);
-        }
+        selection.removeAll(disabled);
         if (!countOrAll.equals("all")) {
             sorted = book.statistics(userProtocols()).sort(selection, book); // TODO: expensive
             count = Integer.parseInt(countOrAll);

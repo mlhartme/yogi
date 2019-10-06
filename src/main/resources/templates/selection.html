@@ -67,10 +67,6 @@
                                     <option>30</option>
                                     <option value="all">alle</option>
                                 </select>
-                                <select class="form-control" name="scope" id="scope">
-                                    <option th:if="${statistics.hasEnabled(selection)}" value="known">Bekannte Vokabel</option>
-                                    <option th:if="${statistics.hasDisabled(selection)}" value="new">Neue Vokabeln</option>
-                                </select>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -90,7 +86,7 @@
     <div class="col-12">
         <h4 th:text="${title}"></h4>
         <a href="#enable" data-toggle="modal" data-target="#enable">Freischalten</a>
-        <a href="#start" data-toggle="modal" data-target="#start">Üben</a>
+        <a th:if="${statistics.hasEnabled(selection)}" href="#start" data-toggle="modal" data-target="#start">Üben</a>
         <a href="#select-and-start" data-toggle="modal" data-target="#select-and-start">Auswählen</a>
         <a th:href="@{/books/{book}/(book=${book.name})}">Zurück</a>
         <div class="col-12">
