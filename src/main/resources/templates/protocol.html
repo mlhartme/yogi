@@ -5,11 +5,15 @@
 <th:block layout:fragment="content">
     <div class="row">
         <div class="col-12" th:with="timing=${protocol.answerTiming()}">
+            <h2 style="size:">
+                <span data-toggle="tooltip" th:title="${before + ' % '}" th:style="${T(net.mlhartme.yogi.Statistics).style(before)}">&#x25cf; </span>
+                <i class="fas fa-arrow-right"></i>
+                <span data-toggle="tooltip" th:title="${after + ' % '}" th:style="${T(net.mlhartme.yogi.Statistics).style(after)}">&#x25cf; </span></h2>
+        </div>
+        <div class="col-12" th:with="timing=${protocol.answerTiming()}">
             <p>Titel: <span th:text="${protocol.title()}"/></p>
             <p>Datum: <span th:text="${protocol.date()}"/></p>
             <p>Vokabeln: <span th:text="${protocol.words()}"/></p>
-            <p>Vorher: <span data-toggle="tooltip" th:title="${before + ' % '}" th:style="${T(net.mlhartme.yogi.Statistics).style(before)}">&#x25cf; </span></p>
-            <p>Nachher: <span data-toggle="tooltip" th:title="${after + ' % '}" th:style="${T(net.mlhartme.yogi.Statistics).style(after)}">&#x25cf; </span></p>
             <p>Dauer: <span th:text="${protocol.duration()}"/></p>
             <p>Schnellste Antwort: <span th:text="${timing.min}"/></p>
             <p>Längste Antwort: <span th:text="${timing.max}"/></p>
