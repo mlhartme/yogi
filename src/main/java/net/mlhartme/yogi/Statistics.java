@@ -142,7 +142,7 @@ public class Statistics {
         if (count == Protocol.NOT_ANSWERED) {
             return 0;
         } else {
-            return Math.max(1, 100 - (count - 1) * 20);
+            return Math.max(1, 100 - (count - 1) * 33);
         }
     }
 
