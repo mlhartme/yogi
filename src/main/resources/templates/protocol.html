@@ -7,11 +7,13 @@
         <div class="col-12" th:with="timing=${protocol.answerTiming()}">
             <p>Titel: <span th:text="${protocol.title()}"/></p>
             <p>Datum: <span th:text="${protocol.date()}"/></p>
+            <p>Vokabeln: <span th:text="${protocol.words()}"/></p>
+            <p>Vorher: <span th:text="${before}"/></p>
+            <p>Nachher: <span th:text="${after}"/></p>
             <p>Dauer: <span th:text="${protocol.duration()}"/></p>
             <p>Schnellste Antwort: <span th:text="${timing.min}"/></p>
             <p>Längste Antwort: <span th:text="${timing.max}"/></p>
             <p>Durchschnittliche Antwort: <span th:text="${timing.avg}"/></p>
-            <p>Vokabeln: <span th:text="${protocol.words()}"/></p>
         </div>
         <div class="col-12">
             <table class="table">

@@ -32,6 +32,34 @@ public class Statistics {
         return result;
     }
 
+    public static int[] beforeAfter(FileNode userProtocols, Book book, FileNode theProtocol, IntSet selection) throws IOException {
+        List<FileNode> logs;
+        Protocol protocol;
+        Statistics result;
+        int count;
+        int before;
+
+        result = new Statistics(book.enabled(userProtocols), book.disabled(userProtocols));
+        logs = Protocol.list(userProtocols, book.name);
+        before = 0;
+        for (FileNode node : logs) {
+            if (node.equals(theProtocol)) {
+                before = result.quality(book, selection);
+            }
+            protocol = Protocol.load(node);
+            for (Map.Entry<Integer, List<String>> entry : protocol.histogramRaw().entrySet()) {
+                count = entry.getKey();
+                for (String question : entry.getValue()) {
+                    result.add(question, count);
+                }
+            }
+            if (node.equals(theProtocol)) {
+                return new int[] { before, result.quality(book, selection) };
+            }
+        }
+        throw new IllegalStateException(theProtocol.getAbsolute());
+    }
+
     //--
 
     /** @return question mapped to number of tries list */

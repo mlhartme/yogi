@@ -135,8 +135,6 @@ public class Protocol {
 
     public String duration() {
         long millis;
-        int seconds;
-        int minutes;
 
         millis = entries.get(entries.size() - 1).date.getTime() - entries.get(0).date.getTime();
         return durationString(millis);
@@ -145,6 +143,7 @@ public class Protocol {
     private static String durationString(long millis) {
         int seconds;
         int minutes;
+
         seconds = (int) (millis / 1000);
         minutes = seconds / 60;
         seconds = seconds % 60;

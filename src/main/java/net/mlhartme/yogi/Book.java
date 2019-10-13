@@ -78,6 +78,21 @@ public class Book implements Comparable<Book> {
         return result;
     }
 
+    public IntSet selection(Protocol protocol) {
+        IntSet result;
+        int idx;
+
+        result = new IntSet();
+        for (String question : protocol.questionCount().keySet()) {
+            idx = lefts.indexOf(question);
+            if (idx < 0) {
+                throw new IllegalStateException(question);
+            }
+            result.add(idx);
+        }
+        return result;
+    }
+
     private FileNode enabledFile(FileNode userProtocols) throws MkdirException {
         FileNode dir;
 
