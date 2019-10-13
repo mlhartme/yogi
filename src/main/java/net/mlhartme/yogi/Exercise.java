@@ -1,5 +1,6 @@
 package net.mlhartme.yogi;
 
+import net.oneandone.sushi.fs.MkdirException;
 import net.oneandone.sushi.fs.Node;
 import net.oneandone.sushi.fs.file.FileNode;
 import net.oneandone.sushi.util.Separator;
@@ -119,13 +120,22 @@ public class Exercise {
     }
 
     private void doLog(FileNode userProtocols, String line) throws IOException {
-        try (Writer writer = userProtocols.join(book.name).mkdirOpt().join(id + ".log").newAppender()) {
+        try (Writer writer = protocolFile(userProtocols).newAppender()) {
             writer.append(Protocol.FMT.format(new Date()));
             writer.append(' ');
             writer.append(line.replace("\n", " // "));
             writer.append('\n');
         }
     }
+
+    private FileNode protocolFile(FileNode userProtocols) throws MkdirException {
+        return userProtocols.join(book.name).mkdirOpt().join(id + ".log");
+    }
+
+    public Protocol protocol(FileNode userProtocols) throws IOException {
+        return Protocol.load(protocolFile(userProtocols));
+    }
+
     public int roundSize() {
         return selection.size() - ofs;
     }
