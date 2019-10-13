@@ -183,21 +183,14 @@ public class YogiController {
     }
 
     @RequestMapping("/books/{book}/protocols/{id}")
-    public String protocol(Model model, @PathVariable(value = "book") String bookName, @PathVariable(value = "id") long id) throws IOException {
-        FileNode file;
+    public String protocol(Model model, @PathVariable(value = "book") String book, @PathVariable(value = "id") long id) throws IOException {
         Protocol protocol;
-        Book book;
-        int[] beforeAfter;
 
-        book = library.get(bookName);
-        file = userProtocols().join(bookName, id + ".log");
-        protocol = Protocol.load(file);
-        beforeAfter =  Statistics.beforeAfter(userProtocols(), book, file, book.selection(protocol));
+        protocol = Protocol.load(userProtocols().join(book, id + ".log"));
+        model.addAttribute("userProtocols", userProtocols());
         model.addAttribute("protocol", protocol);
-        model.addAttribute("book", book);
+        model.addAttribute("book", library.get(book));
         model.addAttribute("library", library);
-        model.addAttribute("before", beforeAfter[0]);
-        model.addAttribute("after", beforeAfter[1]);
         return "protocol";
     }
 

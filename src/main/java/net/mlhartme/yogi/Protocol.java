@@ -75,7 +75,7 @@ public class Protocol {
     public static Protocol load(FileNode src) throws IOException {
         Protocol result;
 
-        result = new Protocol();
+        result = new Protocol(src);
         for (String line : src.readLines()) {
             result.addRaw(line);
         }
@@ -91,10 +91,13 @@ public class Protocol {
             this.text = text;
         }
     }
+
+    private final FileNode file;
     private final List<Entry> entries; // cannot use a map because of duplicate keys
 
-    public Protocol() {
-        entries = new ArrayList<>();
+    public Protocol(FileNode file) {
+        this.file = file;
+        this.entries = new ArrayList<>();
     }
 
     public void addRaw(String raw) throws IOException {
@@ -277,24 +280,14 @@ public class Protocol {
         return result;
     }
 
-    public static class AnswerTiming {
-        public final String min;
-        public final String max;
-        public final String avg;
-
-        public AnswerTiming(String min, String max, String avg) {
-            this.min = min;
-            this.max = max;
-            this.avg = avg;
-        }
-    }
-    public AnswerTiming answerTiming() {
+    public Achievement achievement(FileNode userProtocols, Book book) throws IOException {
         long max = -1;
         long min = Long.MAX_VALUE;
         long avg = 0;
         int count;
         long diff;
         Entry prev;
+        int[] beforeAfter;
 
         prev = null;
         count = 0;
@@ -308,7 +301,9 @@ public class Protocol {
             }
             prev = entry;
         }
-        return count == 0 ? new AnswerTiming("-", "-", "-")
-                : new AnswerTiming(durationString(min), durationString(max), durationString(avg / count));
+        beforeAfter =  Statistics.beforeAfter(userProtocols, book, this.file, book.selection(this));
+
+        return count == 0 ? new Achievement(beforeAfter[0], beforeAfter[1], "-", "-", "-")
+                : new Achievement(beforeAfter[0], beforeAfter[1], durationString(min), durationString(max), durationString(avg / count));
     }
 }
