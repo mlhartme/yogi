@@ -47,6 +47,7 @@ public class YogiSecurity extends WebSecurityConfigurerAdapter {
         return new InMemoryUserDetailsManager(user("Jakob", "3011"),
                 user("Benjamin", "0908"),
                 user("Johann", "0000"),
+                user("Konrad", "Schelling"),
                 user("Michael", "0809"));
     }
 
