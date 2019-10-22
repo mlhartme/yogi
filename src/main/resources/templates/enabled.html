@@ -6,7 +6,7 @@
     <div class="col-12">
         <h4 th:text="${title + ' Freischalten'}"></h4>
         <div class="col-12">
-            <form class="form-horizontal" th:action="${'/books/' + book.name + '/set-enabled'}" method="post">
+            <form class="form-horizontal" accept-charset="utf-8" th:action="@{/books/{book}/set-enabled(book=${book.name})}" method="post">
                 <fieldset>
                     <input name="book" th:value="${book.name}" type="hidden"/>
                     <input name="selection" th:value="${selection}" type="hidden"/>

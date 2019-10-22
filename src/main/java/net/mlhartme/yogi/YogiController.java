@@ -155,7 +155,7 @@ public class YogiController {
         return "redirect:question?e=" + urlencode(exercise.toParam());
     }
 
-    private static String urlencode(String str) {
+    public static String urlencode(String str) {
         try {
             return URLEncoder.encode(str, "utf8");
         } catch (UnsupportedEncodingException e) {
