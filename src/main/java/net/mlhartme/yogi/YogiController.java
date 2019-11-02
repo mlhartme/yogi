@@ -46,7 +46,7 @@ public class YogiController {
 
     @RequestMapping("/books")
     public String books() {
-        return "redirect:/books/" + library.iterator().next().name + "/";
+        return "redirect:/books/" + library.iterator().next().name + "/"; // TODO: doesnt work for french books
     }
 
     @RequestMapping("/books/{book}/")
