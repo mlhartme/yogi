@@ -103,7 +103,7 @@ public class YogiController {
 
         enable = getChecked(request, "enable_");
         library.get(book).enable(userProtocols(), IntSet.parseArg(selection), enable);
-        return "redirect:/books/" + book + "/";
+        return "redirect:";
     }
 
     private static IntSet getChecked(HttpServletRequest request, String prefix) {
