@@ -2,6 +2,7 @@
 
 ## 1.1.0 (pending)
 
+* improved quality computation: when asked only once or twice, the missing answers to three are considered "not answered"
 * added multi user support
 * select excercise count, scope or selection
 

@@ -135,7 +135,7 @@ public class Statistics {
         int idx;
 
         idx = tries.size() - back;
-        return countQuality(tries.get(idx < 0 ? 0 : idx));
+        return countQuality(idx < 0 ? Protocol.NOT_ANSWERED : tries.get(idx));
     }
 
     private int countQuality(int count) {
