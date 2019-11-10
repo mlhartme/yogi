@@ -17,7 +17,7 @@
                         <div class="modal-body" th:unless="${enabledEmpty}">
                             <div class="form-group">
                                 <input name="book" th:value="${book.name}" type="hidden"/>
-                                <input name="title" th:value="${title}" type="hidden"/>
+                                <input name="title" th:value="${book.name}" type="hidden"/>
                                 <select class="form-control" name="count" id="count">
                                     <option>5</option>
                                     <option>10</option>
