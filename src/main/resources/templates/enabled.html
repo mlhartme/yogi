@@ -5,6 +5,8 @@
 <th:block layout:fragment="content" th:with="statistics=${book.statistics(userProtocols)}">
     <div class="col-12">
         <h4 th:text="${title + ' Freischalten'}"></h4>
+        <p>Kreuze alle Vokalen an, die in der Schule schon dran waren, die du also können solltest.
+        Klicke danach auf den "Speichern" Kopf ganz unten.</p>
         <div class="col-12">
             <form class="form-horizontal" accept-charset="utf-8" th:action="@{/books/{book}/set-enabled(book=${book.name})}" method="post">
                 <fieldset>

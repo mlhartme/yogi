@@ -4,7 +4,7 @@
       layout:decorate="~{layout.html}">
 <th:block layout:fragment="content">
     <div id="start" class="modal fade" >
-        <div class="modal-dialog">
+        <div class="modal-dialog" th:with="enabledEmpty=${book.enabled(userProtocols).isEmpty()}">
             <form class="form-horizontal" th:action="${'/books/' + book.name + '/start'}" method="post">
                 <fieldset>
                     <div class="modal-content">
@@ -14,7 +14,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
+                        <div class="modal-body" th:unless="${enabledEmpty}">
                             <div class="form-group">
                                 <input name="book" th:value="${book.name}" type="hidden"/>
                                 <input name="title" th:value="${title}" type="hidden"/>
@@ -29,7 +29,11 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="modal-footer">
+                        <div class="modal-body" th:if="${enabledEmpty}">
+                            <p>Bevor du Vokalen üben kannst, mußte du Vokabeln "freischalten".</p>
+                            <p>Klicke dazu auf die Zahlen hinter den Kapiteln.</p>
+                        </div>
+                        <div class="modal-footer" th:unless="${enabledEmpty}">
                             <div class="form-group">
                                 <div class="col-lg-10 col-lg-offset-2">
                                     <button type="submit" class="btn btn-primary">Starten</button>
