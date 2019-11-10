@@ -187,9 +187,7 @@ public class Statistics {
     }
 
     public static String style(int quality) {
-        if (quality == 0) {
-            return "color: white;";
-        } else if (quality < 30) {
+        if (quality < 30) {
             return "color: red;";
         } else if (quality < 60) {
             return "color: orange;";
