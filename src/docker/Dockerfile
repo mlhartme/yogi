@@ -6,6 +6,6 @@ RUN mkdir -p /usr/share/man/man1 && \
     mkdir /usr/local/springboot && \
     mkdir /var/log/springboot
 
-COPY *.jar /usr/local/springboot
+COPY maven/*.jar /usr/local/springboot
 
 CMD java $OPTS -jar /usr/local/springboot/*.jar

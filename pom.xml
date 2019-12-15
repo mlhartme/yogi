@@ -82,6 +82,41 @@
           			<jvmArguments>-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments>
 		        </configuration>
 			</plugin>
+			<plugin>
+				<groupId>io.fabric8</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.30.0</version>
+				<configuration>
+					<images>
+						<image>
+							<name>yogi:%t</name>
+							<build>
+								<tags><tag>latest</tag></tags>
+								<dockerFile>${basedir}/src/docker/Dockerfile</dockerFile>
+								<assembly>
+									<descriptor>${basedir}/src/docker/assembly.xml</descriptor>
+								</assembly>
+							</build>
+						</image>
+					</images>
+				</configuration>
+				<executions>
+					<execution>
+						<id>build-image</id>
+						<phase>package</phase>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>deploy-image</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>push</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 

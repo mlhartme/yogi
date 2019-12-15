@@ -1,5 +1,4 @@
 /.idea
-/src/docker/*.jar
 /*.iml
 /target/
 /protocols
