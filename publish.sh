@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "copying ..."
+docker save yogi:latest | bzip2 | ssh mops 'bunzip2 | docker load'
