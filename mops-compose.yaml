@@ -6,9 +6,9 @@ services:
       - 8000:8000
       - 8080:8080
     environment:
-      - OPTS=-Dserver.tomcat.basedir=/var/log/springboot -Dserver.tomcat.accesslog.enabled=true -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,quiet=n,address=8000
+      - OPTS=-Dserver.tomcat.basedir=logs -Dserver.tomcat.accesslog.enabled=true -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,quiet=n,address=8000
     volumes:
       - type: "bind"
-        source: "/home/mhm/yogi/tomcat"
-        target: "/var/log/springboot"
+        source: "/home/mhm/yogi"
+        target: "/usr/local/yogi/run"
 
