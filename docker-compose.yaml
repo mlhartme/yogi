@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+  yogi:
+    image: yogi
+    ports:
+      - 8080:8080
+    environment:
+      - OPTS=-Dserver.tomcat.basedir=/var/log/springboot -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,quiet=n,address=8000
+    volumes:
+      - type: "bind"
+        source: "./springboot"
+        target: "/var/log/springboot"
+
