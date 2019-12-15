@@ -3,9 +3,8 @@ FROM debian:bullseye-slim
 RUN mkdir -p /usr/share/man/man1 && \
     apt-get update && \
     apt-get install -y --no-install-recommends procps curl openjdk-13-jdk-headless && \
-    mkdir /usr/local/springboot && \
-    mkdir /var/log/springboot
+    mkdir /usr/local/yogi
 
-COPY maven/*.jar /usr/local/springboot
+COPY maven/*.jar /usr/local/yogi/yogi.jar
 
-CMD java $OPTS -jar /usr/local/springboot/*.jar
+CMD cd /usr/local/yogi/run && pwd && ls -la && java $OPTS -jar /usr/local/yogi/yogi.jar

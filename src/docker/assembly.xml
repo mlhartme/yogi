@@ -6,7 +6,7 @@
         <fileSet>
             <directory>target</directory>
             <includes>
-                <include>*.jar</include>
+                <include>yogi-*.jar</include>
             </includes>
             <outputDirectory>/</outputDirectory>
         </fileSet>
