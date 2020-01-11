@@ -3,8 +3,10 @@ Description=Yogi
 Requires=docker.service
 After=docker.service
 [Service]
-ExecStartPre=/usr/local/bin/docker-compose -f /Users/mhm/yogi/systemd/docker-compose.yaml down
-ExecStart=/usr/local/bin/docker-compose -f /Users/mhm/yogi/systemd/docker-compose.yaml up
-ExecStop=/usr/local/bin/docker-compose -f /Users/mhm/yogi/systemd/docker-compose.yaml down
+User=mhm
+Group=mhm
+ExecStartPre=/usr/local/bin/docker-compose -f /home/mhm/yogi/systemd/docker-compose.yaml down
+ExecStart=/usr/local/bin/docker-compose -f /home/mhm/yogi/systemd/docker-compose.yaml up
+ExecStop=/usr/local/bin/docker-compose -f /home/mhm/yogi/systemd/docker-compose.yaml down
 [Install]
 WantedBy=multi-user.target
