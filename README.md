@@ -18,3 +18,4 @@ install docker-compose
 symlink service into /etc/systemd/system
 systemctl daemon-reload
 systemctl start yogi
+systemctl enable yogi
