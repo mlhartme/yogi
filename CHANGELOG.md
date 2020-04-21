@@ -14,7 +14,8 @@
 * fixed IO exception when logs directory is wiped.
 * fixed divide by 0 for empty protocols
 
-* update spring-boot 2.1.2 to 2.2.0
+* update spring-boot 2.1.2 to 2.2.6
+
 
 ## 1.0.0 (9.9.2019)
 
