@@ -1,10 +1,13 @@
 FROM debian:stretch-slim
 
+LABEL net.oneandone.stool-port.http=8080
+
 ENV LANG de_DE.UTF-8
 RUN mkdir -p /usr/share/man/man1 && \
     apt-get update && \
     apt-get install -y --no-install-recommends procps curl openjdk-8-jdk-headless && \
-    mkdir /usr/local/yogi
+    mkdir /usr/local/yogi && \
+    mkdir /usr/local/yogi/run
 
 COPY maven/*.jar /usr/local/yogi/yogi.jar
 
