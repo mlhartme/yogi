@@ -136,9 +136,11 @@ public class Book implements Comparable<Book> {
             for (String active : lst) {
                 idx = lefts.indexOf(active);
                 if (idx < 0) {
-                    throw new IllegalStateException("unknown question: " + active);
+                    // happens if I fix a typo
+                    System.out.println("unknown question - ignored: " + active);
+                } else {
+                    result.add(idx);
                 }
-                result.add(idx);
             }
         } else {
             // TODO: wait until all users/books have an active file; then dump the asked() code
