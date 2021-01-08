@@ -11,4 +11,7 @@ services:
       - type: "bind"
         source: "/home/mhm/yogi/run"
         target: "/usr/local/yogi/run"
+      - type: "bind"
+        source: "/home/mhm/yogi/etc"
+        target: "/usr/local/yogi/etc"
 

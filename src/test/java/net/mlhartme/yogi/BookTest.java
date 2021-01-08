@@ -17,7 +17,7 @@ public class BookTest {
         Book book;
 
         world = World.create();
-        for (Node file : world.resource("books").find("**/*.yogi")) {
+        for (Node file : world.guessProjectHome(getClass()).join("src/test/etc/books").find("*.yogi")) {
             book = Book.load(file);
             assertTrue(book.size() > 0);
         }

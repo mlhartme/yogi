@@ -19,18 +19,24 @@ Um Yogi als Systemd Service auf einem Linux Rechner aufzusetzen:
 * `scp -r src/systemd yourhost:~/yogi/`
 * auf *yourhost*
   * `mkdir ~/yogi/run`
+  * ~/yogi/etc einrichten
   * `ln -s ~/yogi/systemd/yogi.service /etc/systemd/system
   * `systemctl daemon-reload`
   * `systemctl start yogi`
   * `systemctl enable yogi`
 
-## Lokal Testen
+## Bauen und lokal starten
 
-./run.sh
+* mvn clean package
+* ./run.sh
+* http://localhost:8080
 
 ## Directory Aufbau
 
-/usr/local/yogi/run                        Aktuelles Verzeichnis für Tomcat Prozess. Und "server.tomcat.basedir"
-                 - logs                    Tomcat Access Logs
-                 - work                    Tomcat "work" directory
-                 - protocols               Übungsprotokolle
+/usr/local/yogi/
+      - etc
+         - books                   Verfügbare Bücher
+      - run                        Aktuelles Verzeichnis für Tomcat Prozess. Und "server.tomcat.basedir"
+         - logs                    Tomcat Access Logs
+         - protocols               Übungsprotokolle
+         - work                    Tomcat "work" directory

@@ -30,7 +30,7 @@ public class YogiController {
 
     public YogiController(World world) throws IOException {
         this.protocolRoot = world.getWorking().join("protocols");
-        this.library = Library.load(world.resource("books"));
+        this.library = Library.load(world.file("/usr/local/yogi/etc/books"));
     }
 
 
