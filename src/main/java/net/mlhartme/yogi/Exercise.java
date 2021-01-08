@@ -15,7 +15,7 @@ import java.util.List;
 public class Exercise {
     private static final Separator COLON = Separator.on(':');
 
-    public static Exercise forParam(Book book, String param) throws IOException {
+    public static Exercise forParam(Book book, String param) {
         List<String> args;
 
         args = COLON.split(param);
@@ -107,8 +107,8 @@ public class Exercise {
         this.wrong = wrong;
     }
 
-    public void logTitle(FileNode userProtocols, String title) throws IOException {
-        doLog(userProtocols, "! " + title);
+    public void logTitle(FileNode userProtocols, String withTitle) throws IOException {
+        doLog(userProtocols, "! " + withTitle);
     }
 
     public void logComment(FileNode userProtocols, String comment) throws IOException {

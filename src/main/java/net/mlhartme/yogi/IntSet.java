@@ -92,7 +92,7 @@ public class IntSet implements Iterable<Integer> {
         return data.iterator();
     }
 
-    private static final Random random = new Random();
+    private static final Random RANDOM = new Random();
 
     public int next(IntSet done) {
         int selectionSize;
@@ -104,7 +104,7 @@ public class IntSet implements Iterable<Integer> {
         if (doneSize >= selectionSize) {
             throw new IllegalStateException("all done");
         }
-        rnd = random.nextInt(selectionSize - doneSize);
+        rnd = RANDOM.nextInt(selectionSize - doneSize);
         for (Integer i : this) {
             if (!done.contains(i)) {
                 if (rnd == 0) {

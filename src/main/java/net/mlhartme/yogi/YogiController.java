@@ -156,7 +156,7 @@ public class YogiController {
             while (sorted.size() > count) {
                 sorted.remove(sorted.size() - 1);
             }
-            selection = new IntSet(sorted);;
+            selection = new IntSet(sorted);
         }
         return doStart(book, title, selection);
     }
@@ -233,7 +233,8 @@ public class YogiController {
     }
 
     @RequestMapping("/books/{book}/answer")
-    public String answer(Model model, @PathVariable(value = "book") String book, @RequestParam("e") String e, @RequestParam("question") String question, @RequestParam("answer") String answer) throws IOException {
+    public String answer(Model model, @PathVariable(value = "book") String book, @RequestParam("e") String e,
+                         @RequestParam("question") String question, @RequestParam("answer") String answer) throws IOException {
         Exercise exercise;
         String correction;
 

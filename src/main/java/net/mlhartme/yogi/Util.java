@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class Util {
+public final class Util {
     public static void main(String[] args) throws IOException {
         World world;
         String name;
@@ -35,5 +35,8 @@ public class Util {
                 }
             }
         }
+    }
+
+    private Util() {
     }
 }

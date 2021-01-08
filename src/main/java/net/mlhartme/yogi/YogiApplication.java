@@ -9,13 +9,12 @@ import java.io.IOException;
 
 @SpringBootApplication
 public class YogiApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(YogiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(YogiApplication.class, args);
+    }
 
-	@Bean
-	public World world() throws IOException {
-		return World.create();
-	}
+    @Bean
+    public World world() throws IOException {
+        return World.create();
+    }
 }
-
