@@ -5,6 +5,7 @@
 * ui 
   * add version to footer
 * added `run.sh` to run locally
+* lazy-foss-parent
 * /usr/local/yogi/etc
   * load users from /usr/local/yogi/etc/user.properties
   * load books from /usr/local/yogi/etc/books
