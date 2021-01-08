@@ -2,6 +2,8 @@
 
 ## 1.2.0 (pending)
 
+* ui 
+  * add version to footer
 * added `run.sh` to run locally
 * /usr/local/yogi/etc
   * load users from /usr/local/yogi/etc/user.properties

@@ -7,6 +7,7 @@ import net.oneandone.sushi.util.Separator;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ import java.util.Map;
 public class YogiController {
     private final FileNode protocolRoot;
     private final Library library;
+    private final String version;
 
     public YogiController(World world) throws IOException {
         FileNode src;
@@ -34,8 +36,13 @@ public class YogiController {
         src = world.file("/usr/local/yogi/etc/books");
         this.library = src.exists() ? Library.load(src) : new Library(); // for SpringBoot test
         this.protocolRoot = world.getWorking().join("protocols");
+        this.version = world.resource("yogi.version").readString().trim();
     }
 
+    @ModelAttribute("yogiVersion")
+    protected String getVersion() {
+        return version;
+    }
 
     private FileNode userProtocols() throws MkdirException {
         return protocolRoot.join(YogiSecurity.username()).mkdirsOpt();
