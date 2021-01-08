@@ -29,8 +29,11 @@ public class YogiController {
     private final Library library;
 
     public YogiController(World world) throws IOException {
+        FileNode src;
+
+        src = world.file("/usr/local/yogi/etc/books");
+        this.library = src.exists() ? Library.load(src) : new Library(); // for SpringBoot test
         this.protocolRoot = world.getWorking().join("protocols");
-        this.library = Library.load(world.file("/usr/local/yogi/etc/books"));
     }
 
 
