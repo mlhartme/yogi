@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.0 (pending)
+
+
 ## 1.1.0 (2021-01-08)
 
 * moved `Üben` button up on book level, letting the computer pick vocabulary across sections as needed;
