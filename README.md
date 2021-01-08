@@ -30,6 +30,6 @@ docker run -it -p 8080:8080 yogi
 
 ## Directory Aufbau
 
-/usr/local/yogi/run        Aktuelles Verzeichnis im laufenden Container
+/usr/local/yogi/run                        Aktuelles Verzeichnis für Tomcat
                  - logs                    Das Tomcat Base Directory, dahin kommen logs
                  - protocols               Hier wird das Üben protokolliert
