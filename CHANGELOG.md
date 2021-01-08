@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.0 (pending)
+## 1.1.0 (2021-01-08)
 
 * moved `Üben` button up on book level, letting the computer pick vocabulary across sections as needed;
 * renamed `Auswahl` button on selection page to `Üben ...`
@@ -15,8 +15,9 @@
 * fixed divide by 0 for empty protocols
 
 * update spring-boot 2.1.2 to 2.2.6
+* update to sushi 3.3.0
 
 
-## 1.0.0 (9.9.2019)
+## 1.0.0 (2019-09-09)
 
 Initial tag. Jakob repeated his first year with it.
