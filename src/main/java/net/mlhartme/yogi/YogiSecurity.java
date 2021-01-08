@@ -1,5 +1,7 @@
 package net.mlhartme.yogi;
 
+import net.oneandone.sushi.fs.World;
+import net.oneandone.sushi.fs.file.FileNode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,6 +14,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+
+import java.io.IOException;
+import java.util.Map;
+import java.util.Properties;
 
 @Configuration
 @EnableWebSecurity
@@ -44,11 +50,23 @@ public class YogiSecurity extends WebSecurityConfigurerAdapter {
     @Bean
     @Override
     public UserDetailsService userDetailsService() {
-        return new InMemoryUserDetailsManager(user("Jakob", "3011"),
-                user("Benjamin", "0908"),
-                user("Jan", "Ganz"),
-                user("Konrad", "Schelling"),
-                user("Michael", "0809"));
+        World world;
+        FileNode src;
+        Properties p;
+        InMemoryUserDetailsManager result;
+
+        world = World.createMinimal();
+        src = world.file("/usr/local/yogi/etc/user.properties");
+        try {
+            p = src.exists() ? src.readProperties() : new Properties();
+        } catch (IOException e) {
+            throw new IllegalStateException("cannot load user.properties", e);
+        }
+        result = new InMemoryUserDetailsManager();
+        for (Map.Entry<Object, Object> entry : p.entrySet()) {
+            result.createUser(user((String) entry.getKey(), (String) entry.getValue()));
+        }
+        return result;
     }
 
     private static UserDetails user(String name, String pw) {

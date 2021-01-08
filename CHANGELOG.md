@@ -3,7 +3,9 @@
 ## 1.2.0 (pending)
 
 * added `run.sh` to run locally
-* load books from /usr/local/yogi/etc/books
+* /usr/local/yogi/etc
+  * load users from /usr/local/yogi/etc/user.properties
+  * load books from /usr/local/yogi/etc/books
 
 
 ## 1.1.0 (2021-01-08)
