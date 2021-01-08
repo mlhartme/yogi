@@ -2,6 +2,8 @@
 
 ## 1.2.0 (pending)
 
+* added `run.sh` to run locally
+
 
 ## 1.1.0 (2021-01-08)
 

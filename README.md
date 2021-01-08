@@ -26,10 +26,11 @@ Um Yogi als Systemd Service auf einem Linux Rechner aufzusetzen:
 
 ## Lokal Testen
 
-docker run -it -p 8080:8080 yogi
+./run.sh
 
 ## Directory Aufbau
 
-/usr/local/yogi/run                        Aktuelles Verzeichnis für Tomcat
-                 - logs                    Das Tomcat Base Directory, dahin kommen logs
-                 - protocols               Hier wird das Üben protokolliert
+/usr/local/yogi/run                        Aktuelles Verzeichnis für Tomcat Prozess. Und "server.tomcat.basedir"
+                 - logs                    Tomcat Access Logs
+                 - work                    Tomcat "work" directory
+                 - protocols               Übungsprotokolle
