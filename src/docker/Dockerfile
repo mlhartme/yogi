@@ -1,9 +1,6 @@
 FROM debian:buster-slim
-
-LABEL net.oneandone.stool-port.http=8080
-
 ENV LANG de_DE.UTF-8
-
+ENV OPTS ""
 RUN mkdir -p /usr/share/man/man1 && \
     apt-get update && \
     apt-get install -y --no-install-recommends procps curl locales locales-all openjdk-11-jdk-headless && \
