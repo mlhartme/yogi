@@ -2,7 +2,7 @@
 
 ## 1.2.0 (pending)
 
-* update dependencies: spring, springboot, thymeleaf
+* update dependencies: spring, springboot, thymeleaf, docker plugin
 * ui 
   * add version to footer
 * added `run.sh` to run locally
