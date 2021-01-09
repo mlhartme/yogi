@@ -2,10 +2,11 @@
 
 ## 1.2.0 (pending)
 
+* update spring dependencies
 * ui 
   * add version to footer
 * added `run.sh` to run locally
-* lazy-foss-parent
+* lazy-foss-parent, build fpr Java 11
 * /usr/local/yogi/etc
   * load users from /usr/local/yogi/etc/user.properties
   * load books from /usr/local/yogi/etc/books
