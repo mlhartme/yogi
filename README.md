@@ -1,42 +1,51 @@
 # Yogi
 
-Vokabel Trainer.
+Vocabulary trainer.
 
-Setup mit
+## Build and run locally
 
-alias yogi="docker-compose -f /Users/mhm/Projects/github.com/net/mlhartme/yogi/docker-compose.yaml"
-alias public-yogi="DOCKER_HOST=mops:2375 docker-compose -f /Users/mhm/Projects/github.com/net/mlhartme/yogi/mops-compose.yaml"
+* setup docker
+* `mvn clean package`
+* `./run.sh`
+* point your browser to `http://localhost:8080` and login with the credentials printed on the command line
+* stop with ctrl-c
 
-    
-Satzzeichen, Groß/Kleinschreibung müssen exakt eingegeben werden. Wenn die Frage mit Satzanfang/Groß beginnt und einem Satzzeichen endet,
-dann soll das die Antowort auch machen.
 
-## Server aufsetzen
+## Directory structure for running application
 
-Um Yogi als Systemd Service auf einem Linux Rechner aufzusetzen:
+/usr/local/yogi/
+      - etc
+         - books                   available books
+      - run                        cwd for Tomcat and "server.tomcat.basedir"
+         - logs                    Tomcat Access Logs
+         - protocols               Übungsprotokolle
+         - work                    Tomcat "work" directory
 
-* docker und docker-compose installieren
+## Books
+
+are stored in <name>.yogi files. These files are line based, a line is either
+* empty
+* a header - starts with a hash "#"
+* an entry <left>=<right>
+
+Rules
+* input is trimmed of whitespace; otherwise, it's matched exactly. That means
+  * it is cases sensitive
+  * punctation has to be matched exactly
+    * make sure the question punctation matches the punctation in the answer
+
+
+## Server setup
+
+to create a systemd service on a Linux box
+
+* install docker and docker-compose
 * `scp -r src/systemd yourhost:~/yogi/`
-* auf *yourhost*
+* on *yourhost*
   * `mkdir ~/yogi/run`
-  * ~/yogi/etc einrichten
+  * setup `~/yogi/etc` with a ´books` subdirectory and your books
   * `ln -s ~/yogi/systemd/yogi.service /etc/systemd/system
   * `systemctl daemon-reload`
   * `systemctl start yogi`
   * `systemctl enable yogi`
 
-## Bauen und lokal starten
-
-* mvn clean package
-* ./run.sh
-* http://localhost:8080
-
-## Directory Aufbau
-
-/usr/local/yogi/
-      - etc
-         - books                   Verfügbare Bücher
-      - run                        Aktuelles Verzeichnis für Tomcat Prozess. Und "server.tomcat.basedir"
-         - logs                    Tomcat Access Logs
-         - protocols               Übungsprotokolle
-         - work                    Tomcat "work" directory
