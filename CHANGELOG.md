@@ -1,6 +1,11 @@
 # Changelog
 
-## 1.2.0 (pending)
+## 1.3.0 (pending)
+
+* update dependencies: spring, springboot, junit
+
+
+## 1.2.0 (2021-04-02)
 
 * update dependencies: spring, springboot, thymeleaf, docker plugin, bootstrap (with popper and jquery)
 * ui 
