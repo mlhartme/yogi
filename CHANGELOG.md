@@ -2,6 +2,7 @@
 
 ## 1.3.0 (pending)
 
+* build for Java 16
 * update dependencies: spring, springboot, junit
 
 
