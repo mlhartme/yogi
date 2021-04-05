@@ -86,9 +86,10 @@ public class Book implements Comparable<Book> {
         for (String question : protocol.questionCount().keySet()) {
             idx = lefts.indexOf(question);
             if (idx < 0) {
-                throw new IllegalStateException(question);
+                System.out.println("not found: " + question); // TODO - was corrected
+            } else {
+                result.add(idx);
             }
-            result.add(idx);
         }
         return result;
     }
