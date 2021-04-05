@@ -5,6 +5,10 @@
 <th:block layout:fragment="content">
     <div class="row" th:with="achievement=${protocol.achievement(userProtocols, book)}">
         <div class="col-12">
+            <img th:if="${achievement.after - achievement.before > 30}" src="/static/good.png" width="128"/>
+            <img th:if="${achievement.after - achievement.before <= 30}" src="/static/bad.png" width="128"/>
+        </div>
+        <div class="col-12">
             <h2 style="size:">
                 <span data-toggle="tooltip" th:title="${achievement.before + ' % '}" th:style="${T(net.mlhartme.yogi.Statistics).style(achievement.before)}">&#x25cf; </span>
                 <i class="fas fa-arrow-right"></i>
@@ -18,8 +22,6 @@
             <p>Schnellste Antwort: <span th:text="${achievement.answerMin}"/></p>
             <p>Längste Antwort: <span th:text="${achievement.answerMax}"/></p>
             <p>Durchschnittliche Antwort: <span th:text="${achievement.answerAvg}"/></p>
-            <img th:if="${achievement.after - achievement.before > 30}" src="/static/good.png" width="128"/>
-            <img th:if="${achievement.after - achievement.before <= 30}" src="/static/bad.png" height="128"/>
         </div>
         <div class="col-12">
             <table class="table">
