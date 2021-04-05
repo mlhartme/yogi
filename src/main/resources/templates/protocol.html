@@ -18,6 +18,8 @@
             <p>Schnellste Antwort: <span th:text="${achievement.answerMin}"/></p>
             <p>Längste Antwort: <span th:text="${achievement.answerMax}"/></p>
             <p>Durchschnittliche Antwort: <span th:text="${achievement.answerAvg}"/></p>
+            <img th:if="${achievement.after - achievement.before > 30}" src="/static/good.png" width="128"/>
+            <img th:if="${achievement.after - achievement.before <= 30}" src="/static/bad.png" height="128"/>
         </div>
         <div class="col-12">
             <table class="table">

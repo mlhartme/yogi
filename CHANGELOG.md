@@ -2,6 +2,7 @@
 
 ## 1.3.0 (pending)
 
+* improved protocol overview with date, count and improvements
 * build for Java 16
 * update dependencies: spring, springboot, bootstrap 4.5.2 to 4.6.0, jquery 3.5.1 to 3.6.0, junit 5.7.0 to 5.7.1
 
