@@ -304,6 +304,7 @@ public class Protocol {
         beforeAfter =  Statistics.beforeAfter(userProtocols, book, this.file, book.selection(this));
 
         return count == 0 ? new Achievement(beforeAfter[0], beforeAfter[1], "-", "-", "-")
-                : new Achievement(beforeAfter[0], beforeAfter[1], durationString(min), durationString(max), durationString(avg / count));
+                : new Achievement(beforeAfter[0], beforeAfter[1],
+                durationString(min), durationString(max), durationString(avg / count));
     }
 }

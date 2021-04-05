@@ -181,17 +181,23 @@ public class YogiController {
     public String protocols(Model model, @PathVariable(value = "book") String book) throws IOException {
         List<FileNode> protocols;
         LinkedHashMap<String, String> map;
+        Protocol p;
+        Book b;
+        Achievement a;
         String basename;
 
         protocols = Protocol.list(userProtocols(), book);
         Collections.reverse(protocols);
         map = new LinkedHashMap<>();
+        b = library.get(book);
         for (FileNode log : protocols) {
             basename = log.getBasename();
-            map.put(basename, basename + ": " + Protocol.load(log).title());
+            p = Protocol.load(log);
+            a = p.achievement(userProtocols(), b);
+            map.put(basename, p.date() + " " + p.words() + " " + a.before + " -> " + a.after);
         }
         model.addAttribute("map", map);
-        model.addAttribute("book", library.get(book));
+        model.addAttribute("book", b);
         model.addAttribute("library", library);
         return "protocols";
     }
