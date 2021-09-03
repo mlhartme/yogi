@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.3.0 (pending)
+## 1.3.0 (2021-09-03)
 
 * improved protocol overview with date, count and improvements
 * build for Java 16
