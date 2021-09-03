@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>net.mlhartme</groupId>
 	<artifactId>yogi</artifactId>
-	<version>1.3.0</version>
+	<version>1.3.1-SNAPSHOT</version>
 	<name>yogi</name>
 	<description>Vocabulary Trainer</description>
 
@@ -25,7 +25,7 @@
 	  <url>https://github.com/mlhartme/yogi</url>
 	  <connection>scm:git:ssh://git@github.com/mlhartme/yogi.git</connection>
 	  <developerConnection>scm:git:ssh://git@github.com/mlhartme/yogi.git</developerConnection>
-	  <tag>yogi-1.3.0</tag>
+	  <tag>HEAD</tag>
 	</scm>
 
 	<dependencies>
