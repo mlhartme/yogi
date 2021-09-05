@@ -15,10 +15,8 @@
 
 	<properties>
 		<maven.build.timestamp.format>yyyyMMdd-HHmmss</maven.build.timestamp.format>
-		<spring.version>5.3.5</spring.version>
-		<spring.security.version>5.4.5</spring.security.version>
 		<springboot.version>2.4.4</springboot.version>
-		<junit.version>5.7.1</junit.version>
+		<spring.security.version>5.5.2</spring.security.version>
 	</properties>
 
 	<scm>
@@ -44,25 +42,6 @@
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
 			<version>3.6.0</version>
-		</dependency>
-
-
-		<!-- spring core -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 
 		<!-- spring boot -->
@@ -120,9 +99,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<version>${junit.version}</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-test</artifactId>
+			<version>${springboot.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
