@@ -3,6 +3,7 @@
 ## 1.4.0 (pending)
 
 * update parent 1.5.0 to 1.5.1
+* update spring-boot 2.4.4 to 2.5.4
 
 
 ## 1.3.0 (2021-09-03)
