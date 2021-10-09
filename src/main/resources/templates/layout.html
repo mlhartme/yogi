@@ -30,7 +30,7 @@ body {
         <nav class="navbar navbar-expand fixed-top navbar-light bg-light">
             <ul class="navbar-nav mr-auto">'
                 <div class="dropdown nav-item">
-                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${book.name}"></button>
+                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${book.name}"></button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a th:each="book:${library}" class="dropdown-item" th:href="${'/books/' + book.name} + '/'" th:text="${book.name}"></a>
                     </div>
@@ -48,7 +48,7 @@ body {
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title">Anmerkung</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
@@ -65,7 +65,7 @@ body {
                             <div class="modal-footer">
                                 <div class="form-group">
                                     <div class="col-lg-10 col-lg-offset-2">
-                                        <button class="btn btn-primary close" data-dismiss="modal" onclick="e = $('#exercise').val(); comment = $('#comment-text').val(); $.post('comment', { e: e, comment: comment })" id="comment-submit">Abschicken</button>
+                                        <button class="btn btn-primary close" data-bs-dismiss="modal" onclick="e = $('#exercise').val(); comment = $('#comment-text').val(); $.post('comment', { e: e, comment: comment })" id="comment-submit">Abschicken</button>
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +80,7 @@ body {
                     <div class="modal-body">
                         <h5 class="modal-title">Übung wirklich beenden?</h5>
                         <a th:href="${'/books/' + book + '/'}" class="btn btn-primary btn-sm active" role="button" aria-pressed="true">Ja</a>
-                        <button type="button" class="btn btn-primary btn-sm active" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="btn btn-primary btn-sm active" data-bs-dismiss="modal" aria-label="Close">
                             Nein
                         </button>
                     </div>
@@ -90,8 +90,8 @@ body {
         <nav class="navbar navbar-expand fixed-top navbar-light bg-light">
         <span class="navbar-text">Übung</span>
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link" href="#comment" data-toggle="modal" data-target="#comment"><i class="fa fa-comments"></i> Anmerkung</a></li>
-                <li class="nav-item"><a class="nav-link" href="#quit" data-toggle="modal" data-target="#quit"><i class="fa fa-door-open"></i> Beenden</a></li>
+                <li class="nav-item"><a class="nav-link" href="#comment" data-bs-toggle="modal" data-bs-target="#comment"><i class="fa fa-comments"></i> Anmerkung</a></li>
+                <li class="nav-item"><a class="nav-link" href="#quit" data-bs-toggle="modal" data-bs-target="#quit"><i class="fa fa-door-open"></i> Beenden</a></li>
             </ul>
         </nav>
     </th:block>
@@ -100,7 +100,7 @@ body {
         <div class="col-12">
             <nav class="navbar fixed-bottom navbar-light bg-light">
                 <small>
-                    <p data-toggle="tooltip" th:title="${yogiVersion}">Yogi -  Vokabel Trainer</p>
+                    <p data-bs-toggle="tooltip" th:title="${yogiVersion}">Yogi -  Vokabel Trainer</p>
                 </small>
             </nav>
         </div>
