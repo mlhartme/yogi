@@ -49,7 +49,7 @@
         <a href="#start" data-bs-toggle="modal" data-bs-target="#start">Üben</a>
         <ul class="list-group" th:with="statistics=${book.statistics(userProtocols)}">
             <li class="list-group-item py+2" th:with="quality=${statistics.quality(book)}">
-                <p><span data-bs-toggle="tooltip" th:title="${quality + ' %'}" th:style="${statistics.style(quality)}">&#x25cf; </span>Alles</p>
+                <p><span data-bs-toggle="tooltip" th:title="${quality + ' %'}" th:style="${statistics.style(quality)}">&#x25cf; </span><span th:text="${quality + ' %'}"></span></p>
             </li>
             <li th:each="entry:${book.sections()}" class="list-group-item py+2">
                 <a th:with="quality=${statistics.quality(book, entry.value)}"
