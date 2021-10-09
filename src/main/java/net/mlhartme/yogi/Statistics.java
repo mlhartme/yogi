@@ -118,6 +118,10 @@ public class Statistics {
         tries.add(count);
     }
 
+    public int quality(Book book) {
+        return quality(book, enabled);
+    }
+
     public int quality(Book book, IntSet selection) {
         int sum;
         int count;
