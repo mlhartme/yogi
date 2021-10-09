@@ -4,7 +4,8 @@
 
 * update parent 1.5.0 to 1.5.1
 * update spring-boot 2.4.4 to 2.5.5
-* update bootstrap 4.6.0 to 5.1.0
+* update bootstrap 4.6.0 to 5.1.1
+* update JavaScript code to work without jQuery
 * add favicon
 
 
