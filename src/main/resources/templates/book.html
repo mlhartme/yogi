@@ -3,7 +3,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout.html}">
     <th:block layout:fragment="content" th:with="statistics=${book.statistics(@userFiles)}, quality=${statistics.quality(book, book.loadSelection(@userFiles, selection))}">
-        <span data-bs-toggle="tooltip" th:title="${quality + ' %'}" th:style="${statistics.style(quality)}">&#x25cf; </span><span th:text="${quality + ' %'}"></span>
         <div class="dropdown">
             <button class="btn btn-light dropdown-toggle" type="button" id="bookMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${book.name}"></button>
             <div class="dropdown-menu" aria-labelledby="bookMenuButton">
@@ -19,6 +18,7 @@
         </div>
         <a class="font-weight-lighter"
            th:href="@{/books/{book}/{selection}/selection(book=${book.name}, selection=${selection})}">Auswahl ändern</a>
+        <span data-bs-toggle="tooltip" th:title="${quality + ' %'}" th:style="${statistics.style(quality)}">&#x25cf; </span><span th:text="${quality + ' %'}"></span>
         <form th:action="@{/books/{book}/{selection}/start(book=${book.name}, selection=${selection})}" method="post">
             <button type="submit" class="btn btn-primary">Üben</button>
             <div class="container w-10">
