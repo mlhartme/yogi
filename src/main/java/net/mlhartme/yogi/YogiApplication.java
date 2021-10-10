@@ -36,7 +36,7 @@ public class YogiApplication {
 
     @Bean
     @SessionScope
-    public UserFiles context(World world) throws IOException {
+    public UserFiles userFiles(World world) throws IOException {
         return new UserFiles(world);
     }
 }
