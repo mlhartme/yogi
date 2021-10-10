@@ -46,11 +46,11 @@
         </div>
     </div>
     <div class="col-12" th:with="statistics=${book.statistics(userProtocols)}">
-        <a href="#start" data-bs-toggle="modal" data-bs-target="#start">Üben</a>
         <p th:with="quality=${statistics.quality(book)}">
             <span data-bs-toggle="tooltip" th:title="${quality + ' %'}" th:style="${statistics.style(quality)}">&#x25cf; </span><span th:text="${quality + ' %'}"></span>
             <a class="font-weight-lighter"
                th:href="@{/books/{book}/enabled(book=${book.name}, title=${book.name})}">Freischalten</a>
+            <a href="#start" data-bs-toggle="modal" data-bs-target="#start">Üben</a>
         </p>
     </div>
 </th:block>
