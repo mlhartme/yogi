@@ -14,7 +14,7 @@
             <div th:unless=${correction}>
                 <h5 class="text-success" th:text="${answer}"></h5>
                 <div th:if="${exercise.allDone()}">
-                    <form th:action="${'/books/' + exercise.book.name + '/freigeschaltet/protocols/' + exercise.id}" method="get">
+                    <form th:action="${'/books/' + exercise.book.name + '/' + selection + '/protocols/' + exercise.id}" method="get">
                         <button class="btn btn-primary" autofocus role="button">Fertig</button>
                     </form>
                 </div>

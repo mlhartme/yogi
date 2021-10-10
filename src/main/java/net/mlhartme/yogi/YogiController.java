@@ -40,14 +40,14 @@ import java.util.Map;
 
 @Controller
 public class YogiController {
-    private final UserFiles context;
+    private final UserFiles userFiles;
     private final Library library;
     private final String version;
 
-    public YogiController(World world, UserFiles context) throws IOException {
+    public YogiController(World world, UserFiles userFiles) throws IOException {
         FileNode src;
 
-        this.context = context;
+        this.userFiles = userFiles;
         src = world.file("/usr/local/yogi/etc/books");
         this.library = src.exists() ? Library.load(src) : new Library(); // for SpringBoot test
         this.version = world.resource("yogi.version").readString().trim();
@@ -71,7 +71,7 @@ public class YogiController {
 
     @RequestMapping("/books/{book}")
     public String bookRaw(@PathVariable(value = "book") String book) throws IOException {
-        return "redirect:/books/" + book + "/" + context.firstSelection(book);
+        return "redirect:/books/" + book + "/" + userFiles.firstSelection(book);
     }
 
     @GetMapping("/books/{book}/{selection}")
@@ -91,7 +91,7 @@ public class YogiController {
         model.addAttribute("library", library);
         model.addAttribute("book", book);
         model.addAttribute("selectionName", selectionName);
-        model.addAttribute("selection", book.loadSelection(context, selectionName));
+        model.addAttribute("selection", book.loadSelection(userFiles, selectionName));
         return "selection";
     }
 
@@ -107,8 +107,8 @@ public class YogiController {
             throw new IllegalStateException();
         }
         enable = getChecked(request, "select_");
-        context.deleteSelection(book, oldName);
-        library.get(book).saveSelection(context, newName, enable);
+        userFiles.deleteSelection(book, oldName);
+        library.get(book).saveSelection(userFiles, newName, enable);
         return "redirect:/books/" + book + "/" + newName;
     }
 
@@ -137,9 +137,9 @@ public class YogiController {
         int count;
 
         book = library.get(bookName);
-        selection = book.loadSelection(context, selectionName);
+        selection = book.loadSelection(userFiles, selectionName);
         if (!countOrAll.equals("all")) {
-            sorted = book.statistics(context).sort(selection, book); // TODO: expensive
+            sorted = book.statistics(userFiles).sort(selection, book); // TODO: expensive
             count = Integer.parseInt(countOrAll);
             while (sorted.size() > count) {
                 sorted.remove(sorted.size() - 1);
@@ -152,8 +152,8 @@ public class YogiController {
     private String doStart(Book book, String title, IntSet selection) throws IOException {
         Exercise exercise;
 
-        exercise = Exercise.create(context.nextProtocol(book.name), book, title, selection);
-        exercise.logTitle(context.root(), title);
+        exercise = Exercise.create(userFiles.nextProtocol(book.name), book, title, selection);
+        exercise.logTitle(userFiles.root(), title);
         return "redirect:question?e=" + urlencode(exercise.toParam());
     }
 
@@ -175,18 +175,19 @@ public class YogiController {
         Achievement a;
         String basename;
 
-        protocols = context.listProtocols(book);
+        protocols = userFiles.listProtocols(book);
         Collections.reverse(protocols);
         map = new LinkedHashMap<>();
         b = library.get(book);
         for (FileNode log : protocols) {
             basename = log.getBasename();
             p = Protocol.load(log);
-            a = p.achievement(context, b);
+            a = p.achievement(userFiles, b);
             map.put(basename, p.date() + " " + p.words() + " " + a.before + " -> " + a.after);
         }
         model.addAttribute("map", map);
         model.addAttribute("book", b);
+        model.addAttribute("selection", selection);
         model.addAttribute("library", library);
         return "protocols";
     }
@@ -196,7 +197,7 @@ public class YogiController {
                            @PathVariable(value = "id") long id) throws IOException {
         Protocol protocol;
 
-        protocol = Protocol.load(context.protocolFile(book, id));
+        protocol = Protocol.load(userFiles.protocolFile(book, id));
         model.addAttribute("protocol", protocol);
         model.addAttribute("book", library.get(book));
         model.addAttribute("library", library);
@@ -211,10 +212,10 @@ public class YogiController {
         Exercise exercise;
 
         exercise = Exercise.forParam(library.get(book), body.get("e"));
-        exercise.logComment(context.root(), body.get("comment"));
+        exercise.logComment(userFiles.root(), body.get("comment"));
     }
 
-    @RequestMapping("/books/{book}/{selection}/question")
+    @GetMapping("/books/{book}/{selection}/question")
     public String question(Model model, @PathVariable(value = "book") String book, @PathVariable(value = "selection") String selection,
                            @RequestParam(value = "e") String e,
                            @RequestParam(value = "question", required = false) String question) throws IOException {
@@ -224,12 +225,13 @@ public class YogiController {
         if (question == null) {
             question = exercise.question();
         }
+        model.addAttribute("selection", selection);
         model.addAttribute("exercise", exercise);
         model.addAttribute("question", question);
         return "question";
     }
 
-    @RequestMapping("/books/{book}/{selection}/answer")
+    @PostMapping("/books/{book}/{selection}/answer")
     public String answer(Model model, @PathVariable(value = "book") String book, @PathVariable(value = "selection") String selection,
                          @RequestParam("e") String e,
                          @RequestParam("question") String question, @RequestParam("answer") String answer) throws IOException {
@@ -239,11 +241,12 @@ public class YogiController {
         answer = answer.trim();
         exercise = Exercise.forParam(library.get(book), e);
         correction = exercise.answer(question, answer);
+        model.addAttribute("selection", selection);
         model.addAttribute("exercise", exercise);
         model.addAttribute("question", question);
         model.addAttribute("answer", answer);
         model.addAttribute("correction", correction);
-        exercise.logAnswer(context.root(), question, answer, exercise.lookup(question) /* not correction - it might be null */);
+        exercise.logAnswer(userFiles.root(), question, answer, exercise.lookup(question) /* not correction - it might be null */);
         return "answer";
     }
 }
