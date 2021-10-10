@@ -65,19 +65,25 @@ public class YogiController {
 
     @RequestMapping("/books")
     public String books() {
-        return "redirect:/books/" + library.iterator().next().name + "/"; // TODO: doesnt work for french books
+        return "redirect:/books/" + library.iterator().next().name;
     }
 
-    @RequestMapping("/books/{book}/")
-    public String book(Model model, @PathVariable(value = "book") String book) throws IOException {
+    @RequestMapping("/books/{book}")
+    public String bookRaw() {
+        return "redirect:/books/" + library.iterator().next().name + "/freigeschaltet";
+    }
+
+    @RequestMapping("/books/{book}/{selection}")
+    public String book(Model model, @PathVariable(value = "book") String book, @PathVariable(value = "selection") String selection) throws IOException {
         model.addAttribute("library", library);
         model.addAttribute("book", library.get(book));
+        model.addAttribute("selection", selection);
         return "book";
     }
 
-    @RequestMapping("/books/{book}/selection")
+    @RequestMapping("/books/{book}/{selection}/selection")
     public String selection(Model model, @PathVariable(value = "book") String bookName,
-                            @RequestParam(value = "selection") String selectionName) throws IOException {
+                            @PathVariable(value = "selection") String selectionName) throws IOException {
         Book book;
 
         book = library.get(bookName);
@@ -88,9 +94,9 @@ public class YogiController {
         return "selection";
     }
 
-    @RequestMapping("/books/{book}/set-selection")
+    @RequestMapping("/books/{book}/{selection}/set-selection")
     public String setSelection(@PathVariable(value = "book") String book,
-                               @RequestParam(value = "selection") String selection,
+                               @PathVariable(value = "selection") String selection,
                                HttpServletRequest request /* for selection */)
             throws IOException {
         IntSet enable;
@@ -116,9 +122,9 @@ public class YogiController {
         return result;
     }
 
-    @RequestMapping("/books/{book}/start")
-    public String start(@PathVariable(value = "book") String bookName, @RequestParam("selection") String selectionName,
-                        @RequestParam("title") String title, @RequestParam("count") String countOrAll) throws IOException {
+    @RequestMapping("/books/{book}/{selection}/start")
+    public String start(@PathVariable(value = "book") String bookName, @PathVariable("selection") String selectionName,
+                        @RequestParam("count") String countOrAll) throws IOException {
         Book book;
         IntSet selection;
         List<Integer> sorted;
@@ -134,7 +140,7 @@ public class YogiController {
             }
             selection = new IntSet(sorted);
         }
-        return doStart(book, title, selection);
+        return doStart(book, bookName + "-" + selectionName, selection);
     }
 
     private String doStart(Book book, String title, IntSet selection) throws IOException {
@@ -153,8 +159,9 @@ public class YogiController {
         }
     }
 
-    @RequestMapping("/books/{book}/protocols/")
-    public String protocols(Model model, @PathVariable(value = "book") String book) throws IOException {
+    @RequestMapping("/books/{book}/{selection}/protocols/")
+    public String protocols(Model model, @PathVariable(value = "book") String book, @PathVariable(value = "selection") String selection)
+            throws IOException {
         List<FileNode> protocols;
         LinkedHashMap<String, String> map;
         Protocol p;
@@ -178,8 +185,9 @@ public class YogiController {
         return "protocols";
     }
 
-    @RequestMapping("/books/{book}/protocols/{id}")
-    public String protocol(Model model, @PathVariable(value = "book") String book, @PathVariable(value = "id") long id) throws IOException {
+    @RequestMapping("/books/{book}/{selection}/protocols/{id}")
+    public String protocol(Model model, @PathVariable(value = "book") String book, @PathVariable(value = "selection") String selection,
+                           @PathVariable(value = "id") long id) throws IOException {
         Protocol protocol;
 
         protocol = Protocol.load(context.protocolFile(book, id));
@@ -191,16 +199,18 @@ public class YogiController {
 
     //-- exercise
 
-    @PostMapping("/books/{book}/comment") @ResponseStatus(value = HttpStatus.OK)
-    public void comment(@PathVariable(value = "book") String book, @RequestParam Map<String, String> body) throws IOException {
+    @PostMapping("/books/{book}/{selection}/comment") @ResponseStatus(value = HttpStatus.OK)
+    public void comment(@PathVariable(value = "book") String book, @PathVariable(value = "selection") String selection,
+                        @RequestParam Map<String, String> body) throws IOException {
         Exercise exercise;
 
         exercise = Exercise.forParam(library.get(book), body.get("e"));
         exercise.logComment(context.root(), body.get("comment"));
     }
 
-    @RequestMapping("/books/{book}/question")
-    public String question(Model model, @PathVariable(value = "book") String book, @RequestParam(value = "e") String e,
+    @RequestMapping("/books/{book}/{selection}/question")
+    public String question(Model model, @PathVariable(value = "book") String book, @PathVariable(value = "selection") String selection,
+                           @RequestParam(value = "e") String e,
                            @RequestParam(value = "question", required = false) String question) throws IOException {
         Exercise exercise;
 
@@ -213,8 +223,9 @@ public class YogiController {
         return "question";
     }
 
-    @RequestMapping("/books/{book}/answer")
-    public String answer(Model model, @PathVariable(value = "book") String book, @RequestParam("e") String e,
+    @RequestMapping("/books/{book}/{selection}/answer")
+    public String answer(Model model, @PathVariable(value = "book") String book, @PathVariable(value = "selection") String selection,
+                         @RequestParam("e") String e,
                          @RequestParam("question") String question, @RequestParam("answer") String answer) throws IOException {
         Exercise exercise;
         String correction;

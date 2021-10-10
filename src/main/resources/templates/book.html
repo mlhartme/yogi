@@ -3,14 +3,11 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout.html}">
     <th:block layout:fragment="content" th:with="statistics=${book.statistics(@userFiles)}">
-        <p th:with="quality=${statistics.quality(book, book.loadSelection(@userFiles, 'freigeschaltet'))}">
+        <p th:with="quality=${statistics.quality(book, book.loadSelection(@userFiles, selection))}">
             <span data-bs-toggle="tooltip" th:title="${quality + ' %'}" th:style="${statistics.style(quality)}">&#x25cf; </span><span th:text="${quality + ' %'}"></span>
             <a class="font-weight-lighter"
-               th:href="@{/books/{book}/selection(book=${book.name}, title=${book.name}, selection=freigeschaltet)}">Freischalten</a>
-            <form th:action="${'/books/' + book.name + '/start'}" method="post">
-                <input name="book" th:value="${book.name}" type="hidden"/>
-                <input name="title" th:value="${book.name}" type="hidden"/>
-                <input name="selection" value="freigeschaltet" type="hidden"/>
+               th:href="@{/books/{book}/{selection}/selection(book=${book.name}, selection=${selection})}">Freischalten</a>
+            <form th:action="@{/books/{book}/{selection}/start(book=${book.name}, selection=${selection})}" method="post">
                 <button type="submit" class="btn btn-primary">Üben</button>
                 <div class="container w-10">
                     <select class="form-select" name="count" id="count">
