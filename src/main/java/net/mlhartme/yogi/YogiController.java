@@ -173,7 +173,7 @@ public class YogiController {
     private String doStart(Book book, String title, IntSet selection) throws IOException {
         Exercise exercise;
 
-        exercise = Exercise.create(book, context.userProtocols(), title, selection);
+        exercise = Exercise.create(context.nextProtocol(book.name), book, title, selection);
         exercise.logTitle(context.userProtocols(), title);
         return "redirect:question?e=" + urlencode(exercise.toParam());
     }

@@ -16,10 +16,8 @@
 package net.mlhartme.yogi;
 
 import net.oneandone.sushi.fs.MkdirException;
-import net.oneandone.sushi.fs.Node;
 import net.oneandone.sushi.fs.file.FileNode;
 import net.oneandone.sushi.util.Separator;
-import net.oneandone.sushi.util.Strings;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -59,26 +57,6 @@ public class Exercise {
         return create(id, book, title, selection, round, ofs, ok, wrong);
     }
 
-    private static int next(Node<?> userProtocols, String book) throws IOException {
-        Node<?> dir;
-        int id;
-        int max;
-
-        dir = userProtocols.join(book);
-        max = 0;
-        if (dir.exists()) {
-            for (Node<?> file : dir.find("*.log")) {
-                try {
-                    id = Integer.parseInt(Strings.removeRight(file.getName(), ".log"));
-                } catch (NumberFormatException e) {
-                    throw new IOException("unexpected name: " + file.getName());
-                }
-                max = Math.max(id, max);
-            }
-        }
-        return max + 1;
-    }
-
     private static String eat(List<String> lst, String dflt) {
         if (lst.isEmpty()) {
             return dflt;
@@ -87,8 +65,8 @@ public class Exercise {
         }
     }
 
-    public static Exercise create(Book book, Node<?> userProtocols, String title, IntSet selection) throws IOException {
-        return new Exercise(next(userProtocols, book.name), book, title, selection, 1, 0, new IntSet(), new IntSet());
+    public static Exercise create(int id, Book book, String title, IntSet selection) {
+        return new Exercise(id, book, title, selection, 1, 0, new IntSet(), new IntSet());
     }
 
     public static Exercise create(int id, Book book, String title, String selectionParam, int round, int ofs, String okParam, String wrongParam) {

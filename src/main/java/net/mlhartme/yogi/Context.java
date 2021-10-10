@@ -16,8 +16,10 @@
 package net.mlhartme.yogi;
 
 import net.oneandone.sushi.fs.MkdirException;
+import net.oneandone.sushi.fs.Node;
 import net.oneandone.sushi.fs.World;
 import net.oneandone.sushi.fs.file.FileNode;
+import net.oneandone.sushi.util.Strings;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,8 +34,32 @@ public class Context {
         this.protocolRoot = world.getWorking().join("protocols");
     }
 
+    //--
+
     public FileNode userProtocols() throws MkdirException {
         return protocolRoot.join(YogiSecurity.username()).mkdirsOpt();
+    }
+
+    //-- exercides
+
+    public int nextProtocol(String book) throws IOException {
+        Node<?> dir;
+        int id;
+        int max;
+
+        dir = userProtocols().join(book);
+        max = 0;
+        if (dir.exists()) {
+            for (Node<?> file : dir.find("*.log")) {
+                try {
+                    id = Integer.parseInt(Strings.removeRight(file.getName(), ".log"));
+                } catch (NumberFormatException e) {
+                    throw new IOException("unexpected name: " + file.getName());
+                }
+                max = Math.max(id, max);
+            }
+        }
+        return max + 1;
     }
 
     //-- protocols
