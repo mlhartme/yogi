@@ -68,7 +68,7 @@ public class Book implements Comparable<Book> {
         this.rights = new ArrayList<>();
     }
 
-    public Statistics statistics(Context context) throws IOException {
+    public Statistics statistics(UserFiles context) throws IOException {
         return Statistics.collect(context, this);
     }
 
@@ -115,7 +115,7 @@ public class Book implements Comparable<Book> {
         return result;
     }
 
-    public void enable(Context context, IntSet selection, IntSet enable) throws IOException {
+    public void enable(UserFiles context, IntSet selection, IntSet enable) throws IOException {
         IntSet result;
         List<String> lst;
 
@@ -136,7 +136,7 @@ public class Book implements Comparable<Book> {
         context.saveEnabled(name, lst);
     }
 
-    public IntSet enabled(Context context) throws IOException {
+    public IntSet enabled(UserFiles context) throws IOException {
         List<String> enabled;
         IntSet result;
         int idx;
@@ -159,7 +159,7 @@ public class Book implements Comparable<Book> {
         return result;
     }
 
-    public IntSet disabled(Context context) throws IOException {
+    public IntSet disabled(UserFiles context) throws IOException {
         IntSet result;
         IntSet enabled;
 

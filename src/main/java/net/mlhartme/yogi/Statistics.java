@@ -27,7 +27,7 @@ import java.util.Map;
 
 /** represents the log file for one book */
 public class Statistics {
-    public static Statistics collect(Context context, Book book) throws IOException {
+    public static Statistics collect(UserFiles context, Book book) throws IOException {
         List<FileNode> logs;
         Protocol protocol;
         Statistics result;
@@ -47,7 +47,7 @@ public class Statistics {
         return result;
     }
 
-    public static int[] beforeAfter(Context context, Book book, FileNode theProtocol, IntSet selection) throws IOException {
+    public static int[] beforeAfter(UserFiles context, Book book, FileNode theProtocol, IntSet selection) throws IOException {
         List<FileNode> logs;
         Protocol protocol;
         Statistics result;

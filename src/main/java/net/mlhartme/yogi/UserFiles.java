@@ -27,21 +27,21 @@ import java.util.Collections;
 import java.util.List;
 
 /** Persistent session state */
-public class Context {
-    private final FileNode userProtocols;
+public class UserFiles {
+    private final FileNode root;
 
-    public Context(World world) throws MkdirException {
-        this.userProtocols = world.getWorking().join("protocols").join(YogiSecurity.username()).mkdirsOpt();
+    public UserFiles(World world) throws MkdirException {
+        this.root = world.getWorking().join("protocols").join(YogiSecurity.username()).mkdirsOpt();
     }
 
-    public FileNode userProtocols() {
-        return userProtocols;
+    public FileNode root() {
+        return root;
     }
 
     //-- protocols
 
-    public FileNode protocolFile(String book, long id) throws MkdirException {
-        return userProtocols.join(book, id + ".log");
+    public FileNode protocolFile(String book, long id) {
+        return root.join(book, id + ".log");
     }
 
     public int nextProtocol(String book) throws IOException {
@@ -49,7 +49,7 @@ public class Context {
         int id;
         int max;
 
-        dir = userProtocols.join(book);
+        dir = root.join(book);
         max = 0;
         if (dir.exists()) {
             for (Node<?> file : dir.find("*.log")) {
@@ -68,7 +68,7 @@ public class Context {
         List<FileNode> lst;
         FileNode dir;
 
-        dir = userProtocols.join(book);
+        dir = root.join(book);
         if (!dir.exists()) {
             return new ArrayList<>();
         }
@@ -116,7 +116,7 @@ public class Context {
     private FileNode enabledFile(String book) throws MkdirException {
         FileNode dir;
 
-        dir = userProtocols.join(book).mkdirOpt();
+        dir = root.join(book).mkdirOpt();
         return dir.join("freigeschaltet.selection");
     }
 }

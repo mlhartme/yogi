@@ -40,11 +40,11 @@ import java.util.Map;
 
 @Controller
 public class YogiController {
-    private final Context context;
+    private final UserFiles context;
     private final Library library;
     private final String version;
 
-    public YogiController(World world, Context context) throws IOException {
+    public YogiController(World world, UserFiles context) throws IOException {
         FileNode src;
 
         this.context = context;
@@ -174,7 +174,7 @@ public class YogiController {
         Exercise exercise;
 
         exercise = Exercise.create(context.nextProtocol(book.name), book, title, selection);
-        exercise.logTitle(context.userProtocols(), title);
+        exercise.logTitle(context.root(), title);
         return "redirect:question?e=" + urlencode(exercise.toParam());
     }
 
@@ -229,7 +229,7 @@ public class YogiController {
         Exercise exercise;
 
         exercise = Exercise.forParam(library.get(book), body.get("e"));
-        exercise.logComment(context.userProtocols(), body.get("comment"));
+        exercise.logComment(context.root(), body.get("comment"));
     }
 
     @RequestMapping("/books/{book}/question")
@@ -259,7 +259,7 @@ public class YogiController {
         model.addAttribute("question", question);
         model.addAttribute("answer", answer);
         model.addAttribute("correction", correction);
-        exercise.logAnswer(context.userProtocols(), question, answer, exercise.lookup(question) /* not correction - it might be null */);
+        exercise.logAnswer(context.root(), question, answer, exercise.lookup(question) /* not correction - it might be null */);
         return "answer";
     }
 }

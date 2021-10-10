@@ -239,7 +239,7 @@ public class Protocol {
         return result;
     }
 
-    public Achievement achievement(Context context, Book book) throws IOException {
+    public Achievement achievement(UserFiles context, Book book) throws IOException {
         long max = -1;
         long min = Long.MAX_VALUE;
         long avg = 0;
