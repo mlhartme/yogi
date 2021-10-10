@@ -20,6 +20,7 @@ import net.oneandone.sushi.fs.file.FileNode;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -73,7 +74,7 @@ public class YogiController {
         return "redirect:/books/" + library.iterator().next().name + "/freigeschaltet";
     }
 
-    @RequestMapping("/books/{book}/{selection}")
+    @GetMapping("/books/{book}/{selection}")
     public String book(Model model, @PathVariable(value = "book") String book, @PathVariable(value = "selection") String selection) throws IOException {
         model.addAttribute("library", library);
         model.addAttribute("book", library.get(book));
@@ -81,7 +82,7 @@ public class YogiController {
         return "book";
     }
 
-    @RequestMapping("/books/{book}/{selection}/selection")
+    @GetMapping("/books/{book}/{selection}/selection")
     public String selection(Model model, @PathVariable(value = "book") String bookName,
                             @PathVariable(value = "selection") String selectionName) throws IOException {
         Book book;
@@ -94,7 +95,7 @@ public class YogiController {
         return "selection";
     }
 
-    @RequestMapping("/books/{book}/{selection}/set-selection")
+    @PostMapping("/books/{book}/{selection}/selection")
     public String setSelection(@PathVariable(value = "book") String book,
                                @PathVariable(value = "selection") String selection,
                                HttpServletRequest request /* for selection */)

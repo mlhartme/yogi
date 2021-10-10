@@ -4,14 +4,11 @@
       layout:decorate="~{layout.html}">
 <th:block layout:fragment="content" th:with="statistics=${book.statistics(@userFiles)}">
     <div class="col-12">
-        <h4 th:text="${title + ' Freischalten'}"></h4>
-        <p>Kreuze alle Vokabeln an, die in der Schule schon dran waren, die du also können solltest.
-        Klicke danach auf den "Speichern" Kopf ganz unten.</p>
+        <h4 th:text="${selectionName}"></h4>
+        <p>Kreuze alle Vokabeln an, die bei dieser Auswahl geübt werden sollen.</p>
         <div class="col-12">
-            <form class="form-horizontal" accept-charset="utf-8" th:action="@{/books/{book}/{selection}/set-selection(book=${book.name}, selection=${selectionName})}" method="post">
+            <form class="form-horizontal" accept-charset="utf-8" th:action="@{/books/{book}/{selection}/selection(book=${book.name}, selection=${selectionName})}" method="post">
                 <fieldset>
-                    <input name="book" th:value="${book.name}" type="hidden"/>
-                    <input name="name" th:value="${selectionName}" type="hidden"/>
                     <table class="table">
                         <tbody>
                             <th:block th:each="idx:${book.all()}">
