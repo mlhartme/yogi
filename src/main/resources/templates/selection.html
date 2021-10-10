@@ -37,6 +37,11 @@
                     <button type="submit" class="btn btn-primary">Speichern</button>
                 </fieldset>
             </form>
+            <form class="form-horizontal" accept-charset="utf-8" th:action="@{/books/{book}/{selection}/delete-selection(book=${book.name}, selection=${selectionName})}" method="post">
+                <fieldset>
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                </fieldset>
+            </form>
         </div>
     </div>
 </th:block>

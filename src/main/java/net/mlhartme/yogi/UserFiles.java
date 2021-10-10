@@ -121,7 +121,7 @@ public class UserFiles {
         FileNode dir;
         List<String> result;
 
-        result = new ArrayList();
+        result = new ArrayList<>();
         dir = root.join(book);
         if (dir.isDirectory()) {
             for (var file : dir.find("*.selection")) {

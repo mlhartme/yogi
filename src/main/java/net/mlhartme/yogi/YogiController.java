@@ -124,6 +124,14 @@ public class YogiController {
         return "redirect:/books/" + book + "/" + newName;
     }
 
+    // browser cannot user method="delete" ...
+    @PostMapping("/books/{book}/{selection}/delete-selection")
+    public String deleteSelection(@PathVariable(value = "book") String book,
+                                  @PathVariable(value = "selection") String selection) throws IOException {
+        userFiles.deleteSelection(book, selection);
+        return "redirect:/books/" + book;
+    }
+
     private static IntSet getChecked(HttpServletRequest request, String prefix) {
         Enumeration<String> names;
         String name;
