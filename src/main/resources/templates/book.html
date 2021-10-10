@@ -11,15 +11,17 @@
                 <input name="book" th:value="${book.name}" type="hidden"/>
                 <input name="title" th:value="${book.name}" type="hidden"/>
                 <button type="submit" class="btn btn-primary">Üben</button>
-                <select class="form-control" name="count" id="count">
-                    <option>5</option>
-                    <option>10</option>
-                    <option>15</option>
-                    <option selected>20</option>
-                    <option>25</option>
-                    <option>30</option>
-                    <option value="all">alle</option>
-                </select>
+                <div class="container w-10">
+                    <select class="form-select" name="count" id="count">
+                        <option>5</option>
+                        <option>10</option>
+                        <option>15</option>
+                        <option selected>20</option>
+                        <option>25</option>
+                        <option>30</option>
+                        <option value="all">alle</option>
+                    </select>
+                </div>
             </form>
         </p>
     </th:block>
