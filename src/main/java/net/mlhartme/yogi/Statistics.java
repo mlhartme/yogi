@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/** represents the log file for one book */
+/** represents the log files for one book */
 public class Statistics {
     public static Statistics collect(UserFiles context, Book book) throws IOException {
         List<FileNode> logs;
@@ -87,24 +87,6 @@ public class Statistics {
         this.map = new HashMap<>();
         this.enabled = enabled;
         this.disabled = disabled;
-    }
-
-    public boolean hasEnabled(IntSet selection) {
-        for (Integer i : selection) {
-            if (!disabled.contains(i)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean hasDisabled(IntSet selection) {
-        for (Integer i : selection) {
-            if (disabled.contains(i)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public void add(String question, int count) {

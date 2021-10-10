@@ -133,7 +133,7 @@ public class Book implements Comparable<Book> {
         for (int idx : result) {
             lst.add(lefts.get(idx));
         }
-        context.saveEnabled(name, lst);
+        context.saveSelection(name, lst);
     }
 
     public IntSet enabled(UserFiles context) throws IOException {
@@ -141,7 +141,7 @@ public class Book implements Comparable<Book> {
         IntSet result;
         int idx;
 
-        enabled = context.loadEnabledOpt(name);
+        enabled = context.loadSelectionOpt(name);
         result = new IntSet();
         if (enabled != null) {
             for (String active : enabled) {
