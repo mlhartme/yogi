@@ -131,6 +131,20 @@ public class UserFiles {
         return result;
     }
 
+    public String newSelection(String book, String orig) throws IOException {
+        FileNode file;
+        String name;
+
+        for (int i = 1; true; i++) {
+            name = "auswahl-" + i;
+            file = selectionFile(book, name);
+            if (!file.exists()) {
+                selectionFile(book, orig).copyFile(file);
+                return name;
+            }
+        }
+    }
+
     public void deleteSelection(String book, String name) throws IOException {
         selectionFile(book, name).deleteFile();
     }

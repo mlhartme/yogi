@@ -9,6 +9,7 @@
                 <button class="btn btn-light dropdown-toggle" type="button" id="selectionMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${selection}"></button>
                 <div class="dropdown-menu" aria-labelledby="selectionMenuButton">
                     <a th:each="gotoSelection:${@userFiles.listSelections(book.name)}" class="dropdown-item" th:href="${'/books/' + book.name + '/' + gotoSelection}" th:text="${gotoSelection}"></a>
+                    <a class="dropdown-item" th:href="${'/books/' + book.name + '/' + selection + '/new-selection'}">Neue Auswahl ...</a>
                 </div>
             </div>
             <a class="font-weight-lighter"

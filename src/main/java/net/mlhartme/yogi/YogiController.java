@@ -125,6 +125,16 @@ public class YogiController {
     }
 
     // browser cannot user method="delete" ...
+    @GetMapping("/books/{book}/{selection}/new-selection")
+    public String newSelection(@PathVariable(value = "book") String book,
+                               @PathVariable(value = "selection") String selection) throws IOException {
+        String newSelection;
+
+        newSelection = userFiles.newSelection(book, selection);
+        return "redirect:/books/" + book + "/" + newSelection + "/selection";
+    }
+
+    // browser cannot user method="delete" ...
     @PostMapping("/books/{book}/{selection}/delete-selection")
     public String deleteSelection(@PathVariable(value = "book") String book,
                                   @PathVariable(value = "selection") String selection) throws IOException {
