@@ -10,7 +10,7 @@
             <form th:action="${'/books/' + book.name + '/start'}" method="post">
                 <input name="book" th:value="${book.name}" type="hidden"/>
                 <input name="title" th:value="${book.name}" type="hidden"/>
-                <input name="selection" value="freigeschaltet" />
+                <input name="selection" value="freigeschaltet" type="hidden"/>
                 <button type="submit" class="btn btn-primary">Üben</button>
                 <div class="container w-10">
                     <select class="form-select" name="count" id="count">
