@@ -103,10 +103,7 @@ public class UserFiles {
         FileNode file;
 
         file = selectionFile(book, name);
-        if (!file.exists()) {
-            return null;
-        }
-        return file.readLines();
+        return file.exists() ? file.readLines() : null;
     }
 
     public void saveSelection(String book, String name, List<String> lst) throws IOException {

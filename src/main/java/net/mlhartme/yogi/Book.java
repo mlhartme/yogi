@@ -143,7 +143,7 @@ public class Book implements Comparable<Book> {
                 }
             }
         } else {
-            throw new IOException("selection not found");  // TODO: create empty?
+            throw new IOException("selection not found: " + selectionName);  // TODO: create empty?
         }
         return result;
     }

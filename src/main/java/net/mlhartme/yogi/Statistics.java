@@ -94,10 +94,6 @@ public class Statistics {
         tries.add(count);
     }
 
-    public int quality(Book book) {
-        return quality(book, new IntSet() /* TODO */);
-    }
-
     public int quality(Book book, IntSet selection) {
         int sum;
         int count;
