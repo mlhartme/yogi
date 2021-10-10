@@ -2,8 +2,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout.html}">
-<th:block layout:fragment="content">
-    <div th:with="statistics=${book.statistics(userProtocols)}">
+    <th:block layout:fragment="content" th:with="statistics=${book.statistics(userProtocols)}">
         <p th:with="quality=${statistics.quality(book)}">
             <span data-bs-toggle="tooltip" th:title="${quality + ' %'}" th:style="${statistics.style(quality)}">&#x25cf; </span><span th:text="${quality + ' %'}"></span>
             <a class="font-weight-lighter"
@@ -11,24 +10,17 @@
             <form th:action="${'/books/' + book.name + '/start'}" method="post">
                 <input name="book" th:value="${book.name}" type="hidden"/>
                 <input name="title" th:value="${book.name}" type="hidden"/>
-                <div class="form-row">
-                    <div class="col">
-                        <button type="submit" class="btn btn-primary">Üben</button>
-                    </div>
-                    <div class="col">
-                        <select class="form-control" name="count" id="count">
-                            <option>5</option>
-                            <option>10</option>
-                            <option>15</option>
-                            <option selected>20</option>
-                            <option>25</option>
-                            <option>30</option>
-                            <option value="all">alle</option>
-                        </select>
-                    </div>
-                </div>
+                <button type="submit" class="btn btn-primary">Üben</button>
+                <select class="form-control" name="count" id="count">
+                    <option>5</option>
+                    <option>10</option>
+                    <option>15</option>
+                    <option selected>20</option>
+                    <option>25</option>
+                    <option>30</option>
+                    <option value="all">alle</option>
+                </select>
             </form>
         </p>
-    </div>
-</th:block>
+    </th:block>
 </html>
