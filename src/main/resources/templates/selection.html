@@ -9,6 +9,8 @@
         <div class="col-12">
             <form class="form-horizontal" accept-charset="utf-8" th:action="@{/books/{book}/{selection}/selection(book=${book.name}, selection=${selectionName})}" method="post">
                 <fieldset>
+                    <p>Section Name: </p>
+                    <input type="text" class="form-control" name="newName" th:value="${selectionName}">
                     <table class="table">
                         <tbody>
                             <th:block th:each="idx:${book.all()}">
@@ -21,8 +23,8 @@
                                 </th:block>
                                 <tr>
                                     <td th:with="selected=${selection.contains(idx)}">
-                                        <input th:if="${selected}" class="form-check-input" type="checkbox" th:name="${'enable_' + idx}" th:value="${idx}" checked>
-                                        <input th:unless="${selected}" class="form-check-input" type="checkbox" th:name="${'enable_' + idx}" th:value="${idx}">
+                                        <input th:if="${selected}" class="form-check-input" type="checkbox" th:name="${'select_' + idx}" th:value="${idx}" checked>
+                                        <input th:unless="${selected}" class="form-check-input" type="checkbox" th:name="${'select_' + idx}" th:value="${idx}">
                                     </td>
                                     <td th:text="${book.left(idx)}"></td>
                                     <td th:text="${book.right(idx)}"></td>

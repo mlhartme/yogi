@@ -71,7 +71,7 @@ public class YogiController {
 
     @RequestMapping("/books/{book}")
     public String bookRaw(@PathVariable(value = "book") String book) throws IOException {
-        return "redirect:/books/" + library.iterator().next().name + "/" + context.firstSelection(book);
+        return "redirect:/books/" + book + "/" + context.firstSelection(book);
     }
 
     @GetMapping("/books/{book}/{selection}")
@@ -96,15 +96,20 @@ public class YogiController {
     }
 
     @PostMapping("/books/{book}/{selection}/selection")
-    public String setSelection(@PathVariable(value = "book") String book,
-                               @PathVariable(value = "selection") String selection,
+    public String updateSelection(@PathVariable(value = "book") String book,
+                               @PathVariable(value = "selection") String oldName,
+                               @RequestParam("newName") String newName,
                                HttpServletRequest request /* for selection */)
             throws IOException {
         IntSet enable;
 
-        enable = getChecked(request, "enable_");
-        library.get(book).saveSelection(context, selection, enable);
-        return "redirect:";
+        if (newName.isEmpty()) {
+            throw new IllegalStateException();
+        }
+        enable = getChecked(request, "select_");
+        context.deleteSelection(book, oldName);
+        library.get(book).saveSelection(context, newName, enable);
+        return "redirect:/books/" + book + "/" + newName;
     }
 
     private static IntSet getChecked(HttpServletRequest request, String prefix) {

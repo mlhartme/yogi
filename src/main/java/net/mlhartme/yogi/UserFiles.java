@@ -140,4 +140,8 @@ public class UserFiles {
         }
         return result;
     }
+
+    public void deleteSelection(String book, String name) throws IOException {
+        selectionFile(book, name).deleteFile();
+    }
 }
