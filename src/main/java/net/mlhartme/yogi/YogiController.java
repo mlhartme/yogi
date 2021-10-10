@@ -124,7 +124,7 @@ public class YogiController {
         IntSet enable;
 
         enable = getChecked(request, "enable_");
-        library.get(book).enable(context, context.userProtocols(), IntSet.parseArg(selection), enable);
+        library.get(book).enable(context, IntSet.parseArg(selection), enable);
         return "redirect:";
     }
 
@@ -156,9 +156,9 @@ public class YogiController {
 
         book = library.get(bookName);
         if (selectionStrOpt == null) {
-            selection = book.enabled(context, context.userProtocols());
+            selection = book.enabled(context);
         } else {
-            disabled = book.disabled(context, context.userProtocols());
+            disabled = book.disabled(context);
             selection = IntSet.parse(Separator.COMMA.split(selectionStrOpt));
             selection.removeAll(disabled);
         }
@@ -205,7 +205,7 @@ public class YogiController {
         for (FileNode log : protocols) {
             basename = log.getBasename();
             p = Protocol.load(log);
-            a = p.achievement(context, context.userProtocols(), b);
+            a = p.achievement(context, b);
             map.put(basename, p.date() + " " + p.words() + " " + a.before + " -> " + a.after);
         }
         model.addAttribute("map", map);

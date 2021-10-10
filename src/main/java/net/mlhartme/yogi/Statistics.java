@@ -27,14 +27,14 @@ import java.util.Map;
 
 /** represents the log file for one book */
 public class Statistics {
-    public static Statistics collect(Context context, FileNode userProtocols, Book book) throws IOException {
+    public static Statistics collect(Context context, Book book) throws IOException {
         List<FileNode> logs;
         Protocol protocol;
         Statistics result;
         int count;
 
-        result = new Statistics(book.enabled(context, userProtocols), book.disabled(context, userProtocols));
-        logs = Protocol.list(userProtocols, book.name);
+        result = new Statistics(book.enabled(context), book.disabled(context));
+        logs = Protocol.list(context.userProtocols(), book.name);
         for (FileNode node : logs) {
             protocol = Protocol.load(node);
             for (Map.Entry<Integer, List<String>> entry : protocol.histogramRaw().entrySet()) {
@@ -47,15 +47,15 @@ public class Statistics {
         return result;
     }
 
-    public static int[] beforeAfter(Context context, FileNode userProtocols, Book book, FileNode theProtocol, IntSet selection) throws IOException {
+    public static int[] beforeAfter(Context context, Book book, FileNode theProtocol, IntSet selection) throws IOException {
         List<FileNode> logs;
         Protocol protocol;
         Statistics result;
         int count;
         int before;
 
-        result = new Statistics(book.enabled(context, userProtocols), book.disabled(context, userProtocols));
-        logs = Protocol.list(userProtocols, book.name);
+        result = new Statistics(book.enabled(context), book.disabled(context));
+        logs = Protocol.list(context.userProtocols(), book.name);
         before = 0;
         for (FileNode node : logs) {
             if (node.equals(theProtocol)) {

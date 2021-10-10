@@ -16,7 +16,6 @@
 package net.mlhartme.yogi;
 
 import net.oneandone.sushi.fs.Node;
-import net.oneandone.sushi.fs.file.FileNode;
 import net.oneandone.sushi.util.Strings;
 
 import java.io.IOException;
@@ -24,7 +23,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class Book implements Comparable<Book> {
     public static final String EXT = ".yogi";
@@ -71,7 +69,7 @@ public class Book implements Comparable<Book> {
     }
 
     public Statistics statistics(Context context) throws IOException {
-        return Statistics.collect(context, context.userProtocols(), this);
+        return Statistics.collect(context, this);
     }
 
     public Map<String, IntSet> sections() throws IOException {
@@ -117,11 +115,11 @@ public class Book implements Comparable<Book> {
         return result;
     }
 
-    public void enable(Context context, FileNode userProtocols, IntSet selection, IntSet enable) throws IOException {
+    public void enable(Context context, IntSet selection, IntSet enable) throws IOException {
         IntSet result;
         List<String> lst;
 
-        result = enabled(context, userProtocols);
+        result = enabled(context);
         for (int idx : selection) {
             if (enable.contains(idx)) {
                 if (!result.contains(idx)) {
@@ -138,11 +136,9 @@ public class Book implements Comparable<Book> {
         context.saveEnabled(name, lst);
     }
 
-    public IntSet enabled(Context context, FileNode userProtocols) throws IOException {
+    public IntSet enabled(Context context) throws IOException {
         List<String> enabled;
         IntSet result;
-        Set<String> asked;
-        String question;
         int idx;
 
         enabled = context.loadEnabledOpt(name);
@@ -163,11 +159,11 @@ public class Book implements Comparable<Book> {
         return result;
     }
 
-    public IntSet disabled(Context context, FileNode userProtocols) throws IOException {
+    public IntSet disabled(Context context) throws IOException {
         IntSet result;
         IntSet enabled;
 
-        enabled = enabled(context, userProtocols);
+        enabled = enabled(context);
         result = new IntSet();
         for (int i = 0; i < lefts.size(); i++) {
             if (!enabled.contains(i)) {
