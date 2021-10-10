@@ -1,6 +1,6 @@
 # Yogi
 
-Vocabulary trainer.
+Vocabulary trainer. For Germans to learn e.g. English.
 
 ## Build and run locally
 
