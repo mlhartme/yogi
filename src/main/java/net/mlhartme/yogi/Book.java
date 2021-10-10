@@ -227,6 +227,16 @@ public class Book implements Comparable<Book> {
         return lefts.indexOf(left);
     }
 
+    public IntSet all() {
+        IntSet result;
+
+        result = new IntSet();
+        for (int i = 0; i < lefts.size(); i++) {
+            result.add(i);
+        }
+        return result;
+    }
+
     @Override
     public int compareTo(Book right) {
         return name.compareTo(right.name);

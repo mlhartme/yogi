@@ -108,20 +108,22 @@ public class YogiController {
 
     @RequestMapping("/books/{book}/enabled")
     public String enabled(Model model, @PathVariable(value = "book") String bookName, @RequestParam("title") String title,
-                            @RequestParam("selection") String selectionStr) throws IOException {
+                          @RequestParam(value = "selection", required = false) String selectionStr) throws IOException {
+        Book book;
         IntSet selection;
 
-        selection = IntSet.parse(Separator.COMMA.split(selectionStr));
+        book = library.get(bookName);
+        selection = selectionStr == null ? book.all() : IntSet.parse(Separator.COMMA.split(selectionStr));
         model.addAttribute("userProtocols", userProtocols());
         model.addAttribute("library", library);
-        model.addAttribute("book", library.get(bookName));
+        model.addAttribute("book", book);
         model.addAttribute("title", title);
         model.addAttribute("selection", selection);
         return "enabled";
     }
 
     @RequestMapping("/books/{book}/set-enabled")
-    public String setEnableD(@PathVariable(value = "book") String book, @RequestParam(value = "selection") String selection,
+    public String setEnabled(@PathVariable(value = "book") String book, @RequestParam(value = "selection") String selection,
                              HttpServletRequest request /* for selection */)
             throws IOException {
         IntSet enable;
