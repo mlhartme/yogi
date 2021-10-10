@@ -33,7 +33,7 @@ public class Statistics {
         Statistics result;
         int count;
 
-        result = new Statistics(book.enabled(context), book.disabled(context));
+        result = new Statistics(book.enabled(context));
         logs = context.listProtocols(book.name);
         for (FileNode node : logs) {
             protocol = Protocol.load(node);
@@ -54,7 +54,7 @@ public class Statistics {
         int count;
         int before;
 
-        result = new Statistics(book.enabled(context), book.disabled(context));
+        result = new Statistics(book.enabled(context));
         logs = context.listProtocols(book.name);
         before = 0;
         for (FileNode node : logs) {
@@ -81,12 +81,10 @@ public class Statistics {
     private final Map<String, List<Integer>> map;
 
     public final IntSet enabled;
-    public final IntSet disabled;
 
-    public Statistics(IntSet enabled, IntSet disabled) {
+    public Statistics(IntSet enabled) {
         this.map = new HashMap<>();
         this.enabled = enabled;
-        this.disabled = disabled;
     }
 
     public void add(String question, int count) {

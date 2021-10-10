@@ -143,22 +143,14 @@ public class YogiController {
 
     @RequestMapping("/books/{book}/start")
     public String start(@PathVariable(value = "book") String bookName,
-                        @RequestParam("title") String title, @RequestParam(value = "selection", required = false) String selectionStrOpt,
-                        @RequestParam("count") String countOrAll) throws IOException {
+                        @RequestParam("title") String title, @RequestParam("count") String countOrAll) throws IOException {
         Book book;
-        IntSet disabled;
         IntSet selection;
         List<Integer> sorted;
         int count;
 
         book = library.get(bookName);
-        if (selectionStrOpt == null) {
-            selection = book.enabled(context);
-        } else {
-            disabled = book.disabled(context);
-            selection = IntSet.parse(Separator.COMMA.split(selectionStrOpt));
-            selection.removeAll(disabled);
-        }
+        selection = book.enabled(context);
         if (!countOrAll.equals("all")) {
             sorted = book.statistics(context).sort(selection, book); // TODO: expensive
             count = Integer.parseInt(countOrAll);

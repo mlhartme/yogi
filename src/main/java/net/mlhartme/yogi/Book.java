@@ -159,20 +159,6 @@ public class Book implements Comparable<Book> {
         return result;
     }
 
-    public IntSet disabled(UserFiles context) throws IOException {
-        IntSet result;
-        IntSet enabled;
-
-        enabled = enabled(context);
-        result = new IntSet();
-        for (int i = 0; i < lefts.size(); i++) {
-            if (!enabled.contains(i)) {
-                result.add(i);
-            }
-        }
-        return result;
-    }
-
     public int size() {
         return lefts.size();
     }
