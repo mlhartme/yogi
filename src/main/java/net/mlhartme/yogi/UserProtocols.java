@@ -29,7 +29,6 @@ public class UserProtocols {
         FileNode dir;
 
         dir = directory.join(book).mkdirOpt();
-        return dir.join(".enabled");
+        return dir.join("freigeschaltet.selection");
     }
-
 }

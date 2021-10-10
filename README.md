@@ -18,7 +18,13 @@ Vocabulary trainer. For Germans to learn e.g. English.
          - books                   available books
       - run                        cwd for Tomcat and "server.tomcat.basedir"
          - logs                    Tomcat Access Logs
-         - protocols               Übungsprotokolle
+         - protocols               Übungsprotokolle ("userProtocols")
+           - <book>
+             - freigeschaltet.selection
+             - *.selection         Arbitrary Selection
+             - 1.log               Übung 1
+             - 2.log               Übung 2
+             - ...
          - work                    Tomcat "work" directory
 
 ## Books
