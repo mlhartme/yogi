@@ -38,6 +38,10 @@ public class Context {
 
     //-- protocols
 
+    public FileNode protocolFile(String book, long id) throws MkdirException {
+        return userProtocols().join(book, id + ".log");
+    }
+
     public List<FileNode> listProtocols(String book) throws IOException {
         List<FileNode> lst;
         FileNode dir;

@@ -215,7 +215,7 @@ public class YogiController {
     public String protocol(Model model, @PathVariable(value = "book") String book, @PathVariable(value = "id") long id) throws IOException {
         Protocol protocol;
 
-        protocol = Protocol.load(context.userProtocols().join(book, id + ".log"));
+        protocol = Protocol.load(context.protocolFile(book, id));
         model.addAttribute("protocol", protocol);
         model.addAttribute("book", library.get(book));
         model.addAttribute("library", library);
