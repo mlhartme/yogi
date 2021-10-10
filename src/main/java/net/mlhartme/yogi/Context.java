@@ -19,6 +19,9 @@ import net.oneandone.sushi.fs.MkdirException;
 import net.oneandone.sushi.fs.World;
 import net.oneandone.sushi.fs.file.FileNode;
 
+import java.io.IOException;
+import java.util.List;
+
 /** Session state */
 public class Context {
     private final FileNode protocolRoot;
@@ -31,7 +34,21 @@ public class Context {
         return protocolRoot.join(YogiSecurity.username()).mkdirsOpt();
     }
 
-    public FileNode enabledFile(String book) throws MkdirException {
+    public List<String> loadEnabledOpt(String book) throws IOException {
+        FileNode file;
+
+        file = enabledFile(book);
+        if (!file.exists()) {
+            return null;
+        }
+        return file.readLines();
+    }
+
+    public void saveEnabled(String book, List<String> lst) throws IOException {
+        enabledFile(book).writeLines(lst);
+    }
+
+    private FileNode enabledFile(String book) throws MkdirException {
         FileNode dir;
 
         dir = userProtocols().join(book).mkdirOpt();

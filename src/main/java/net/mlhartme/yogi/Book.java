@@ -135,22 +135,20 @@ public class Book implements Comparable<Book> {
         for (int idx : result) {
             lst.add(lefts.get(idx));
         }
-        context.enabledFile(name).writeLines(lst);
+        context.saveEnabled(name, lst);
     }
 
     public IntSet enabled(Context context, FileNode userProtocols) throws IOException {
-        FileNode file;
+        List<String> enabled;
         IntSet result;
         Set<String> asked;
         String question;
-        List<String> lst;
         int idx;
 
-        file = context.enabledFile(name);
+        enabled = context.loadEnabledOpt(name);
         result = new IntSet();
-        if (file.exists()) {
-            lst = file.readLines();
-            for (String active : lst) {
+        if (enabled != null) {
+            for (String active : enabled) {
                 idx = lefts.indexOf(active);
                 if (idx < 0) {
                     // happens if I fix a typo
@@ -160,17 +158,7 @@ public class Book implements Comparable<Book> {
                 }
             }
         } else {
-            // TODO: wait until all users/books have an active file; then dump the asked() code
-            lst = new ArrayList<>();
-            asked = Protocol.asked(userProtocols, name);
-            for (int i = 0; i < lefts.size(); i++) {
-                question = lefts.get(i);
-                if (asked.contains(question)) {
-                    result.add(i);
-                    lst.add(question);
-                }
-            }
-            file.writeLines(lst);
+            throw new IOException("selection not found");  // TODO: create empty?
         }
         return result;
     }
