@@ -20,6 +20,8 @@ import net.oneandone.sushi.fs.World;
 import net.oneandone.sushi.fs.file.FileNode;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /** Persistent session state */
@@ -33,6 +35,43 @@ public class Context {
     public FileNode userProtocols() throws MkdirException {
         return protocolRoot.join(YogiSecurity.username()).mkdirsOpt();
     }
+
+    //-- protocols
+
+    public List<FileNode> listProtocols(String book) throws IOException {
+        List<FileNode> lst;
+        FileNode dir;
+
+        dir = userProtocols().join(book);
+        if (!dir.exists()) {
+            return new ArrayList<>();
+        }
+        lst = dir.find("*.log");
+        Collections.sort(lst, (o1, o2) -> {
+            Integer left;
+            Integer right;
+
+            left = numberOpt(o1);
+            right = numberOpt(o2);
+            if (left != null && right != null) {
+                return left.compareTo(right);
+            } else {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+        return lst;
+    }
+
+
+    private static Integer numberOpt(FileNode log) {
+        try {
+            return Integer.parseInt(log.getBasename());
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
+    //-- selections
 
     public List<String> loadEnabledOpt(String book) throws IOException {
         FileNode file;

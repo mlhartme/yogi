@@ -22,8 +22,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -31,42 +29,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class Protocol {
-    public static List<FileNode> list(FileNode userProtocols, String book) throws IOException {
-        List<FileNode> lst;
-        FileNode dir;
-
-        dir = userProtocols.join(book);
-        if (!dir.exists()) {
-            return new ArrayList<>();
-        }
-        lst = dir.find("*.log");
-        Collections.sort(lst, new Comparator<FileNode>() {
-            @Override
-            public int compare(FileNode o1, FileNode o2) {
-                Integer left;
-                Integer right;
-
-                left = numberOpt(o1);
-                right = numberOpt(o2);
-                if (left != null && right != null) {
-                    return left.compareTo(right);
-                } else {
-                    return o1.getName().compareTo(o2.getName());
-                }
-            }
-        });
-        return lst;
-    }
-
-
-    private static Integer numberOpt(FileNode log) {
-        try {
-            return Integer.parseInt(log.getBasename());
-        } catch (NumberFormatException e) {
-            return null;
-        }
-    }
-
     public static final SimpleDateFormat FMT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public static Protocol load(FileNode src) throws IOException {

@@ -195,7 +195,7 @@ public class YogiController {
         Achievement a;
         String basename;
 
-        protocols = Protocol.list(context.userProtocols(), book);
+        protocols = context.listProtocols(book);
         Collections.reverse(protocols);
         map = new LinkedHashMap<>();
         b = library.get(book);

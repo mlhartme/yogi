@@ -34,7 +34,7 @@ public class Statistics {
         int count;
 
         result = new Statistics(book.enabled(context), book.disabled(context));
-        logs = Protocol.list(context.userProtocols(), book.name);
+        logs = context.listProtocols(book.name);
         for (FileNode node : logs) {
             protocol = Protocol.load(node);
             for (Map.Entry<Integer, List<String>> entry : protocol.histogramRaw().entrySet()) {
@@ -55,7 +55,7 @@ public class Statistics {
         int before;
 
         result = new Statistics(book.enabled(context), book.disabled(context));
-        logs = Protocol.list(context.userProtocols(), book.name);
+        logs = context.listProtocols(book.name);
         before = 0;
         for (FileNode node : logs) {
             if (node.equals(theProtocol)) {
