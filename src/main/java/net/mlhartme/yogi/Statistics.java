@@ -20,7 +20,6 @@ import net.oneandone.sushi.fs.file.FileNode;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,11 +79,8 @@ public class Statistics {
     /** @return question mapped to number of tries list */
     private final Map<String, List<Integer>> map;
 
-    public final IntSet enabled;
-
     public Statistics(IntSet enabled) {
         this.map = new HashMap<>();
-        this.enabled = enabled;
     }
 
     public void add(String question, int count) {
@@ -99,7 +95,7 @@ public class Statistics {
     }
 
     public int quality(Book book) {
-        return quality(book, enabled);
+        return quality(book, new IntSet() /* TODO */);
     }
 
     public int quality(Book book, IntSet selection) {
@@ -109,10 +105,8 @@ public class Statistics {
         sum = 0;
         count = 0;
         for (Integer question : selection) {
-            if (enabled.contains(question)) {
-                sum += quality(book.left(question));
-                count++;
-            }
+            sum += quality(book.left(question));
+            count++;
         }
         return count == 0 ? 0 : sum / count;
     }
@@ -176,12 +170,7 @@ public class Statistics {
         for (Integer i : selection) {
             result.add(i);
         }
-        Collections.sort(result, new Comparator<Integer>() {
-            @Override
-            public int compare(Integer left, Integer right) {
-                return Integer.compare(quality(book.left(left)), quality(book.left(right)));
-            }
-        });
+        Collections.sort(result, (left, right) -> Integer.compare(quality(book.left(left)), quality(book.left(right))));
         return result;
     }
 
@@ -196,25 +185,6 @@ public class Statistics {
             return "color: yellowgreen;";
         } else {
             return "color: green;";
-        }
-    }
-
-
-    public String enableMarker(IntSet selection) {
-        int e;
-        int all;
-
-        e = 0;
-        for (int i : selection) {
-            if (enabled.contains(i)) {
-                e++;
-            }
-        }
-        all = selection.size();
-        if (e == all) {
-            return Integer.toString(all);
-        } else {
-            return Integer.toString(e) + "/" + selection.size();
         }
     }
 }

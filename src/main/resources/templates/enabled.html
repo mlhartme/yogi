@@ -23,7 +23,7 @@
                                     </tr>
                                 </th:block>
                                 <tr>
-                                    <td th:with="enabled=${statistics.enabled.contains(idx)}">
+                                    <td th:with="enabled=false"><!-- TODO: ${statistics.enabled.contains(idx)} -->
                                         <input th:if="${enabled}" class="form-check-input" type="checkbox" th:name="${'enable_' + idx}" th:value="${idx}" checked>
                                         <input th:unless="${enabled}" class="form-check-input" type="checkbox" th:name="${'enable_' + idx}" th:value="${idx}">
                                     </td>
