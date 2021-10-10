@@ -6,7 +6,7 @@
         <p th:with="quality=${statistics.quality(book)}">
             <span data-bs-toggle="tooltip" th:title="${quality + ' %'}" th:style="${statistics.style(quality)}">&#x25cf; </span><span th:text="${quality + ' %'}"></span>
             <a class="font-weight-lighter"
-               th:href="@{/books/{book}/enabled(book=${book.name}, title=${book.name})}">Freischalten</a>
+               th:href="@{/books/{book}/selection(book=${book.name}, title=${book.name})}">Freischalten</a>
             <form th:action="${'/books/' + book.name + '/start'}" method="post">
                 <input name="book" th:value="${book.name}" type="hidden"/>
                 <input name="title" th:value="${book.name}" type="hidden"/>

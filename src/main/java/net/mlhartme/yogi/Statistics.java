@@ -32,7 +32,7 @@ public class Statistics {
         Statistics result;
         int count;
 
-        result = new Statistics(book.enabled(context));
+        result = new Statistics();
         logs = context.listProtocols(book.name);
         for (FileNode node : logs) {
             protocol = Protocol.load(node);
@@ -53,7 +53,7 @@ public class Statistics {
         int count;
         int before;
 
-        result = new Statistics(book.enabled(context));
+        result = new Statistics();
         logs = context.listProtocols(book.name);
         before = 0;
         for (FileNode node : logs) {
@@ -79,7 +79,7 @@ public class Statistics {
     /** @return question mapped to number of tries list */
     private final Map<String, List<Integer>> map;
 
-    public Statistics(IntSet enabled) {
+    public Statistics() {
         this.map = new HashMap<>();
     }
 

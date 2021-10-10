@@ -76,8 +76,8 @@ public class YogiController {
         return "book";
     }
 
-    @RequestMapping("/books/{book}/enabled")
-    public String enabled(Model model, @PathVariable(value = "book") String bookName, @RequestParam("title") String title,
+    @RequestMapping("/books/{book}/selection")
+    public String selection(Model model, @PathVariable(value = "book") String bookName, @RequestParam("title") String title,
                           @RequestParam(value = "selection", required = false) String selectionStr) throws IOException {
         Book book;
         IntSet selection;
@@ -88,12 +88,12 @@ public class YogiController {
         model.addAttribute("book", book);
         model.addAttribute("title", title);
         model.addAttribute("selection", selection);
-        return "enabled";
+        return "selection";
     }
 
-    @RequestMapping("/books/{book}/set-enabled")
-    public String setEnabled(@PathVariable(value = "book") String book, @RequestParam(value = "selection") String selection,
-                             HttpServletRequest request /* for selection */)
+    @RequestMapping("/books/{book}/set-selection")
+    public String setSelection(@PathVariable(value = "book") String book, @RequestParam(value = "selection") String selection,
+                               HttpServletRequest request /* for selection */)
             throws IOException {
         IntSet enable;
 
