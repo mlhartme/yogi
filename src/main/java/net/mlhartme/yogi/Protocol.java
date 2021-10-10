@@ -26,10 +26,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 public class Protocol {
@@ -58,22 +56,6 @@ public class Protocol {
             }
         });
         return lst;
-    }
-
-    public static Set<String> asked(FileNode userProtocols, String book) throws IOException {
-        Protocol protocol;
-        Set<String> questions;
-
-        questions = new HashSet<>();
-        for (FileNode node : Protocol.list(userProtocols, book)) {
-            protocol = Protocol.load(node);
-            for (Map.Entry<Integer, List<String>> entry : protocol.histogramRaw().entrySet()) {
-                if (entry.getKey() > 0) {
-                    questions.addAll(entry.getValue());
-                }
-            }
-        }
-        return questions;
     }
 
 

@@ -22,7 +22,7 @@ import net.oneandone.sushi.fs.file.FileNode;
 import java.io.IOException;
 import java.util.List;
 
-/** Session state */
+/** Persistent session state */
 public class Context {
     private final FileNode protocolRoot;
 
