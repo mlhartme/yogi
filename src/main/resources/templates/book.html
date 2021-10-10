@@ -5,7 +5,13 @@
     <th:block layout:fragment="content" th:with="statistics=${book.statistics(@userFiles)}">
         <p th:with="quality=${statistics.quality(book, book.loadSelection(@userFiles, selection))}">
             <span data-bs-toggle="tooltip" th:title="${quality + ' %'}" th:style="${statistics.style(quality)}">&#x25cf; </span><span th:text="${quality + ' %'}"></span>
-            <div class="dropdown nav-item">
+            <div class="dropdown">
+                <button class="btn btn-light dropdown-toggle" type="button" id="bookMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${book.name}"></button>
+                <div class="dropdown-menu" aria-labelledby="bookMenuButton">
+                    <a th:each="book:${library}" class="dropdown-item" th:href="${'/books/' + book.name} + '/'" th:text="${book.name}"></a>
+                </div>
+            </div>
+            <div class="dropdown">
                 <button class="btn btn-light dropdown-toggle" type="button" id="selectionMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${selection}"></button>
                 <div class="dropdown-menu" aria-labelledby="selectionMenuButton">
                     <a th:each="gotoSelection:${@userFiles.listSelections(book.name)}" class="dropdown-item" th:href="${'/books/' + book.name + '/' + gotoSelection}" th:text="${gotoSelection}"></a>
