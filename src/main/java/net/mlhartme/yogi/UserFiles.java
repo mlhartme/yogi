@@ -116,4 +116,28 @@ public class UserFiles {
         dir = root.join(book).mkdirOpt();
         return dir.join(name + ".selection");
     }
+
+    public String firstSelection(String book) throws IOException { // TODO
+        List<String> lst;
+
+        lst = listSelections(book);
+        if (lst.isEmpty()) {
+            throw new IOException("no selection");
+        }
+        return lst.get(0);
+    }
+
+    public List<String> listSelections(String book) throws IOException {
+        FileNode dir;
+        List<String> result;
+
+        result = new ArrayList();
+        dir = root.join(book);
+        if (dir.isDirectory()) {
+            for (var file : dir.find("*.selection")) {
+                result.add(file.getBasename());
+            }
+        }
+        return result;
+    }
 }

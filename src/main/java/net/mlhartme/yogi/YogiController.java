@@ -70,8 +70,8 @@ public class YogiController {
     }
 
     @RequestMapping("/books/{book}")
-    public String bookRaw() {
-        return "redirect:/books/" + library.iterator().next().name + "/freigeschaltet";
+    public String bookRaw(@PathVariable(value = "book") String book) throws IOException {
+        return "redirect:/books/" + library.iterator().next().name + "/" + context.firstSelection(book);
     }
 
     @GetMapping("/books/{book}/{selection}")
