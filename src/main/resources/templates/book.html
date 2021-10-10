@@ -3,54 +3,31 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout.html}">
 <th:block layout:fragment="content">
-    <div id="start" class="modal fade" >
-        <div class="modal-dialog" th:with="enabledEmpty=${book.enabled(userProtocols).isEmpty()}">
-            <form class="form-horizontal" th:action="${'/books/' + book.name + '/start'}" method="post">
-                <fieldset>
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Übung starten</h5>
-                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body" th:unless="${enabledEmpty}">
-                            <div class="form-group">
-                                <input name="book" th:value="${book.name}" type="hidden"/>
-                                <input name="title" th:value="${book.name}" type="hidden"/>
-                                <select class="form-control" name="count" id="count">
-                                    <option>5</option>
-                                    <option>10</option>
-                                    <option>15</option>
-                                    <option selected>20</option>
-                                    <option>25</option>
-                                    <option>30</option>
-                                    <option value="all">alle</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="modal-body" th:if="${enabledEmpty}">
-                            <p>Bevor du Vokalen üben kannst, mußte du Vokabeln "freischalten".</p>
-                            <p>Klicke dazu auf die Zahlen hinter den Kapiteln.</p>
-                        </div>
-                        <div class="modal-footer" th:unless="${enabledEmpty}">
-                            <div class="form-group">
-                                <div class="col-lg-10 col-lg-offset-2">
-                                    <button type="submit" class="btn btn-primary">Starten</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </fieldset>
-            </form>
-        </div>
-    </div>
-    <div class="col-12" th:with="statistics=${book.statistics(userProtocols)}">
+    <div th:with="statistics=${book.statistics(userProtocols)}">
         <p th:with="quality=${statistics.quality(book)}">
             <span data-bs-toggle="tooltip" th:title="${quality + ' %'}" th:style="${statistics.style(quality)}">&#x25cf; </span><span th:text="${quality + ' %'}"></span>
             <a class="font-weight-lighter"
                th:href="@{/books/{book}/enabled(book=${book.name}, title=${book.name})}">Freischalten</a>
-            <a href="#start" data-bs-toggle="modal" data-bs-target="#start">Üben</a>
+            <form th:action="${'/books/' + book.name + '/start'}" method="post">
+                <input name="book" th:value="${book.name}" type="hidden"/>
+                <input name="title" th:value="${book.name}" type="hidden"/>
+                <div class="form-row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary">Üben</button>
+                    </div>
+                    <div class="col">
+                        <select class="form-control" name="count" id="count">
+                            <option>5</option>
+                            <option>10</option>
+                            <option>15</option>
+                            <option selected>20</option>
+                            <option>25</option>
+                            <option>30</option>
+                            <option value="all">alle</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
         </p>
     </div>
 </th:block>
