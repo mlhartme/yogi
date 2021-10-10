@@ -19,6 +19,7 @@ import net.oneandone.sushi.fs.World;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.context.annotation.SessionScope;
 
 import java.io.IOException;
 
@@ -31,5 +32,11 @@ public class YogiApplication {
     @Bean
     public World world() throws IOException {
         return World.create();
+    }
+
+    @Bean
+    @SessionScope
+    public Context context(World world) throws IOException {
+        return new Context(world);
     }
 }

@@ -295,7 +295,7 @@ public class Protocol {
         return result;
     }
 
-    public Achievement achievement(FileNode userProtocols, Book book) throws IOException {
+    public Achievement achievement(Context context, FileNode userProtocols, Book book) throws IOException {
         long max = -1;
         long min = Long.MAX_VALUE;
         long avg = 0;
@@ -316,7 +316,7 @@ public class Protocol {
             }
             prev = entry;
         }
-        beforeAfter =  Statistics.beforeAfter(userProtocols, book, this.file, book.selection(this));
+        beforeAfter =  Statistics.beforeAfter(context, userProtocols, book, this.file, book.selection(this));
 
         return count == 0 ? new Achievement(beforeAfter[0], beforeAfter[1], "-", "-", "-")
                 : new Achievement(beforeAfter[0], beforeAfter[1],

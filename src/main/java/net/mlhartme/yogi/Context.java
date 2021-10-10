@@ -16,19 +16,25 @@
 package net.mlhartme.yogi;
 
 import net.oneandone.sushi.fs.MkdirException;
+import net.oneandone.sushi.fs.World;
 import net.oneandone.sushi.fs.file.FileNode;
 
-public class UserProtocols {
-    private final FileNode directory;
+/** Session state */
+public class Context {
+    private final FileNode protocolRoot;
 
-    public UserProtocols(FileNode directory) {
-        this.directory = directory;
+    public Context(World world) {
+        this.protocolRoot = world.getWorking().join("protocols");
+    }
+
+    public FileNode userProtocols() throws MkdirException {
+        return protocolRoot.join(YogiSecurity.username()).mkdirsOpt();
     }
 
     public FileNode enabledFile(String book) throws MkdirException {
         FileNode dir;
 
-        dir = directory.join(book).mkdirOpt();
+        dir = userProtocols().join(book).mkdirOpt();
         return dir.join("freigeschaltet.selection");
     }
 }

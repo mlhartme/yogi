@@ -15,7 +15,6 @@
  */
 package net.mlhartme.yogi;
 
-import net.oneandone.sushi.fs.MkdirException;
 import net.oneandone.sushi.fs.World;
 import net.oneandone.sushi.fs.file.FileNode;
 import net.oneandone.sushi.util.Separator;
@@ -41,26 +40,22 @@ import java.util.Map;
 
 @Controller
 public class YogiController {
-    private final FileNode protocolRoot;
+    private final Context context;
     private final Library library;
     private final String version;
 
-    public YogiController(World world) throws IOException {
+    public YogiController(World world, Context context) throws IOException {
         FileNode src;
 
+        this.context = context;
         src = world.file("/usr/local/yogi/etc/books");
         this.library = src.exists() ? Library.load(src) : new Library(); // for SpringBoot test
-        this.protocolRoot = world.getWorking().join("protocols");
         this.version = world.resource("yogi.version").readString().trim();
     }
 
     @ModelAttribute("yogiVersion")
     protected String getVersion() {
         return version;
-    }
-
-    private FileNode userProtocols() throws MkdirException {
-        return protocolRoot.join(YogiSecurity.username()).mkdirsOpt();
     }
 
     @RequestMapping("/")
@@ -78,7 +73,7 @@ public class YogiController {
     public String book(Model model, @PathVariable(value = "book") String book) throws IOException {
         model.addAttribute("library", library);
         model.addAttribute("book", library.get(book));
-        model.addAttribute("userProtocols", userProtocols());
+        model.addAttribute("userProtocols", context.userProtocols());
         return "book";
     }
 
@@ -88,7 +83,7 @@ public class YogiController {
         IntSet selection;
 
         selection = IntSet.parse(Separator.COMMA.split(selectionStr));
-        model.addAttribute("userProtocols", userProtocols());
+        model.addAttribute("userProtocols", context.userProtocols());
         model.addAttribute("library", library);
         model.addAttribute("book", library.get(bookName));
         model.addAttribute("title", title);
@@ -114,7 +109,7 @@ public class YogiController {
 
         book = library.get(bookName);
         selection = selectionStr == null ? book.all() : IntSet.parse(Separator.COMMA.split(selectionStr));
-        model.addAttribute("userProtocols", userProtocols());
+        model.addAttribute("userProtocols", context.userProtocols());
         model.addAttribute("library", library);
         model.addAttribute("book", book);
         model.addAttribute("title", title);
@@ -129,7 +124,7 @@ public class YogiController {
         IntSet enable;
 
         enable = getChecked(request, "enable_");
-        library.get(book).enable(userProtocols(), IntSet.parseArg(selection), enable);
+        library.get(book).enable(context, context.userProtocols(), IntSet.parseArg(selection), enable);
         return "redirect:";
     }
 
@@ -161,14 +156,14 @@ public class YogiController {
 
         book = library.get(bookName);
         if (selectionStrOpt == null) {
-            selection = book.enabled(userProtocols());
+            selection = book.enabled(context, context.userProtocols());
         } else {
-            disabled = book.disabled(userProtocols());
+            disabled = book.disabled(context, context.userProtocols());
             selection = IntSet.parse(Separator.COMMA.split(selectionStrOpt));
             selection.removeAll(disabled);
         }
         if (!countOrAll.equals("all")) {
-            sorted = book.statistics(userProtocols()).sort(selection, book); // TODO: expensive
+            sorted = book.statistics(context).sort(selection, book); // TODO: expensive
             count = Integer.parseInt(countOrAll);
             while (sorted.size() > count) {
                 sorted.remove(sorted.size() - 1);
@@ -181,8 +176,8 @@ public class YogiController {
     private String doStart(Book book, String title, IntSet selection) throws IOException {
         Exercise exercise;
 
-        exercise = Exercise.create(book, userProtocols(), title, selection);
-        exercise.logTitle(userProtocols(), title);
+        exercise = Exercise.create(book, context.userProtocols(), title, selection);
+        exercise.logTitle(context.userProtocols(), title);
         return "redirect:question?e=" + urlencode(exercise.toParam());
     }
 
@@ -203,14 +198,14 @@ public class YogiController {
         Achievement a;
         String basename;
 
-        protocols = Protocol.list(userProtocols(), book);
+        protocols = Protocol.list(context.userProtocols(), book);
         Collections.reverse(protocols);
         map = new LinkedHashMap<>();
         b = library.get(book);
         for (FileNode log : protocols) {
             basename = log.getBasename();
             p = Protocol.load(log);
-            a = p.achievement(userProtocols(), b);
+            a = p.achievement(context, context.userProtocols(), b);
             map.put(basename, p.date() + " " + p.words() + " " + a.before + " -> " + a.after);
         }
         model.addAttribute("map", map);
@@ -223,8 +218,8 @@ public class YogiController {
     public String protocol(Model model, @PathVariable(value = "book") String book, @PathVariable(value = "id") long id) throws IOException {
         Protocol protocol;
 
-        protocol = Protocol.load(userProtocols().join(book, id + ".log"));
-        model.addAttribute("userProtocols", userProtocols());
+        protocol = Protocol.load(context.userProtocols().join(book, id + ".log"));
+        model.addAttribute("userProtocols", context.userProtocols());
         model.addAttribute("protocol", protocol);
         model.addAttribute("book", library.get(book));
         model.addAttribute("library", library);
@@ -238,7 +233,7 @@ public class YogiController {
         Exercise exercise;
 
         exercise = Exercise.forParam(library.get(book), body.get("e"));
-        exercise.logComment(userProtocols(), body.get("comment"));
+        exercise.logComment(context.userProtocols(), body.get("comment"));
     }
 
     @RequestMapping("/books/{book}/question")
@@ -268,7 +263,7 @@ public class YogiController {
         model.addAttribute("question", question);
         model.addAttribute("answer", answer);
         model.addAttribute("correction", correction);
-        exercise.logAnswer(userProtocols(), question, answer, exercise.lookup(question) /* not correction - it might be null */);
+        exercise.logAnswer(context.userProtocols(), question, answer, exercise.lookup(question) /* not correction - it might be null */);
         return "answer";
     }
 }

@@ -70,8 +70,8 @@ public class Book implements Comparable<Book> {
         this.rights = new ArrayList<>();
     }
 
-    public Statistics statistics(FileNode userProtocols) throws IOException {
-        return Statistics.collect(userProtocols, this);
+    public Statistics statistics(Context context) throws IOException {
+        return Statistics.collect(context, context.userProtocols(), this);
     }
 
     public Map<String, IntSet> sections() throws IOException {
@@ -117,11 +117,11 @@ public class Book implements Comparable<Book> {
         return result;
     }
 
-    public void enable(FileNode userProtocols, IntSet selection, IntSet enable) throws IOException {
+    public void enable(Context context, FileNode userProtocols, IntSet selection, IntSet enable) throws IOException {
         IntSet result;
         List<String> lst;
 
-        result = enabled(userProtocols);
+        result = enabled(context, userProtocols);
         for (int idx : selection) {
             if (enable.contains(idx)) {
                 if (!result.contains(idx)) {
@@ -135,10 +135,10 @@ public class Book implements Comparable<Book> {
         for (int idx : result) {
             lst.add(lefts.get(idx));
         }
-        new UserProtocols(userProtocols).enabledFile(name).writeLines(lst);
+        context.enabledFile(name).writeLines(lst);
     }
 
-    public IntSet enabled(FileNode userProtocols) throws IOException {
+    public IntSet enabled(Context context, FileNode userProtocols) throws IOException {
         FileNode file;
         IntSet result;
         Set<String> asked;
@@ -146,7 +146,7 @@ public class Book implements Comparable<Book> {
         List<String> lst;
         int idx;
 
-        file = new UserProtocols(userProtocols).enabledFile(name);
+        file = context.enabledFile(name);
         result = new IntSet();
         if (file.exists()) {
             lst = file.readLines();
@@ -175,11 +175,11 @@ public class Book implements Comparable<Book> {
         return result;
     }
 
-    public IntSet disabled(FileNode userProtocols) throws IOException {
+    public IntSet disabled(Context context, FileNode userProtocols) throws IOException {
         IntSet result;
         IntSet enabled;
 
-        enabled = enabled(userProtocols);
+        enabled = enabled(context, userProtocols);
         result = new IntSet();
         for (int i = 0; i < lefts.size(); i++) {
             if (!enabled.contains(i)) {
