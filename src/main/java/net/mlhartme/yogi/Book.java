@@ -15,7 +15,6 @@
  */
 package net.mlhartme.yogi;
 
-import net.oneandone.sushi.fs.MkdirException;
 import net.oneandone.sushi.fs.Node;
 import net.oneandone.sushi.fs.file.FileNode;
 import net.oneandone.sushi.util.Strings;
@@ -118,13 +117,6 @@ public class Book implements Comparable<Book> {
         return result;
     }
 
-    private FileNode enabledFile(FileNode userProtocols) throws MkdirException {
-        FileNode dir;
-
-        dir = userProtocols.join(name).mkdirOpt();
-        return dir.join(".enabled");
-    }
-
     public void enable(FileNode userProtocols, IntSet selection, IntSet enable) throws IOException {
         IntSet result;
         List<String> lst;
@@ -143,7 +135,7 @@ public class Book implements Comparable<Book> {
         for (int idx : result) {
             lst.add(lefts.get(idx));
         }
-        enabledFile(userProtocols).writeLines(lst);
+        new UserProtocols(userProtocols).enabledFile(name).writeLines(lst);
     }
 
     public IntSet enabled(FileNode userProtocols) throws IOException {
@@ -154,7 +146,7 @@ public class Book implements Comparable<Book> {
         List<String> lst;
         int idx;
 
-        file = enabledFile(userProtocols);
+        file = new UserProtocols(userProtocols).enabledFile(name);
         result = new IntSet();
         if (file.exists()) {
             lst = file.readLines();
