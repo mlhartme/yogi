@@ -71,7 +71,19 @@ public class YogiController {
 
     @RequestMapping("/books/{book}")
     public String bookRaw(@PathVariable(value = "book") String book) throws IOException {
-        return "redirect:/books/" + book + "/" + userFiles.firstSelection(book);
+        List<String> lst;
+        String selection;
+
+        lst = userFiles.listSelections(book);
+        if (lst.isEmpty()) {
+            // TODO: user notice about selections
+            // TODO: empty selection
+            selection = "freigeschaltet";
+            userFiles.saveSelection(book, selection, Collections.emptyList());
+        } else {
+            selection = lst.get(0);
+        }
+        return "redirect:/books/" + book + "/" + selection;
     }
 
     @GetMapping("/books/{book}/{selection}")
