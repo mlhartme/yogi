@@ -45,26 +45,13 @@
             </form>
         </div>
     </div>
-    <div class="col-12">
+    <div class="col-12" th:with="statistics=${book.statistics(userProtocols)}">
         <a href="#start" data-bs-toggle="modal" data-bs-target="#start">Üben</a>
-        <ul class="list-group" th:with="statistics=${book.statistics(userProtocols)}">
-            <li class="list-group-item py+2" th:with="quality=${statistics.quality(book)}">
-                <p>
-                    <span data-bs-toggle="tooltip" th:title="${quality + ' %'}" th:style="${statistics.style(quality)}">&#x25cf; </span><span th:text="${quality + ' %'}"></span>
-                    <a class="font-weight-lighter"
-                       th:href="@{/books/{book}/enabled(book=${book.name}, title=${book.name})}">Freischalten</a>
-                </p>
-            </li>
-            <li th:each="entry:${book.sections()}" class="list-group-item py+2">
-                <a th:with="quality=${statistics.quality(book, entry.value)}"
-                   th:href="@{/books/{book}/selection(book=${book.name}, title=${entry.key}, selection=${entry.value})}">
-                    <span data-bs-toggle="tooltip" th:title="${quality + ' %'}" th:style="${statistics.style(quality)}">&#x25cf; </span><span th:text="${entry.key}"></span>
-                </a>
-                <a class="font-weight-lighter"
-                   th:href="@{/books/{book}/enabled(book=${book.name}, title=${entry.key}, selection=${entry.value})}"
-                   th:text="${'(' + statistics.enableMarker(entry.value) + ')'}"></a>
-            </li>
-        </ul>
+        <p th:with="quality=${statistics.quality(book)}">
+            <span data-bs-toggle="tooltip" th:title="${quality + ' %'}" th:style="${statistics.style(quality)}">&#x25cf; </span><span th:text="${quality + ' %'}"></span>
+            <a class="font-weight-lighter"
+               th:href="@{/books/{book}/enabled(book=${book.name}, title=${book.name})}">Freischalten</a>
+        </p>
     </div>
 </th:block>
 </html>
