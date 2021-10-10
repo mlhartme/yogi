@@ -73,7 +73,6 @@ public class YogiController {
     public String book(Model model, @PathVariable(value = "book") String book) throws IOException {
         model.addAttribute("library", library);
         model.addAttribute("book", library.get(book));
-        model.addAttribute("userProtocols", context.userProtocols());
         return "book";
     }
 
@@ -83,7 +82,6 @@ public class YogiController {
         IntSet selection;
 
         selection = IntSet.parse(Separator.COMMA.split(selectionStr));
-        model.addAttribute("userProtocols", context.userProtocols());
         model.addAttribute("library", library);
         model.addAttribute("book", library.get(bookName));
         model.addAttribute("title", title);
@@ -109,7 +107,6 @@ public class YogiController {
 
         book = library.get(bookName);
         selection = selectionStr == null ? book.all() : IntSet.parse(Separator.COMMA.split(selectionStr));
-        model.addAttribute("userProtocols", context.userProtocols());
         model.addAttribute("library", library);
         model.addAttribute("book", book);
         model.addAttribute("title", title);
@@ -219,7 +216,6 @@ public class YogiController {
         Protocol protocol;
 
         protocol = Protocol.load(context.userProtocols().join(book, id + ".log"));
-        model.addAttribute("userProtocols", context.userProtocols());
         model.addAttribute("protocol", protocol);
         model.addAttribute("book", library.get(book));
         model.addAttribute("library", library);
