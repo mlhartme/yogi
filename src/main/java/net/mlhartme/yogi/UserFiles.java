@@ -99,24 +99,24 @@ public class UserFiles {
 
     //-- selections
 
-    public List<String> loadSelectionOpt(String book) throws IOException {
+    public List<String> loadSelectionOpt(String book, String name) throws IOException {
         FileNode file;
 
-        file = selectionFile(book);
+        file = selectionFile(book, name);
         if (!file.exists()) {
             return null;
         }
         return file.readLines();
     }
 
-    public void saveSelection(String book, List<String> lst) throws IOException {
-        selectionFile(book).writeLines(lst);
+    public void saveSelection(String book, String name, List<String> lst) throws IOException {
+        selectionFile(book, name).writeLines(lst);
     }
 
-    private FileNode selectionFile(String book) throws MkdirException {
+    private FileNode selectionFile(String book, String name) throws MkdirException {
         FileNode dir;
 
         dir = root.join(book).mkdirOpt();
-        return dir.join("freigeschaltet.selection");
+        return dir.join(name + ".selection");
     }
 }

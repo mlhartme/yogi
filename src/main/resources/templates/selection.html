@@ -8,13 +8,13 @@
         <p>Kreuze alle Vokabeln an, die in der Schule schon dran waren, die du also können solltest.
         Klicke danach auf den "Speichern" Kopf ganz unten.</p>
         <div class="col-12">
-            <form class="form-horizontal" accept-charset="utf-8" th:action="@{/books/{book}/set-selection(book=${book.name})}" method="post">
+            <form class="form-horizontal" accept-charset="utf-8" th:action="@{/books/{book}/set-selection(book=${book.name}, selection=${selectionName})}" method="post">
                 <fieldset>
                     <input name="book" th:value="${book.name}" type="hidden"/>
-                    <input name="selection" th:value="${selection}" type="hidden"/>
+                    <input name="name" th:value="${selectionName}" type="hidden"/>
                     <table class="table">
                         <tbody>
-                            <th:block th:each="idx:${selection}">
+                            <th:block th:each="idx:${book.all()}">
                                 <th:block th:with="section=${book.sectionStart(idx)}">
                                     <tr th:if="${section != null}">
                                         <td th:text="${section}"></td>
@@ -23,7 +23,7 @@
                                     </tr>
                                 </th:block>
                                 <tr>
-                                    <td th:with="selected=false"><!-- TODO: ${statistics.enabled.contains(idx)} -->
+                                    <td th:with="selected=${selection.contains(idx)}">
                                         <input th:if="${selected}" class="form-check-input" type="checkbox" th:name="${'enable_' + idx}" th:value="${idx}" checked>
                                         <input th:unless="${selected}" class="form-check-input" type="checkbox" th:name="${'enable_' + idx}" th:value="${idx}">
                                     </td>

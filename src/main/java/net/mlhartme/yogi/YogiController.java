@@ -17,7 +17,6 @@ package net.mlhartme.yogi;
 
 import net.oneandone.sushi.fs.World;
 import net.oneandone.sushi.fs.file.FileNode;
-import net.oneandone.sushi.util.Separator;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -77,28 +76,27 @@ public class YogiController {
     }
 
     @RequestMapping("/books/{book}/selection")
-    public String selection(Model model, @PathVariable(value = "book") String bookName, @RequestParam("title") String title,
-                          @RequestParam(value = "selection", required = false) String selectionStr) throws IOException {
+    public String selection(Model model, @PathVariable(value = "book") String bookName,
+                            @RequestParam(value = "selection") String selectionName) throws IOException {
         Book book;
-        IntSet selection;
 
         book = library.get(bookName);
-        selection = selectionStr == null ? book.all() : IntSet.parse(Separator.COMMA.split(selectionStr));
         model.addAttribute("library", library);
         model.addAttribute("book", book);
-        model.addAttribute("title", title);
-        model.addAttribute("selection", selection);
+        model.addAttribute("selectionName", selectionName);
+        model.addAttribute("selection", book.loadSelection(context, selectionName));
         return "selection";
     }
 
     @RequestMapping("/books/{book}/set-selection")
-    public String setSelection(@PathVariable(value = "book") String book, @RequestParam(value = "selection") String selection,
+    public String setSelection(@PathVariable(value = "book") String book,
+                               @RequestParam(value = "selection") String selection,
                                HttpServletRequest request /* for selection */)
             throws IOException {
         IntSet enable;
 
         enable = getChecked(request, "enable_");
-        library.get(book).enable(context, IntSet.parseArg(selection), enable);
+        library.get(book).saveSelection(context, selection, enable);
         return "redirect:";
     }
 
@@ -119,7 +117,7 @@ public class YogiController {
     }
 
     @RequestMapping("/books/{book}/start")
-    public String start(@PathVariable(value = "book") String bookName,
+    public String start(@PathVariable(value = "book") String bookName, @RequestParam("selection") String selectionName,
                         @RequestParam("title") String title, @RequestParam("count") String countOrAll) throws IOException {
         Book book;
         IntSet selection;
@@ -127,7 +125,7 @@ public class YogiController {
         int count;
 
         book = library.get(bookName);
-        selection = book.enabled(context);
+        selection = book.loadSelection(context, selectionName);
         if (!countOrAll.equals("all")) {
             sorted = book.statistics(context).sort(selection, book); // TODO: expensive
             count = Integer.parseInt(countOrAll);

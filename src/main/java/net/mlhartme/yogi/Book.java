@@ -115,33 +115,22 @@ public class Book implements Comparable<Book> {
         return result;
     }
 
-    public void enable(UserFiles context, IntSet selection, IntSet enable) throws IOException {
-        IntSet result;
+    public void saveSelection(UserFiles context, String selectionName, IntSet selection) throws IOException {
         List<String> lst;
 
-        result = enabled(context);
-        for (int idx : selection) {
-            if (enable.contains(idx)) {
-                if (!result.contains(idx)) {
-                    result.add(idx);
-                }
-            } else {
-                result.remove(idx);
-            }
-        }
         lst = new ArrayList<>();
-        for (int idx : result) {
+        for (int idx : selection) {
             lst.add(lefts.get(idx));
         }
-        context.saveSelection(name, lst);
+        context.saveSelection(name, selectionName, lst);
     }
 
-    public IntSet enabled(UserFiles context) throws IOException {
+    public IntSet loadSelection(UserFiles context, String selectionName) throws IOException {
         List<String> enabled;
         IntSet result;
         int idx;
 
-        enabled = context.loadSelectionOpt(name);
+        enabled = context.loadSelectionOpt(name, selectionName);
         result = new IntSet();
         if (enabled != null) {
             for (String active : enabled) {
