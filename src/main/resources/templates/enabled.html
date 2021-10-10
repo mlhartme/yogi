@@ -14,14 +14,23 @@
                     <input name="selection" th:value="${selection}" type="hidden"/>
                     <table class="table">
                         <tbody>
-                            <tr th:each="idx:${selection}">
-                                <td th:with="enabled=${statistics.enabled.contains(idx)}">
-                                    <input th:if="${enabled}" class="form-check-input" type="checkbox" th:name="${'enable_' + idx}" th:value="${idx}" checked>
-                                    <input th:unless="${enabled}" class="form-check-input" type="checkbox" th:name="${'enable_' + idx}" th:value="${idx}">
-                                </td>
-                                <td th:text="${book.left(idx)}"></td>
-                                <td th:text="${book.right(idx)}"></td>
-                            </tr>
+                            <th:block th:each="idx:${selection}">
+                                <th:block th:with="section=${book.sectionStart(idx)}">
+                                    <tr th:if="${section != null}">
+                                        <td th:text="${section}"></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </th:block>
+                                <tr>
+                                    <td th:with="enabled=${statistics.enabled.contains(idx)}">
+                                        <input th:if="${enabled}" class="form-check-input" type="checkbox" th:name="${'enable_' + idx}" th:value="${idx}" checked>
+                                        <input th:unless="${enabled}" class="form-check-input" type="checkbox" th:name="${'enable_' + idx}" th:value="${idx}">
+                                    </td>
+                                    <td th:text="${book.left(idx)}"></td>
+                                    <td th:text="${book.right(idx)}"></td>
+                                </tr>
+                            </th:block>
                         </tbody>
                     </table>
 

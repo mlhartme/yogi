@@ -83,6 +83,15 @@ public class Book implements Comparable<Book> {
         return result;
     }
 
+    public String sectionStart(int idx) {
+        for (var entry : sections.entrySet()) {
+            if (entry.getValue().iterator().next() == idx) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
     public Map<String, String> selection(IntSet selection) {
         LinkedHashMap<String, String> result;
 
