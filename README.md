@@ -22,8 +22,8 @@ Vocabulary trainer. For Germans to learn e.g. English.
            - <book>
              - freigeschaltet.selection
              - *.selection         Arbitrary Selection
-             - 1.log               Übung 1
-             - 2.log               Übung 2
+             - 1.protocol          Übung 1
+             - 2.protocol          Übung 2
              - ...
          - work                    Tomcat "work" directory
 

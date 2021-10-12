@@ -6,12 +6,14 @@
     <form th:action="@{/}" method="post">
         <div class="row">
             <div class="col-12">
+                <div><img src="/static/yogi.png" width="256"/></div>
                 <div th:if="${param.error}">
                     Unbekannter Name oder falsches Password.
                 </div>
                 <div th:if="${param.logout}">
                     Sie wurden ausgelogged.
                 </div>
+                <div><label>Willkommen. Bitte melde dich an:</label></div>
                 <div><label>Name: <input type="text" name="username"/> </label></div>
                 <div><label>Password: <input type="password" name="password"/> </label></div>
                 <div><input type="submit" value="Anmelden"/></div>
