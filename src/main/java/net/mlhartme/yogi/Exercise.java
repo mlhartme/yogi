@@ -121,8 +121,8 @@ public class Exercise {
         }
     }
 
-    private FileNode protocolFile(FileNode userProtocols) throws MkdirException {
-        return userProtocols.join(book.name).mkdirOpt().join(id + ".log");
+    private FileNode protocolFile(FileNode userProtocols) throws MkdirException {  // TODO: move this code
+        return userProtocols.join(book.name).mkdirOpt().join(id + UserFiles.PROTOCOL_EXT);
     }
 
     public Protocol protocol(FileNode userProtocols) throws IOException {

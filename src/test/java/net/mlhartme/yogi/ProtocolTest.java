@@ -38,7 +38,7 @@ public class ProtocolTest {
         Map<Integer, List<String>> hist;
 
         w = World.create();
-        file = w.guessProjectHome(getClass()).join("src/test/1.log");
+        file = w.guessProjectHome(getClass()).join("src/test/1.protocol");
         p = Protocol.load(file);
 
         tries = new HashMap<>();
@@ -63,7 +63,7 @@ public class ProtocolTest {
         Map<Integer, List<String>> hist;
 
         w = World.create();
-        file = w.guessProjectHome(getClass()).join("src/test/2.log");
+        file = w.guessProjectHome(getClass()).join("src/test/2.protocol");
         p = Protocol.load(file);
 
         tries = new HashMap<>();

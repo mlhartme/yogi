@@ -19,7 +19,6 @@ import net.oneandone.sushi.fs.MkdirException;
 import net.oneandone.sushi.fs.Node;
 import net.oneandone.sushi.fs.World;
 import net.oneandone.sushi.fs.file.FileNode;
-import net.oneandone.sushi.util.Strings;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,18 +29,33 @@ import java.util.List;
 public class UserFiles {
     private final FileNode root;
 
-    public UserFiles(World world) throws MkdirException {
+    public UserFiles(World world) throws IOException {
         this.root = world.getWorking().join("protocols").join(YogiSecurity.username()).mkdirsOpt();
+        migration();
     }
 
+    // TODO: dump when 1.3 rollout is done
+    private void migration() throws IOException {
+        for (FileNode book : root.list()) {
+            if (book.isDirectory()) {
+                for (FileNode oldProtocol : book.find("*.log")) {
+                    FileNode newProtocol = book.join(oldProtocol.getBasename() + ".protocol");
+                    System.out.println("migration " + oldProtocol + " -> " + newProtocol);
+                    oldProtocol.move(newProtocol);
+                }
+            }
+        }
+    }
     public FileNode root() {
         return root;
     }
 
     //-- protocols
 
+    public static final String PROTOCOL_EXT = ".protocol";
+
     public FileNode protocolFile(String book, long id) {
-        return root.join(book, id + ".log");
+        return root.join(book, id + PROTOCOL_EXT);
     }
 
     public int nextProtocol(String book) throws IOException {
@@ -52,9 +66,9 @@ public class UserFiles {
         dir = root.join(book);
         max = 0;
         if (dir.exists()) {
-            for (Node<?> file : dir.find("*.log")) {
+            for (Node<?> file : dir.find("*" + PROTOCOL_EXT)) {
                 try {
-                    id = Integer.parseInt(Strings.removeRight(file.getName(), ".log"));
+                    id = Integer.parseInt(file.getBasename());
                 } catch (NumberFormatException e) {
                     throw new IOException("unexpected name: " + file.getName());
                 }
@@ -72,7 +86,7 @@ public class UserFiles {
         if (!dir.exists()) {
             return new ArrayList<>();
         }
-        lst = dir.find("*.log");
+        lst = dir.find("*" + PROTOCOL_EXT);
         Collections.sort(lst, (o1, o2) -> {
             Integer left;
             Integer right;
