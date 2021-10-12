@@ -31,23 +31,36 @@ public class UserFiles {
 
     public UserFiles(World world) throws IOException {
         this.root = world.getWorking().join("protocols").join(YogiSecurity.username()).mkdirsOpt();
-        migrationBefore_1_4();
+        migrationBefore14();
     }
 
     // TODO: dump when 1.4 rollout is done
-    private void migrationBefore_1_4() throws IOException {
+    private void migrationBefore14() throws IOException {
         for (FileNode book : root.list()) {
             if (book.isDirectory()) {
-                for (FileNode oldProtocol : book.find("*.log")) {
-                    FileNode newProtocol = book.join(oldProtocol.getBasename() + ".protocol");
-                    System.out.println("migration " + oldProtocol + " -> " + newProtocol);
-                    oldProtocol.move(newProtocol);
-                }
+                migrateBefore14selection(book);
+                migrateBefore14protocols(book);
             }
         }
     }
-    public FileNode root() {
-        return root;
+
+    // TODO: dump when 1.4 rollout is done
+    private void migrateBefore14protocols(FileNode book) throws IOException {
+        var oldSelection = book.join(".enabled");
+        if (oldSelection.exists()) {
+            var newSelection = book.join("freigeschaltet.selection");
+            System.out.println("selection migration " + oldSelection + " -> " + newSelection);
+            oldSelection.move(newSelection);
+        }
+    }
+
+    // TODO: dump when 1.4 rollout is done
+    private void migrateBefore14selection(FileNode book) throws IOException {
+        for (FileNode oldProtocol : book.find("*.log")) {
+            FileNode newProtocol = book.join(oldProtocol.getBasename() + ".protocol");
+            System.out.println("protocol migration " + oldProtocol + " -> " + newProtocol);
+            oldProtocol.move(newProtocol);
+        }
     }
 
     //-- protocols
