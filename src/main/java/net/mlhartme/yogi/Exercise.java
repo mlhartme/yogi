@@ -15,8 +15,6 @@
  */
 package net.mlhartme.yogi;
 
-import net.oneandone.sushi.fs.MkdirException;
-import net.oneandone.sushi.fs.file.FileNode;
 import net.oneandone.sushi.util.Separator;
 
 import java.io.IOException;
@@ -100,33 +98,25 @@ public class Exercise {
         this.wrong = wrong;
     }
 
-    public void logTitle(FileNode userProtocols, String withTitle) throws IOException {
-        doLog(userProtocols, "! " + withTitle);
+    public void logTitle(UserFiles userFiles, String withTitle) throws IOException {
+        doLog(userFiles, "! " + withTitle);
     }
 
-    public void logComment(FileNode userProtocols, String comment) throws IOException {
-        doLog(userProtocols, "# " + comment);
+    public void logComment(UserFiles userFiles, String comment) throws IOException {
+        doLog(userFiles, "# " + comment);
     }
 
-    public void logAnswer(FileNode userProtocols, String question, String answer, String correct) throws IOException {
-        doLog(userProtocols, question + " -> " + answer + " -> " + correct);
+    public void logAnswer(UserFiles userFiles, String question, String answer, String correct) throws IOException {
+        doLog(userFiles, question + " -> " + answer + " -> " + correct);
     }
 
-    private void doLog(FileNode userProtocols, String line) throws IOException {
-        try (Writer writer = protocolFile(userProtocols).newAppender()) {
+    private void doLog(UserFiles userFiles, String line) throws IOException {
+        try (Writer writer = userFiles.protocolFile(book.name, id).newAppender()) {
             writer.append(Protocol.FMT.format(new Date()));
             writer.append(' ');
             writer.append(line.replace("\n", " // "));
             writer.append('\n');
         }
-    }
-
-    private FileNode protocolFile(FileNode userProtocols) throws MkdirException {  // TODO: move this code
-        return userProtocols.join(book.name).mkdirOpt().join(id + UserFiles.PROTOCOL_EXT);
-    }
-
-    public Protocol protocol(FileNode userProtocols) throws IOException {
-        return Protocol.load(protocolFile(userProtocols));
     }
 
     public int roundSize() {

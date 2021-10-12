@@ -183,7 +183,7 @@ public class YogiController {
         Exercise exercise;
 
         exercise = Exercise.create(userFiles.nextProtocol(book.name), book, title, selection);
-        exercise.logTitle(userFiles.root(), title);
+        exercise.logTitle(userFiles, title);
         return "redirect:question?e=" + urlencode(exercise.toParam());
     }
 
@@ -242,7 +242,7 @@ public class YogiController {
         Exercise exercise;
 
         exercise = Exercise.forParam(library.get(book), body.get("e"));
-        exercise.logComment(userFiles.root(), body.get("comment"));
+        exercise.logComment(userFiles, body.get("comment"));
     }
 
     @GetMapping("/books/{book}/{selection}/question")
@@ -276,7 +276,7 @@ public class YogiController {
         model.addAttribute("question", question);
         model.addAttribute("answer", answer);
         model.addAttribute("correction", correction);
-        exercise.logAnswer(userFiles.root(), question, answer, exercise.lookup(question) /* not correction - it might be null */);
+        exercise.logAnswer(userFiles, question, answer, exercise.lookup(question) /* not correction - it might be null */);
         return "answer";
     }
 }

@@ -31,11 +31,11 @@ public class UserFiles {
 
     public UserFiles(World world) throws IOException {
         this.root = world.getWorking().join("protocols").join(YogiSecurity.username()).mkdirsOpt();
-        migration();
+        migrationBefore_1_4();
     }
 
-    // TODO: dump when 1.3 rollout is done
-    private void migration() throws IOException {
+    // TODO: dump when 1.4 rollout is done
+    private void migrationBefore_1_4() throws IOException {
         for (FileNode book : root.list()) {
             if (book.isDirectory()) {
                 for (FileNode oldProtocol : book.find("*.log")) {
@@ -52,7 +52,7 @@ public class UserFiles {
 
     //-- protocols
 
-    public static final String PROTOCOL_EXT = ".protocol";
+    private static final String PROTOCOL_EXT = ".protocol";
 
     public FileNode protocolFile(String book, long id) {
         return root.join(book, id + PROTOCOL_EXT);
