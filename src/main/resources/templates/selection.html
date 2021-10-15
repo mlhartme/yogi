@@ -13,8 +13,8 @@
                     <input type="text" class="form-control" name="newName" th:value="${selectionName}">
                     <table class="table">
                         <tbody>
-                            <th:block th:each="section:${book.sections()}">
-                                <tr th:with="ck=${'collapse' + section.key}">
+                            <th:block th:each="section:${book.sections()}" th:with="ck=${'collapse' + section.key}">
+                                <tr>
                                     <td th:text="${section.key}"></td>
                                     <td>
                                         <a class="btn btn-primary" data-bs-toggle="collapse" th:href="${'#' + ck}" role="button" aria-expanded="false" th:aria-controls="${ck}">Toggle</a>
