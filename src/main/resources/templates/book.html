@@ -5,54 +5,50 @@
 <th:block layout:fragment="content"
           th:with="statistics=${book.statistics(@userFiles)}, quality=${statistics.quality(book, book.loadSelection(@userFiles, selection))}">
     <form th:action="@{/books/{book}/{selection}/start(book=${book.name}, selection=${selection})}" method="post">
-        <table class="table">
-            <tr>
-                <td>
-                    <div class="dropdown">
-                        <button class="btn btn-light dropdown-toggle" type="button" id="bookMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false" th:text="${book.name}"></button>
-                        <div class="dropdown-menu" aria-labelledby="bookMenuButton">
-                            <a th:each="book:${library}" class="dropdown-item" th:href="${'/books/' + book.name} + '/'" th:text="${book.name}"></a>
-                        </div>
+        <div class="row">
+            <div class="col">
+                <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle" type="button" id="bookMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false" th:text="${book.name}"></button>
+                    <div class="dropdown-menu" aria-labelledby="bookMenuButton">
+                        <a th:each="book:${library}" class="dropdown-item" th:href="${'/books/' + book.name} + '/'" th:text="${book.name}"></a>
                     </div>
-                </td>
-                <td>
-                    <div class="col">
-                        <div class="dropdown">
-                            <button class="btn btn-light dropdown-toggle" type="button" id="selectionMenuButton" data-bs-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false" th:text="${selection}"></button>
-                            <div class="dropdown-menu" aria-labelledby="selectionMenuButton">
-                                <a class="dropdown-item"
-                                   th:href="@{/books/{book}/{selection}/selection(book=${book.name}, selection=${selection})}" th:text="${'Auswahl ' + selection + ' bearbeiten'}"></a>
-                                <hr class="dropdown-divider">
-                                <a th:each="gotoSelection:${@userFiles.listSelections(book.name)}" class="dropdown-item"
-                                   th:href="${'/books/' + book.name + '/' + gotoSelection}" th:text="${gotoSelection}"></a>
-                                <hr class="dropdown-divider">
-                                <a class="dropdown-item" th:href="${'/books/' + book.name + '/' + selection + '/new-selection'}">Neue Auswahl ...</a>
-                            </div>
-                        </div>
+                </div>
+            </div>
+            <div class="col-10">
+                <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle" type="button" id="selectionMenuButton" data-bs-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false" th:text="${selection}"></button>
+                    <div class="dropdown-menu" aria-labelledby="selectionMenuButton">
+                        <a class="dropdown-item"
+                           th:href="@{/books/{book}/{selection}/selection(book=${book.name}, selection=${selection})}" th:text="${'Auswahl ' + selection + ' bearbeiten'}"></a>
+                        <hr class="dropdown-divider">
+                        <a th:each="gotoSelection:${@userFiles.listSelections(book.name)}" class="dropdown-item"
+                           th:href="${'/books/' + book.name + '/' + gotoSelection}" th:text="${gotoSelection}"></a>
+                        <hr class="dropdown-divider">
+                        <a class="dropdown-item" th:href="${'/books/' + book.name + '/' + selection + '/new-selection'}">Neue Auswahl ...</a>
                     </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <span data-bs-toggle="tooltip" th:title="${quality + ' %'}" th:style="${statistics.style(quality)}">&#x25cf; </span><span
-                        th:text="${quality + ' %'}"></span>
-                </td>
-                <td>
-                    <button type="submit" class="btn btn-primary">Üben</button>
-                    <select class="form-select" style="width:auto;" name="count" id="count">
-                        <option>5</option>
-                        <option>10</option>
-                        <option>15</option>
-                        <option selected>20</option>
-                        <option>25</option>
-                        <option>30</option>
-                        <option value="all">alle</option>
-                    </select>
-                </td>
-            </tr>
-        </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <span data-bs-toggle="tooltip" th:title="${quality + ' %'}" th:style="${statistics.style(quality)}">&#x25cf; </span><span
+                    th:text="${quality + ' %'}"></span>
+            </div>
+            <div class="col-10">
+                <button type="submit" class="btn btn-primary">Üben</button>
+                <select class="form-select" style="width:auto;" name="count" id="count">
+                    <option>5</option>
+                    <option>10</option>
+                    <option>15</option>
+                    <option selected>20</option>
+                    <option>25</option>
+                    <option>30</option>
+                    <option value="all">alle</option>
+                </select>
+            </div>
+        </div>
         <a th:href="${'/books/' + book.name + '/' + selection + '/protocols/'}">Protokolle</a>
     </form>
 </th:block>
