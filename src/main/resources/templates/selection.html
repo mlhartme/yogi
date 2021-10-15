@@ -9,7 +9,7 @@
         <div class="col-12">
             <form class="form-horizontal" accept-charset="utf-8" th:action="@{/books/{book}/{selection}/selection(book=${book.name}, selection=${selectionName})}" method="post">
                 <fieldset>
-                    <p>Section Name: </p>
+                    <p>Name der Auswahl: </p>
                     <input type="text" class="form-control" name="newName" th:value="${selectionName}">
                     <table class="table">
                         <tbody>
