@@ -13,22 +13,30 @@
                     <input type="text" class="form-control" name="newName" th:value="${selectionName}">
                     <table class="table">
                         <tbody>
-                            <th:block th:each="idx:${book.all()}">
-                                <th:block th:with="section=${book.sectionStart(idx)}">
-                                    <tr th:if="${section != null}">
-                                        <td th:text="${section}"></td>
-                                        <td></td>
-                                        <td></td>
+                            <th:block th:each="section:${book.sections()}">
+                                <tr th:with="ck=${'collapse' + section.key}">
+                                    <td th:text="${section.key}"></td>
+                                    <td>
+                                        <a class="btn btn-primary" data-bs-toggle="collapse" th:href="${'#' + ck}" role="button" aria-expanded="false" th:aria-controls="${ck}">Toggle</a>
+                                    </td>
+                                    <td>
+                                        <div class="collapse" th:id="${ck}">
+                                            <div class="card card-body">
+                                                Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <th:block th:each="idx:${section.value}">
+                                    <tr>
+                                        <td th:with="selected=${selection.contains(idx)}">
+                                            <input th:if="${selected}" class="form-check-input" type="checkbox" th:name="${'select_' + idx}" th:value="${idx}" checked>
+                                            <input th:unless="${selected}" class="form-check-input" type="checkbox" th:name="${'select_' + idx}" th:value="${idx}">
+                                        </td>
+                                        <td th:text="${book.left(idx)}"></td>
+                                        <td th:text="${book.right(idx)}"></td>
                                     </tr>
                                 </th:block>
-                                <tr>
-                                    <td th:with="selected=${selection.contains(idx)}">
-                                        <input th:if="${selected}" class="form-check-input" type="checkbox" th:name="${'select_' + idx}" th:value="${idx}" checked>
-                                        <input th:unless="${selected}" class="form-check-input" type="checkbox" th:name="${'select_' + idx}" th:value="${idx}">
-                                    </td>
-                                    <td th:text="${book.left(idx)}"></td>
-                                    <td th:text="${book.right(idx)}"></td>
-                                </tr>
                             </th:block>
                         </tbody>
                     </table>
@@ -37,9 +45,10 @@
                     <button type="submit" class="btn btn-primary">Speichern</button>
                 </fieldset>
             </form>
+            <hr/>
             <form class="form-horizontal" accept-charset="utf-8" th:action="@{/books/{book}/{selection}/delete-selection(book=${book.name}, selection=${selectionName})}" method="post">
                 <fieldset>
-                    <button type="submit" class="btn btn-primary">Delete</button>
+                    <button type="submit" class="btn btn-primary">Diese Auswahl löschen</button>
                 </fieldset>
             </form>
         </div>
