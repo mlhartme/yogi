@@ -22,11 +22,24 @@ body {
 
 <div class="container-fluid">
     <th:block th:if="${(exercise == null) && (login == null)}">
-        <nav class="navbar navbar-expand fixed-top navbar-light bg-light">
-            <ul class="navbar-nav mr-auto">'
-                <li class="nav-item"><a class="nav-link" th:href="${'/logout'}" th:text="${T(net.mlhartme.yogi.YogiSecurity).username() + ' abmelden'}"></a></li>
-            </ul>
-        </nav>
+        <div class="row">
+            <div class="col-10">
+            </div>
+            <div class="col-1">
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Yogi
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><p class="dropdown-item" data-bs-toggle="tooltip" th:title="${yogiVersion}">Yogi - Vokabel Trainer</p></li>
+                        <hr class="dropdown-divider">
+                        <li><a class="dropdown-item" th:href="${'/logout'}" th:text="${T(net.mlhartme.yogi.YogiSecurity).username() + ' abmelden'}"></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-1">
+            </div>
+        </div>
     </th:block>
     <th:block th:if="${exercise != null}">
         <div id="comment" class="modal fade" >
@@ -84,15 +97,6 @@ body {
         </nav>
     </th:block>
     <th:block layout:fragment="content"/>
-    <div class="row">
-        <div class="col-12">
-            <nav class="navbar fixed-bottom navbar-light bg-light">
-                <small>
-                    <p data-bs-toggle="tooltip" th:title="${yogiVersion}">Yogi -  Vokabel Trainer</p>
-                </small>
-            </nav>
-        </div>
-    </div>
 </div>
 
 <script type="text/javascript" th:src="@{/webjars/popper.js/2.9.3/umd/popper.min.js}"></script>
