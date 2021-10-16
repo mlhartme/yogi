@@ -17,6 +17,7 @@ package net.mlhartme.yogi;
 
 import net.oneandone.sushi.fs.World;
 import net.oneandone.sushi.fs.file.FileNode;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -37,6 +38,12 @@ import java.util.Properties;
 @Configuration
 @EnableWebSecurity
 public class YogiSecurity extends WebSecurityConfigurerAdapter {
+    private final FileNode userProperties;
+
+    public YogiSecurity(World world, @Value("${yogi.config}") String config) {
+        userProperties = world.file(config).join("user.properties");
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable() // TODO: post logout and get rid of this ...
@@ -65,15 +72,11 @@ public class YogiSecurity extends WebSecurityConfigurerAdapter {
     @Bean
     @Override
     public UserDetailsService userDetailsService() {
-        World world;
-        FileNode src;
         Properties p;
         InMemoryUserDetailsManager result;
 
-        world = World.createMinimal();
-        src = world.file("/usr/local/yogi/etc/user.properties");
         try {
-            p = src.exists() ? src.readProperties() : new Properties();
+            p = userProperties.readProperties();
         } catch (IOException e) {
             throw new IllegalStateException("cannot load user.properties", e);
         }
