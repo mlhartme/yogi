@@ -52,23 +52,16 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col">
-                            <div class="progress" style="height: 30px;">
-                                <div class="progress-bar" role="progressbar"
-                                     th:style="${'background-' + statistics.style(quality) + ' width: ' + quality + '%'}"
-                                     th:aria-valuenow="${quality}" aria-valuemin="0" aria-valuemax="100" th:text="${quality + ' %'}"></div>
-                            </div>
-                        </div>
+                        <div class="col">&nbsp;</div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <div class="container">
-                                <div class="row">
-                                    <div class="col"></div>
-                                    <div class="col-auto">
+                                <div class="row" >
+                                    <div class="col-auto" style="padding-right: 0px">
                                         <button type="submit" class="btn btn-primary">Üben</button>
                                     </div>
-                                    <div class="col-auto">
+                                    <div class="col-auto" style="padding-left: 0px">
                                         <select class="form-select" style="width:auto;" name="count" id="count">
                                             <option>5</option>
                                             <option>10</option>
@@ -79,7 +72,20 @@
                                             <option value="all">alle</option>
                                         </select>
                                     </div>
+                                    <div class="col"></div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">&nbsp;</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="progress" style="height: 38px;">
+                                <div class="progress-bar" role="progressbar"
+                                     th:style="${'background-' + statistics.style(quality) + ' width: ' + quality + '%'}"
+                                     th:aria-valuenow="${quality}" aria-valuemin="0" aria-valuemax="100" th:text="${quality + ' %'}"></div>
                             </div>
                         </div>
                     </div>
