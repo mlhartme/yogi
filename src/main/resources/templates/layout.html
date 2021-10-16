@@ -105,10 +105,47 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
 // disable back button - https://stackoverflow.com/questions/12381563/how-to-stop-browser-back-button-using-javascript
 history.pushState(null, document.title, location.href);
-window.addEventListener('popstate', function (event)
-{
+window.addEventListener('popstate', function (event) {
   history.pushState(null, document.title, location.href);
 });
+
+function updateSection(self) {
+  var root = self
+  while (true) {
+    console.log("check " + root)
+    if (root.id.startsWith("section_")) {
+      id = root.id.substring(8)
+      break; // found it
+    }
+    root = root.parentElement
+  }
+  var allInputs = root.getElementsByTagName('input')
+  console.log("id: " + id + " length: " + allInputs + " " + allInputs.length)
+  var selected = 0
+  for (let input of allInputs) {
+    if (input.checked === true) {
+      selected++;
+    }
+  }
+  console.log("count: " + allInputs.length)
+  console.log("selected: " + selected);
+  document.getElementById("counter_" + id).innerHTML = selected + "/" + allInputs.length
+}
+
+function initSections() {
+  console.log("init")
+  for (var i = 1; true; i++) {
+    var element = document.getElementById("section_" + i);
+    console.info("check " + element)
+    if (element) {
+      updateSection(element);
+    } else {
+      break;
+    }
+  }
+}
+
+initSections()
 </script>
 </body>
 </html>
