@@ -16,7 +16,7 @@
                             <button class="btn btn-warning dropdown-toggle" type="button" id="bookMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false" th:text="${book.name}"></button>
                             <div class="dropdown-menu" aria-labelledby="bookMenuButton">
-                                <a th:each="book:${library}" class="dropdown-item" th:href="${'/books/' + book.name} + '/'" th:text="${book.name}"></a>
+                                <a th:each="book:${library}" class="dropdown-item" th:href="@{/books/{book}/(book=${book.name})}" th:text="${book.name}"></a>
                             </div>
                         </div>
                         <div class="col">
@@ -29,8 +29,8 @@
                                 <ul class="dropdown-menu" aria-labelledby="systemMenuButton">
                                     <li><p class="dropdown-item" data-bs-toggle="tooltip" th:title="${yogiVersion}">Yogi - Vokabel Trainer</p></li>
                                     <hr class="dropdown-divider">
-                                    <li><a class="dropdown-item" th:href="${'/books/' + book.name + '/' + selection + '/protocols/'}">Protokolle</a></li>
-                                    <li><a class="dropdown-item" th:href="${'/logout'}" th:text="${T(net.mlhartme.yogi.YogiSecurity).username() + ' abmelden'}"></a></li>
+                                    <li><a class="dropdown-item" th:href="@{/books/{book}/{selection}/protocols/(book=${book.name}, selection=${selection})}">Protokolle</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/logout}" th:text="${T(net.mlhartme.yogi.YogiSecurity).username() + ' abmelden'}"></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -45,9 +45,9 @@
                                    th:href="@{/books/{book}/{selection}/selection(book=${book.name}, selection=${selection})}" th:text="${selection + ' bearbeiten ...'}"></a>
                                 <hr class="dropdown-divider">
                                 <a th:each="gotoSelection:${@userFiles.listSelections(book.name)}" class="dropdown-item"
-                                   th:href="${'/books/' + book.name + '/' + gotoSelection}" th:text="${gotoSelection}"></a>
+                                   th:href="@{/books/{book}/{selection}/(book=${book.name},selection=${gotoSelection})}" th:text="${gotoSelection}"></a>
                                 <hr class="dropdown-divider">
-                                <a class="dropdown-item" th:href="${'/books/' + book.name + '/' + selection + '/new-selection'}">Neue Auswahl ...</a>
+                                <a class="dropdown-item" th:href="@{/books/{book}/{selection}/new-selection(book=${book.name}, selection=${selection})}">Neue Auswahl ...</a>
                             </div>
                         </div>
                     </div>
