@@ -27,11 +27,11 @@ import java.util.Map;
 public class Book implements Comparable<Book> {
     public static final String EXT = ".yogi";
 
-    public static Book load(Node<?> file) throws IOException {
+    public static Book load(Node<?> file, byte[] jpg) throws IOException {
         Book book;
         IntSet current;
 
-        book = new Book(Strings.removeRight(file.getName(), EXT));
+        book = new Book(Strings.removeRight(file.getName(), EXT), jpg);
         current = null;
         for (String line : file.readLines()) {
             if (line.startsWith("# ")) {
@@ -57,15 +57,21 @@ public class Book implements Comparable<Book> {
     }
 
     public final String name;
+    public final byte[] jpg;
     public final LinkedHashMap<String, IntSet> sections;
     private final List<String> lefts;
     private final List<String> rights;
 
-    public Book(String name) {
+    public Book(String name, byte[] jpg) {
         this.name = name;
+        this.jpg = jpg;
         this.sections = new LinkedHashMap<>();
         this.lefts = new ArrayList<>();
         this.rights = new ArrayList<>();
+    }
+
+    public byte[] jpg() {
+        return jpg;
     }
 
     public Statistics statistics(UserFiles context) throws IOException {

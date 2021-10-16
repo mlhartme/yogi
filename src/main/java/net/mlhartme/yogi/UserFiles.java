@@ -124,6 +124,9 @@ public class UserFiles {
         }
     }
 
+    //-- book image
+
+
     //-- selections
 
     public List<String> loadSelectionOpt(String book, String name) throws IOException {

@@ -34,6 +34,9 @@
                         <a th:each="book:${library}" class="dropdown-item" th:href="${'/books/' + book.name} + '/'" th:text="${book.name}"></a>
                     </div>
                 </div>
+                <div class="col-auto">
+                    <img th:src="@{/books/{book}/jpg(book=${book.name})}" width="196"/>
+                </div>
                 <div class="col-auto dropdown">
                     <button class="btn btn-light dropdown-toggle" type="button" id="selectionMenuButton" data-bs-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false" th:text="${selection}"></button>

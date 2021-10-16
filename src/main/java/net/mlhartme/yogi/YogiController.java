@@ -18,6 +18,7 @@ package net.mlhartme.yogi;
 import net.oneandone.sushi.fs.World;
 import net.oneandone.sushi.fs.file.FileNode;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.servlet.http.HttpServletRequest;
@@ -84,6 +86,13 @@ public class YogiController {
             selection = lst.get(0);
         }
         return "redirect:/books/" + book + "/" + selection;
+    }
+
+    // TODO: could collide wird selection
+    @ResponseBody
+    @GetMapping(value = "/books/{book}/jpg", produces = MediaType.IMAGE_JPEG_VALUE)
+    public byte[] bookJpg(@PathVariable(value = "book") String book) throws IOException {
+        return library.get(book).jpg();
     }
 
     @GetMapping("/books/{book}/{selection}")

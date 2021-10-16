@@ -26,10 +26,12 @@ import java.util.List;
 public class Library implements Iterable<Book> {
     public static Library load(Node<?> base) throws IOException {
         Library result;
+        byte[] jpg;
 
         result = new Library();
         for (Node<?> book : base.find("*.yogi")) {
-            result.books.add(Book.load(book));
+            jpg = base.join(book.getBasename() + ".jpg").readBytes();
+            result.books.add(Book.load(book, jpg));
         }
         Collections.sort(result.books);
         return result;
