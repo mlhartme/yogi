@@ -9,6 +9,9 @@
                 <li th:each="entry:${map}" class="list-group-item py+2"><a th:href="${'/books/' + book.name + '/' + selection + '/protocols/' + entry.key}" th:text="${entry.value}"></a></li>
             </ul>
         </div>
+        <div class="col-12">
+            <a class="btn btn-primary" th:href="@{/books/{book}/{selection}(book=${book.name},selection=${selectionName})}">Fertig</a>
+        </div>
     </div>
 </th:block>
 </html>

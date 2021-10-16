@@ -41,7 +41,7 @@
                         </tbody>
                     </table>
 
-                    <a class="btn btn-primary" th:href="@{/books/{book}/(book=${book.name})}">Abbrechen</a>
+                    <a class="btn btn-primary" th:href="@{/books/{book}/{selection}(book=${book.name},selection=${selectionName})}">Abbrechen</a>
                     <button type="submit" class="btn btn-primary">Speichern</button>
                 </fieldset>
             </form>

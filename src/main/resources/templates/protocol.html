@@ -41,6 +41,9 @@
                 </tbody>
             </table>
         </div>
+        <div class="col-12">
+            <a class="btn btn-primary" th:href="@{/books/{book}/{selection}(book=${book.name},selection=${selectionName})}">Fertig</a>
+        </div>
     </div>
 </th:block>
 </html>
