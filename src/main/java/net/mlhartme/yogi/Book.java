@@ -72,11 +72,19 @@ public class Book implements Comparable<Book> {
         return Statistics.collect(context, this);
     }
 
-    public Map<String, IntSet> sections() throws IOException {
-        LinkedHashMap<String, IntSet> result;
+    public static record Section(int id, String title, IntSet selection) {
+    }
 
-        result = new LinkedHashMap<>(sections.size() + 1);
-        result.putAll(sections);
+    public List<Section> sections() {
+        List<Section> result;
+        int id;
+
+        result = new ArrayList<>(sections.size());
+        id = 0;
+        for (var entry : sections.entrySet()) {
+            id++;
+            result.add(new Section(id, entry.getKey(), entry.getValue()));
+        }
         return result;
     }
 
