@@ -17,8 +17,8 @@ ${yogi.config}
   - books                   available books
   - user.properties
 
-${yogi.lib}                 Übungsprotokolle ("userFiles")
-  - <user>
+${yogi.lib}                 persistent stageÜbungsprotokolle
+  - <user>                  userFiles
     - <book>
       - *.selection         Arbitrary Selection
       - 1.protocol          Übung 1
