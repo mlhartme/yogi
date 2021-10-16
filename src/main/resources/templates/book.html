@@ -5,7 +5,7 @@
 <th:block layout:fragment="content"
           th:with="statistics=${book.statistics(@userFiles)}, quality=${statistics.quality(book, book.loadSelection(@userFiles, selection))}">
     <form th:action="@{/books/{book}/{selection}/start(book=${book.name}, selection=${selection})}" method="post">
-        <div class="row">
+        <div class="row gx-1">
             <div class="col-auto">
                 <img th:src="@{/books/{book}/jpg(book=${book.name})}" width="196"/>
             </div>
