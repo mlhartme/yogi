@@ -18,23 +18,25 @@
                     </div>
                 </div>
                 <div class="accordion" id="selectionAccordion">
-                    <div class="accordion-item" th:each="section:${book.sections()}" th:with="ck=${'section_' + section.id}">
-                        <h2 class="accordion-header" th:id="${'heading' + ck}">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" th:data-bs-target="${'#' + ck}"
-                                    aria-expanded="true" th:aria-controls="${ck}" th:text="${section.title}"></button>
-                        </h2>
-                        <div th:id="${ck}" class="accordion-collapse collapse show" aria-labelledby="${'heading' + ck}"
-                             data-bs-parent="#selectionAccordion">
-                            <div class="accordion-body container">
-                                <div class="row" th:each="idx:${section.selection}">
-                                    <div class="col-auto" th:with="selected=${selection.contains(idx)}">
-                                        <input th:if="${selected}" class="form-check-input" type="checkbox"
-                                               th:name="${'select_' + idx}" th:value="${idx}" checked>
-                                        <input th:unless="${selected}" class="form-check-input" type="checkbox"
-                                               th:name="${'select_' + idx}" th:value="${idx}">
+                    <div class="accordion-item" th:each="section:${book.sections()}">
+                        <div th:id="${'section_' + section.id}">
+                            <h2 class="accordion-header" th:id="${'heading_' + section.id}">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" th:data-bs-target="${'#body_' + section.id}"
+                                        aria-expanded="true" th:aria-controls="${'body_' + section.id}" th:text="${section.title}"></button>
+                            </h2>
+                            <div th:id="${'body_' + section.id}" class="accordion-collapse collapse show" aria-labelledby="${'heading_' + section.id}"
+                                 data-bs-parent="#selectionAccordion">
+                                <div class="accordion-body container">
+                                    <div class="row" th:each="idx:${section.selection}">
+                                        <div class="col-auto" th:with="selected=${selection.contains(idx)}">
+                                            <input th:if="${selected}" class="form-check-input" type="checkbox"
+                                                   th:name="${'select_' + idx}" th:value="${idx}" checked>
+                                            <input th:unless="${selected}" class="form-check-input" type="checkbox"
+                                                   th:name="${'select_' + idx}" th:value="${idx}">
+                                        </div>
+                                        <div class="col" th:text="${book.left(idx)}"></div>
+                                        <div class="col" th:text="${book.right(idx)}"></div>
                                     </div>
-                                    <div class="col" th:text="${book.left(idx)}"></div>
-                                    <div class="col" th:text="${book.right(idx)}"></div>
                                 </div>
                             </div>
                         </div>
