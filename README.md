@@ -13,20 +13,18 @@ Vocabulary trainer. For Germans to learn e.g. English.
 
 ## Directory structure for running application
 
-/usr/local/yogi/
-      - etc
-         - books                   available books
-         - user.properties
-      - run                        cwd for Tomcat and "server.tomcat.basedir"
-         - logs                    Tomcat Access Logs
-         - protocols               Übungsprotokolle ("userProtocols")
-           - <book>
-             - freigeschaltet.selection
-             - *.selection         Arbitrary Selection
-             - 1.protocol          Übung 1
-             - 2.protocol          Übung 2
-             - ...
-         - work                    Tomcat "work" directory
+${yogi.config}
+  - books                   available books
+  - user.properties
+
+${cwd}
+     - protocols               Übungsprotokolle ("userProtocols")
+       - <user>
+         - <book>
+           - *.selection         Arbitrary Selection
+           - 1.protocol          Übung 1
+           - 2.protocol          Übung 2
+           - ...
 
 ## Books
 
