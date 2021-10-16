@@ -9,8 +9,14 @@
         <div class="col-12">
             <form class="form-horizontal" accept-charset="utf-8"
                   th:action="@{/books/{book}/{selection}/selection(book=${book.name}, selection=${selectionName})}" method="post">
-                <p>Name der Auswahl: </p>
-                <input type="text" class="form-control" name="newName" th:value="${selectionName}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-auto">Name der Auswahl: </div>
+                        <div class="col">
+                            <input type="text" class="form-control" name="newName" th:value="${selectionName}">
+                        </div>
+                    </div>
+                </div>
                 <div class="accordion" id="selectionAccordion">
                     <div class="accordion-item" th:each="section:${book.sections()}" th:with="ck=${'section_' + section.id}">
                         <h2 class="accordion-header" th:id="${'heading' + ck}">
