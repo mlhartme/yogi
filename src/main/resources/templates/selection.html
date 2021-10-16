@@ -23,8 +23,11 @@
                         <div th:id="${'section_' + section.id}">
                             <h2 class="accordion-header" th:id="${'heading_' + section.id}">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" th:data-bs-target="${'#body_' + section.id}"
-                                        aria-expanded="true" th:aria-controls="${'body_' + section.id}" th:text="${section.title}"></button>
-                                <span th:id="${'counter_' + section.id}">x/y</span>
+                                        aria-expanded="true" th:aria-controls="${'body_' + section.id}" >
+                                    <th:text th:text="${section.title + ' '}"></th:text>
+                                    <span>&nbsp;</span>
+                                    <span th:id="${'counter_' + section.id}">x/y</span>
+                                </button>
                             </h2>
                             <div th:id="${'body_' + section.id}" class="accordion-collapse collapse show" aria-labelledby="${'heading_' + section.id}"
                                  data-bs-parent="#selectionAccordion">
