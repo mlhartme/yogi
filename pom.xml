@@ -117,42 +117,51 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>io.fabric8</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.34.1</version>
-				<configuration>
-					<images>
-						<image>
-							<name>yogi:%t</name>
-							<build>
-								<tags><tag>latest</tag></tags>
-								<dockerFile>${basedir}/src/docker/Dockerfile</dockerFile>
-								<assembly>
-									<descriptor>${basedir}/src/docker/assembly.xml</descriptor>
-								</assembly>
-							</build>
-						</image>
-					</images>
-				</configuration>
-				<executions>
-					<execution>
-						<id>build-image</id>
-						<phase>package</phase>
-						<goals>
-							<goal>build</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>deploy-image</id>
-						<phase>deploy</phase>
-						<goals>
-							<goal>push</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
 
+	<profiles>
+		<profile>
+			<id>docker</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>io.fabric8</groupId>
+						<artifactId>docker-maven-plugin</artifactId>
+						<version>0.34.1</version>
+						<configuration>
+							<images>
+								<image>
+									<name>yogi:%t</name>
+									<build>
+										<tags><tag>latest</tag></tags>
+										<dockerFile>${basedir}/src/docker/Dockerfile</dockerFile>
+										<assembly>
+											<descriptor>${basedir}/src/docker/assembly.xml</descriptor>
+										</assembly>
+									</build>
+								</image>
+							</images>
+						</configuration>
+						<executions>
+							<execution>
+								<id>build-image</id>
+								<phase>package</phase>
+								<goals>
+									<goal>build</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>deploy-image</id>
+								<phase>deploy</phase>
+								<goals>
+									<goal>push</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
