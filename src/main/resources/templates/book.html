@@ -59,8 +59,11 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <h1 th:style="${statistics.style(quality)}">&#x25cf;</h1>
-                                <p th:text="${quality + ' %'}"></p>
+                                <div class="progress" style="height: 30px;">
+                                    <div class="progress-bar" role="progressbar"
+                                         th:style="${'background-' + statistics.style(quality) + ' width: ' + quality + '%'}"
+                                         th:aria-valuenow="${quality}" aria-valuemin="0" aria-valuemax="100" th:text="${quality + ' %'}"></div>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
