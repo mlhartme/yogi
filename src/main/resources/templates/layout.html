@@ -21,26 +21,6 @@ body {
 <body>
 
 <div class="container-fluid">
-    <th:block th:if="${(exercise == null) && (login == null)}">
-        <div class="row">
-            <div class="col-10">
-            </div>
-            <div class="col-1">
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        Yogi
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><p class="dropdown-item" data-bs-toggle="tooltip" th:title="${yogiVersion}">Yogi - Vokabel Trainer</p></li>
-                        <hr class="dropdown-divider">
-                        <li><a class="dropdown-item" th:href="${'/logout'}" th:text="${T(net.mlhartme.yogi.YogiSecurity).username() + ' abmelden'}"></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-1">
-            </div>
-        </div>
-    </th:block>
     <th:block th:if="${exercise != null}">
         <div id="comment" class="modal fade" >
             <div class="modal-dialog">

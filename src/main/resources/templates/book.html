@@ -4,6 +4,26 @@
       layout:decorate="~{layout.html}">
 <th:block layout:fragment="content"
           th:with="statistics=${book.statistics(@userFiles)}, quality=${statistics.quality(book, book.loadSelection(@userFiles, selection))}">
+<div class="row">
+    <div class="col-10">
+    </div>
+    <div class="col-1">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                Yogi
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><p class="dropdown-item" data-bs-toggle="tooltip" th:title="${yogiVersion}">Yogi - Vokabel Trainer</p></li>
+                <hr class="dropdown-divider">
+                <li><a class="dropdown-item" th:href="${'/books/' + book.name + '/' + selection + '/protocols/'}">Protokolle</a></li>
+                <li><a class="dropdown-item" th:href="${'/logout'}" th:text="${T(net.mlhartme.yogi.YogiSecurity).username() + ' abmelden'}"></a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-1">
+    </div>
+</div>
+<div class="row">
     <div class="col-12">
         <form th:action="@{/books/{book}/{selection}/start(book=${book.name}, selection=${selection})}" method="post">
             <div class="row">
@@ -49,8 +69,8 @@
                     </select>
                 </div>
             </div>
-            <a th:href="${'/books/' + book.name + '/' + selection + '/protocols/'}">Protokolle</a>
         </form>
     </div>
+</div>
 </th:block>
 </html>
