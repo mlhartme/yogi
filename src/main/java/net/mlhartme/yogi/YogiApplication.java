@@ -16,6 +16,7 @@
 package net.mlhartme.yogi;
 
 import net.oneandone.sushi.fs.World;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -36,7 +37,7 @@ public class YogiApplication {
 
     @Bean
     @SessionScope
-    public UserFiles userFiles(World world) throws IOException {
-        return new UserFiles(world);
+    public UserFiles userFiles(World world, @Value("${yogi.lib}") String lib) throws IOException {
+        return new UserFiles(world.file(lib).checkDirectory());
     }
 }

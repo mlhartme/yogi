@@ -17,7 +17,6 @@ package net.mlhartme.yogi;
 
 import net.oneandone.sushi.fs.MkdirException;
 import net.oneandone.sushi.fs.Node;
-import net.oneandone.sushi.fs.World;
 import net.oneandone.sushi.fs.file.FileNode;
 
 import java.io.IOException;
@@ -25,12 +24,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/** Persistent session state */
+/** Persistent session state per use */
 public class UserFiles {
     private final FileNode root;
 
-    public UserFiles(World world) throws IOException {
-        this.root = world.getWorking().join("protocols").join(YogiSecurity.username()).mkdirsOpt();
+    public UserFiles(FileNode lib) throws IOException {
+        this.root = lib.join(YogiSecurity.username()).mkdirsOpt();
         migrationBefore14();
     }
 

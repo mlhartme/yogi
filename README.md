@@ -17,14 +17,13 @@ ${yogi.config}
   - books                   available books
   - user.properties
 
-${cwd}
-     - protocols               Übungsprotokolle ("userProtocols")
-       - <user>
-         - <book>
-           - *.selection         Arbitrary Selection
-           - 1.protocol          Übung 1
-           - 2.protocol          Übung 2
-           - ...
+${yogi.lib}                 Übungsprotokolle ("userFiles")
+  - <user>
+    - <book>
+      - *.selection         Arbitrary Selection
+      - 1.protocol          Übung 1
+      - 2.protocol          Übung 2
+      - ...
 
 ## Books
 
