@@ -13,7 +13,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-auto">
-                            <button class="btn btn-light dropdown-toggle" type="button" id="bookMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
+                            <button class="btn btn-warning dropdown-toggle" type="button" id="bookMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false" th:text="${book.name}"></button>
                             <div class="dropdown-menu" aria-labelledby="bookMenuButton">
                                 <a th:each="book:${library}" class="dropdown-item" th:href="${'/books/' + book.name} + '/'" th:text="${book.name}"></a>
@@ -23,7 +23,7 @@
                         </div>
                         <div class="col-auto">
                             <div class="dropdown">
-                                <button class="btn btn-light dropdown-toggle" type="button" id="systemMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn btn-warning dropdown-toggle" type="button" id="systemMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="/static/yogi.png" width="32"/>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="systemMenuButton">
@@ -38,7 +38,7 @@
                     <div class="row">
                         <div class="col dropdown">
                             <hr/>
-                            <button class="btn btn-light dropdown-toggle" type="button" id="selectionMenuButton" data-bs-toggle="dropdown"
+                            <button class="btn btn-warning dropdown-toggle" type="button" id="selectionMenuButton" data-bs-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false" th:text="${selection}"></button>
                             <div class="dropdown-menu" aria-labelledby="selectionMenuButton">
                                 <a class="dropdown-item"
