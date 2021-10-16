@@ -17,6 +17,7 @@ package net.mlhartme.yogi;
 
 import net.oneandone.sushi.fs.World;
 import net.oneandone.sushi.fs.file.FileNode;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -46,12 +47,9 @@ public class YogiController {
     private final Library library;
     private final String version;
 
-    public YogiController(World world, UserFiles userFiles) throws IOException {
-        FileNode src;
-
+    public YogiController(World world, UserFiles userFiles, @Value("${yogi.config}") String config) throws IOException {
         this.userFiles = userFiles;
-        src = world.file("/usr/local/yogi/etc/books");
-        this.library = src.exists() ? Library.load(src) : new Library(); // for SpringBoot test
+        this.library = Library.load(world.file(config).join("books").checkDirectory());
         this.version = world.resource("yogi.version").readString().trim();
     }
 

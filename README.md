@@ -16,6 +16,7 @@ Vocabulary trainer. For Germans to learn e.g. English.
 /usr/local/yogi/
       - etc
          - books                   available books
+         - user.properties
       - run                        cwd for Tomcat and "server.tomcat.basedir"
          - logs                    Tomcat Access Logs
          - protocols               Übungsprotokolle ("userProtocols")
