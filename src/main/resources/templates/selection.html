@@ -8,42 +8,40 @@
         <p>Kreuze alle Vokabeln an, die bei dieser Auswahl geübt werden sollen.</p>
         <div class="col-12">
             <form class="form-horizontal" accept-charset="utf-8" th:action="@{/books/{book}/{selection}/selection(book=${book.name}, selection=${selectionName})}" method="post">
-                <fieldset>
-                    <p>Name der Auswahl: </p>
-                    <input type="text" class="form-control" name="newName" th:value="${selectionName}">
-                    <table class="table">
-                        <tbody>
-                            <th:block th:each="section:${book.sections()}" th:with="ck=${'collapse' + section.key}">
-                                <tr>
-                                    <td th:text="${section.key}"></td>
-                                    <td>
-                                        <a class="btn btn-primary" data-bs-toggle="collapse" th:href="${'#' + ck}" role="button" aria-expanded="false" th:aria-controls="${ck}">Toggle</a>
-                                    </td>
-                                    <td>
-                                        <div class="collapse" th:id="${ck}">
-                                            <div class="card card-body">
-                                                Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
-                                            </div>
+                <p>Name der Auswahl: </p>
+                <input type="text" class="form-control" name="newName" th:value="${selectionName}">
+                <table class="table">
+                    <tbody>
+                        <th:block th:each="section:${book.sections()}" th:with="ck=${'collapse' + section.key}">
+                            <tr>
+                                <td th:text="${section.key}"></td>
+                                <td>
+                                    <a class="btn btn-primary" data-bs-toggle="collapse" th:href="${'#' + ck}" role="button" aria-expanded="false" th:aria-controls="${ck}">Toggle</a>
+                                </td>
+                                <td>
+                                    <div class="collapse" th:id="${ck}">
+                                        <div class="card card-body">
+                                            Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
                                         </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <th:block th:each="idx:${section.value}">
+                                <tr>
+                                    <td th:with="selected=${selection.contains(idx)}">
+                                        <input th:if="${selected}" class="form-check-input" type="checkbox" th:name="${'select_' + idx}" th:value="${idx}" checked>
+                                        <input th:unless="${selected}" class="form-check-input" type="checkbox" th:name="${'select_' + idx}" th:value="${idx}">
                                     </td>
+                                    <td th:text="${book.left(idx)}"></td>
+                                    <td th:text="${book.right(idx)}"></td>
                                 </tr>
-                                <th:block th:each="idx:${section.value}">
-                                    <tr>
-                                        <td th:with="selected=${selection.contains(idx)}">
-                                            <input th:if="${selected}" class="form-check-input" type="checkbox" th:name="${'select_' + idx}" th:value="${idx}" checked>
-                                            <input th:unless="${selected}" class="form-check-input" type="checkbox" th:name="${'select_' + idx}" th:value="${idx}">
-                                        </td>
-                                        <td th:text="${book.left(idx)}"></td>
-                                        <td th:text="${book.right(idx)}"></td>
-                                    </tr>
-                                </th:block>
                             </th:block>
-                        </tbody>
-                    </table>
+                        </th:block>
+                    </tbody>
+                </table>
 
-                    <a class="btn btn-primary" th:href="@{/books/{book}/{selection}(book=${book.name},selection=${selectionName})}">Abbrechen</a>
-                    <button type="submit" class="btn btn-primary">Speichern</button>
-                </fieldset>
+                <a class="btn btn-primary" th:href="@{/books/{book}/{selection}(book=${book.name},selection=${selectionName})}">Abbrechen</a>
+                <button type="submit" class="btn btn-primary">Speichern</button>
             </form>
             <hr/>
             <form class="form-horizontal" accept-charset="utf-8" th:action="@{/books/{book}/{selection}/delete-selection(book=${book.name}, selection=${selectionName})}" method="post">
