@@ -38,6 +38,6 @@ public class YogiApplication {
     @Bean
     @SessionScope
     public UserFiles userFiles(World world, @Value("${yogi.lib}") String lib) throws IOException {
-        return new UserFiles(world.file(lib).checkDirectory());
+        return new UserFiles(world.file(lib).mkdirOpt());
     }
 }

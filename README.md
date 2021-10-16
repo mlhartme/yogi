@@ -4,11 +4,15 @@ Vocabulary trainer. For Germans to learn e.g. English.
 
 ## Build and run locally
 
-* setup docker
-* `mvn clean package`
-* `./run.sh`
-* point your browser to `http://localhost:8080` and login with the credentials printed on the command line
+* `mvn clean package spring-boot:run`
+* point your browser to `http://localhost:8080` and login with the credentials from src/test/user.properties
 * stop with ctrl-c
+
+## Run locally with Docker
+
+* setup docker
+* `mvn clean package -Pdocker`
+* ./run.sh
 
 
 ## Directory structure for running application
@@ -41,7 +45,9 @@ Rules
 
 ## Server setup
 
-to create a systemd service on a Linux box
+TODO: service still needed?
+
+To create a systemd service on a Linux box
 
 * install docker and docker-compose
 * `scp -r src/systemd yourhost:~/yogi/`
