@@ -4,82 +4,79 @@
       layout:decorate="~{layout.html}">
 <th:block layout:fragment="content"
           th:with="statistics=${book.statistics(@userFiles)}, quality=${statistics.quality(book, book.loadSelection(@userFiles, selection))}">
-<div class="row">
-    <div class="col-12">
-        <form th:action="@{/books/{book}/{selection}/start(book=${book.name}, selection=${selection})}" method="post">
-            <div class="row">
-                <div class="col-auto">
-                    <img th:src="@{/books/{book}/jpg(book=${book.name})}" width="196"/>
-                </div>
-                <div class="col">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-auto">
-                                <button class="btn btn-light dropdown-toggle" type="button" id="bookMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false" th:text="${book.name}"></button>
-                                <div class="dropdown-menu" aria-labelledby="bookMenuButton">
-                                    <a th:each="book:${library}" class="dropdown-item" th:href="${'/books/' + book.name} + '/'" th:text="${book.name}"></a>
-                                </div>
-                                <hr/>
+    <form th:action="@{/books/{book}/{selection}/start(book=${book.name}, selection=${selection})}" method="post">
+        <div class="row">
+            <div class="col-auto">
+                <img th:src="@{/books/{book}/jpg(book=${book.name})}" width="196"/>
+            </div>
+            <div class="col">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-auto">
+                            <button class="btn btn-light dropdown-toggle" type="button" id="bookMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false" th:text="${book.name}"></button>
+                            <div class="dropdown-menu" aria-labelledby="bookMenuButton">
+                                <a th:each="book:${library}" class="dropdown-item" th:href="${'/books/' + book.name} + '/'" th:text="${book.name}"></a>
                             </div>
-                            <div class="col">
-                            </div>
-                            <div class="col-auto">
-                                <div class="dropdown">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Yogi
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                        <li><p class="dropdown-item" data-bs-toggle="tooltip" th:title="${yogiVersion}">Yogi - Vokabel Trainer</p></li>
-                                        <hr class="dropdown-divider">
-                                        <li><a class="dropdown-item" th:href="${'/books/' + book.name + '/' + selection + '/protocols/'}">Protokolle</a></li>
-                                        <li><a class="dropdown-item" th:href="${'/logout'}" th:text="${T(net.mlhartme.yogi.YogiSecurity).username() + ' abmelden'}"></a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <hr/>
                         </div>
-                        <div class="row">
-                            <div class="col dropdown">
-                                <button class="btn btn-light dropdown-toggle" type="button" id="selectionMenuButton" data-bs-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false" th:text="${selection}"></button>
-                                <div class="dropdown-menu" aria-labelledby="selectionMenuButton">
-                                    <a class="dropdown-item"
-                                       th:href="@{/books/{book}/{selection}/selection(book=${book.name}, selection=${selection})}" th:text="${selection + ' bearbeiten ...'}"></a>
+                        <div class="col">
+                        </div>
+                        <div class="col-auto">
+                            <div class="dropdown">
+                                <button class="btn btn-light dropdown-toggle" type="button" id="systemMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="/static/yogi.png" width="32"/>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="systemMenuButton">
+                                    <li><p class="dropdown-item" data-bs-toggle="tooltip" th:title="${yogiVersion}">Yogi - Vokabel Trainer</p></li>
                                     <hr class="dropdown-divider">
-                                    <a th:each="gotoSelection:${@userFiles.listSelections(book.name)}" class="dropdown-item"
-                                       th:href="${'/books/' + book.name + '/' + gotoSelection}" th:text="${gotoSelection}"></a>
-                                    <hr class="dropdown-divider">
-                                    <a class="dropdown-item" th:href="${'/books/' + book.name + '/' + selection + '/new-selection'}">Neue Auswahl ...</a>
-                                </div>
+                                    <li><a class="dropdown-item" th:href="${'/books/' + book.name + '/' + selection + '/protocols/'}">Protokolle</a></li>
+                                    <li><a class="dropdown-item" th:href="${'/logout'}" th:text="${T(net.mlhartme.yogi.YogiSecurity).username() + ' abmelden'}"></a></li>
+                                </ul>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="progress" style="height: 30px;">
-                                    <div class="progress-bar" role="progressbar"
-                                         th:style="${'background-' + statistics.style(quality) + ' width: ' + quality + '%'}"
-                                         th:aria-valuenow="${quality}" aria-valuemin="0" aria-valuemax="100" th:text="${quality + ' %'}"></div>
-                                </div>
+                    </div>
+                    <div class="row">
+                        <div class="col dropdown">
+                            <button class="btn btn-light dropdown-toggle" type="button" id="selectionMenuButton" data-bs-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false" th:text="${selection}"></button>
+                            <div class="dropdown-menu" aria-labelledby="selectionMenuButton">
+                                <a class="dropdown-item"
+                                   th:href="@{/books/{book}/{selection}/selection(book=${book.name}, selection=${selection})}" th:text="${selection + ' bearbeiten ...'}"></a>
+                                <hr class="dropdown-divider">
+                                <a th:each="gotoSelection:${@userFiles.listSelections(book.name)}" class="dropdown-item"
+                                   th:href="${'/books/' + book.name + '/' + gotoSelection}" th:text="${gotoSelection}"></a>
+                                <hr class="dropdown-divider">
+                                <a class="dropdown-item" th:href="${'/books/' + book.name + '/' + selection + '/new-selection'}">Neue Auswahl ...</a>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col">
-                                            <button type="submit" class="btn btn-primary">Üben</button>
-                                        </div>
-                                        <div class="col">
-                                            <select class="form-select" style="width:auto;" name="count" id="count">
-                                                <option>5</option>
-                                                <option>10</option>
-                                                <option>15</option>
-                                                <option selected>20</option>
-                                                <option>25</option>
-                                                <option>30</option>
-                                                <option value="all">alle</option>
-                                            </select>
-                                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="progress" style="height: 30px;">
+                                <div class="progress-bar" role="progressbar"
+                                     th:style="${'background-' + statistics.style(quality) + ' width: ' + quality + '%'}"
+                                     th:aria-valuenow="${quality}" aria-valuemin="0" aria-valuemax="100" th:text="${quality + ' %'}"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <button type="submit" class="btn btn-primary">Üben</button>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-select" style="width:auto;" name="count" id="count">
+                                            <option>5</option>
+                                            <option>10</option>
+                                            <option>15</option>
+                                            <option selected>20</option>
+                                            <option>25</option>
+                                            <option>30</option>
+                                            <option value="all">alle</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -87,8 +84,7 @@
                     </div>
                 </div>
             </div>
-        </form>
-    </div>
-</div>
+        </div>
+    </form>
 </th:block>
 </html>
