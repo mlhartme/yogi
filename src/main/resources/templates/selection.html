@@ -19,21 +19,17 @@
                         </h2>
                         <div th:id="${ck}" class="accordion-collapse collapse show" aria-labelledby="${'heading' + ck}"
                              data-bs-parent="#selectionAccordion">
-                            <div class="accordion-body">
-                                <table class="table">
-                                    <th:block th:each="idx:${section.value}">
-                                        <tr>
-                                            <td th:with="selected=${selection.contains(idx)}">
-                                                <input th:if="${selected}" class="form-check-input" type="checkbox"
-                                                       th:name="${'select_' + idx}" th:value="${idx}" checked>
-                                                <input th:unless="${selected}" class="form-check-input" type="checkbox"
-                                                       th:name="${'select_' + idx}" th:value="${idx}">
-                                            </td>
-                                            <td th:text="${book.left(idx)}"></td>
-                                            <td th:text="${book.right(idx)}"></td>
-                                        </tr>
-                                    </th:block>
-                                </table>
+                            <div class="accordion-body container">
+                                <div class="row" th:each="idx:${section.value}">
+                                    <div class="col-auto" th:with="selected=${selection.contains(idx)}">
+                                        <input th:if="${selected}" class="form-check-input" type="checkbox"
+                                               th:name="${'select_' + idx}" th:value="${idx}" checked>
+                                        <input th:unless="${selected}" class="form-check-input" type="checkbox"
+                                               th:name="${'select_' + idx}" th:value="${idx}">
+                                    </div>
+                                    <div class="col" th:text="${book.left(idx)}"></div>
+                                    <div class="col" th:text="${book.right(idx)}"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
