@@ -18,6 +18,7 @@
                     </div>
                 </div>
                 <div class="accordion" id="selectionAccordion">
+
                     <div class="accordion-item" th:each="section:${book.sections()}">
                         <div th:id="${'section_' + section.id}">
                             <h2 class="accordion-header" th:id="${'heading_' + section.id}">
@@ -30,10 +31,8 @@
                                 <div class="accordion-body container">
                                     <div class="row" th:each="idx:${section.selection}">
                                         <div class="col-auto" th:with="selected=${selection.contains(idx)}">
-                                            <input th:if="${selected}" class="form-check-input" type="checkbox"
-                                                   th:name="${'select_' + idx}" th:value="${idx}" onchange="updateSection(this)" checked>
-                                            <input th:unless="${selected}" class="form-check-input" type="checkbox"
-                                                   th:name="${'select_' + idx}" th:value="${idx}" onchange="updateSection(this)">
+                                            <input class="form-check-input" type="checkbox"
+                                                   th:name="${'select_' + idx}" th:value="${idx}" onchange="updateSection(this)" th:checked="${selected}">
                                         </div>
                                         <div class="col" th:text="${book.left(idx)}"></div>
                                         <div class="col" th:text="${book.right(idx)}"></div>
