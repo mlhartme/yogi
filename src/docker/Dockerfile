@@ -9,4 +9,4 @@ RUN mkdir -p /usr/share/man/man1 && \
 
 COPY maven/*-springboot.jar /usr/local/yogi/yogi.jar
 
-CMD java -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -Dyogi.config=/usr/local/yogi/etc -Dyogi.lib=/usr/local/yogi/run $OPTS -jar /usr/local/yogi/yogi.jar
+CMD cd /usr/local/yogi/run && java -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 -Dyogi.config=/usr/local/yogi/etc -Dyogi.lib=/usr/local/yogi/run/lib $OPTS -jar /usr/local/yogi/yogi.jar

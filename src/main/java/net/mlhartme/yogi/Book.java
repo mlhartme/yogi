@@ -115,8 +115,11 @@ public class Book implements Comparable<Book> {
         }
         if (lastMixed != null) {
             return lastMixed;
+        } else if (firstEmpty != null) {
+            return firstEmpty;
         } else {
-            return firstEmpty; // TODO: npe if empty
+            // everything selected
+            return -1;  // no section
         }
     }
 

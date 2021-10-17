@@ -31,6 +31,13 @@ ${yogi.lib}                 persistent stageÜbungsprotokolle
       - 2.protocol          Übung 2
       - ...
 
+The docker container also create
+
+/usr/local/yogi/run
+  - work    Tomcat work mkdir
+  - logs    Tomcat access logs
+
+
 ## Books
 
 are stored in <name>.yogi files. These files are line based, a line is either
