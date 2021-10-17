@@ -94,6 +94,56 @@ public class Book implements Comparable<Book> {
         return result;
     }
 
+    public int currentSection(IntSet userSelection) {
+        int id;
+        Integer lastMixed;
+        Integer firstEmpty;
+        IntSet sectionSelection;
+
+        id = 0;
+        lastMixed = null;
+        firstEmpty = null;
+        for (var entry : sections.entrySet()) {
+            sectionSelection = entry.getValue();
+            id++;
+            if (firstEmpty == null && empty(userSelection, sectionSelection)) {
+                firstEmpty = id;
+            }
+            if (mixed(userSelection, sectionSelection)) {
+                lastMixed = id;
+            }
+        }
+        if (lastMixed != null) {
+            return lastMixed;
+        } else {
+            return firstEmpty; // TODO: npe if empty
+        }
+    }
+
+    private static boolean empty(IntSet userSelection, IntSet sectionSelection) {
+        for (int idx : userSelection) {
+            if (sectionSelection.contains(idx)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    private static boolean mixed(IntSet userSelection, IntSet sectionSelection) {
+        boolean foundMissing;
+        boolean foundContaining;
+
+        foundMissing = false;
+        foundContaining = false;
+        for (int idx : sectionSelection) {
+            if (userSelection.contains(idx)) {
+                foundContaining = true;
+            } else {
+                foundMissing = true;
+            }
+        }
+        return foundMissing && foundContaining;
+    }
+
     public Map<String, String> selection(IntSet selection) {
         LinkedHashMap<String, String> result;
 
