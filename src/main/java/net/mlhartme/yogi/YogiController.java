@@ -30,11 +30,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.util.UriUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
@@ -66,7 +67,7 @@ public class YogiController {
 
     @RequestMapping("/books")
     public String books() {
-        return "redirect:/books/" + library.iterator().next().name;
+        return "redirect:/books/" + urlEncodeSegement(library.iterator().next().name);
     }
 
     @RequestMapping("/books/{book}")
@@ -83,7 +84,7 @@ public class YogiController {
         } else {
             selection = lst.get(0);
         }
-        return "redirect:/books/" + book + "/" + selection;
+        return "redirect:/books/" + urlEncodeSegement(book) + "/" + urlEncodeSegement(selection);
     }
 
     // TODO: could collide wird selection
@@ -128,7 +129,7 @@ public class YogiController {
         enable = getChecked(request, "select_");
         userFiles.deleteSelection(book, oldName);
         library.get(book).saveSelection(userFiles, newName, enable);
-        return "redirect:/books/" + book + "/" + newName;
+        return "redirect:/books/" + urlEncodeSegement(book) + "/" + urlEncodeSegement(newName);
     }
 
     // browser cannot user method="delete" ...
@@ -138,7 +139,7 @@ public class YogiController {
         String newSelection;
 
         newSelection = userFiles.newSelection(book, selection);
-        return "redirect:/books/" + book + "/" + newSelection + "/selection";
+        return "redirect:/books/" + urlEncodeSegement(book) + "/" + urlEncodeSegement(newSelection) + "/selection";
     }
 
     // browser cannot user method="delete" ...
@@ -146,7 +147,7 @@ public class YogiController {
     public String deleteSelection(@PathVariable(value = "book") String book,
                                   @PathVariable(value = "selection") String selection) throws IOException {
         userFiles.deleteSelection(book, selection);
-        return "redirect:/books/" + book;
+        return "redirect:/books/" + urlEncodeSegement(book);
     }
 
     private static IntSet getChecked(HttpServletRequest request, String prefix) {
@@ -191,15 +192,15 @@ public class YogiController {
 
         exercise = Exercise.create(userFiles.nextProtocol(book.name), book, title, selection);
         exercise.logTitle(userFiles, title);
-        return "redirect:question?e=" + urlencode(exercise.toParam());
+        return "redirect:question?e=" + urlEncodeQuery(exercise.toParam());
     }
 
-    public static String urlencode(String str) {
-        try {
-            return URLEncoder.encode(str, "utf8");
-        } catch (UnsupportedEncodingException e) {
-            throw new IllegalStateException(e);
-        }
+    private static String urlEncodeSegement(String segment) {
+        return UriUtils.encodePathSegment(segment, StandardCharsets.UTF_8);
+    }
+
+    public static String urlEncodeQuery(String str) {
+        return URLEncoder.encode(str, StandardCharsets.UTF_8);
     }
 
     @RequestMapping("/books/{book}/{selection}/protocols/")
