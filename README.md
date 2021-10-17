@@ -4,6 +4,8 @@ Vocabulary trainer. For Germans to learn e.g. English. Implemented with springbo
 
 ## Build and run locally
 
+... with example vocabulary.
+
 * `mvn clean package spring-boot:run`
 * point your browser to `http://localhost:8080` and login with the credentials from src/test/user.properties
 * stop with ctrl-c
@@ -12,7 +14,7 @@ Vocabulary trainer. For Germans to learn e.g. English. Implemented with springbo
 
 * setup docker
 * `mvn clean package -Pdocker`
-* ./run.sh
+* ./docker-run.sh
 
 
 ## Directory structure for running application
