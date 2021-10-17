@@ -20,21 +20,50 @@
             </div>
         </div>
     </div>
+    <div id="rename" class="modal fade" >
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <form class="form-horizontal" accept-charset="utf-8"
+                      th:action="@{/books/{book}/{selection}/delete-selection(book=${book.name}, selection=${selectionName})}" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Name der Auswahl ändern</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" accept-charset="utf-8">
+                            <input id="newNameDialog" type="text" class="form-control" name="newNameDialog" th:value="${selectionName}">
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close"
+                                onclick="var n=document.getElementById('newNameDialog').value; document.getElementById('nameTitle').innerHTML=n; document.getElementById('newName').value=n">Ändern</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close"
+                                onclick="var n=document.getElementById('newName').value; document.getElementById('newNameDialog').value=n; console.log('abbrechen' + n)">Abbrechen</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <form class="form-horizontal" accept-charset="utf-8"
           th:action="@{/books/{book}/{selection}/selection(book=${book.name}, selection=${selectionName})}" method="post">
+        <input id="newName" type="hidden" class="form-control" name="newName" th:value="${selectionName}"/>
         <div class="row">
-            <h4 th:text="${selectionName}"></h4>
-            <p>Kreuze alle Vokabeln an, die bei dieser Auswahl geübt werden sollen.</p>
+            <div class="col-auto">
+                <h4 id="nameTitle" th:text="${selectionName}"></h4>
+            </div>
+            <div class="col-auto">
+                <a class="btn btn-primary" href="#rename" data-bs-toggle="modal" data-bs-target="#rename">Name Ändern ...</a>
+            </div>
+            <div class="col">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p>Kreuze alle Vokabeln an, die bei dieser Auswahl geübt werden sollen.</p>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-12">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-auto">Name der Auswahl: </div>
-                        <div class="col">
-                            <input type="text" class="form-control" name="newName" th:value="${selectionName}">
-                        </div>
-                    </div>
-                </div>
                 <div class="accordion" id="selectionAccordion">
                     <div class="accordion-item" th:each="section:${book.sections()}">
                         <div th:id="${'section_' + section.id}">
