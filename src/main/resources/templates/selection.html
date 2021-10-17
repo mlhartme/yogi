@@ -47,12 +47,12 @@
     <form class="form-horizontal" accept-charset="utf-8"
           th:action="@{/books/{book}/{selection}/selection(book=${book.name}, selection=${selectionName})}" method="post">
         <input id="newName" type="hidden" class="form-control" name="newName" th:value="${selectionName}"/>
-        <div class="row">
+        <div class="row g-0">
             <div class="col-auto">
                 <h4 id="nameTitle" th:text="${selectionName}"></h4>
             </div>
             <div class="col-auto">
-                <a class="btn btn-primary" href="#rename" data-bs-toggle="modal" data-bs-target="#rename">Name Ändern ...</a>
+                <a class="btn btn-ligth btn-sm" href="#rename" data-bs-toggle="modal" data-bs-target="#rename"><i class="fa fa-pen"></i></a>
             </div>
             <div class="col">
             </div>
