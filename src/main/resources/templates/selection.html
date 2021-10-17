@@ -54,6 +54,9 @@
                                             <input class="form-check-input" type="checkbox"
                                                    th:name="${'select_' + idx}" th:value="${idx}" onchange="updateSection(this)" th:checked="${selected}">
                                         </div>
+                                        <div class="col-auto" th:with="quality=${statistics.quality(idx)}">
+                                            <span data-bs-toggle="tooltip" th:title="${quality + ' % ' + statistics.tries(idx)}" th:style="${statistics.style(quality)}">&#x25cf; </span>
+                                        </div>
                                         <div class="col" th:text="${book.left(idx)}"></div>
                                         <div class="col" th:text="${book.right(idx)}"></div>
                                     </div>

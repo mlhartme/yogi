@@ -112,7 +112,7 @@ function updateSection(self) {
   }
   console.log("count: " + allInputs.length)
   console.log("selected: " + selected);
-  document.getElementById("counter_" + id).innerHTML = selected + "/" + allInputs.length
+  document.getElementById("counter_" + id).innerHTML = "(" + selected + "/" + allInputs.length + ")"
 }
 
 function initSections() {
