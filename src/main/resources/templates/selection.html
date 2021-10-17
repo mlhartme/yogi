@@ -3,12 +3,30 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout.html}">
 <th:block layout:fragment="content" th:with="statistics=${book.statistics(@userFiles)}">
-    <div class="col-12">
-        <h4 th:text="${selectionName}"></h4>
-        <p>Kreuze alle Vokabeln an, die bei dieser Auswahl geübt werden sollen.</p>
-        <div class="col-12">
-            <form class="form-horizontal" accept-charset="utf-8"
-                  th:action="@{/books/{book}/{selection}/selection(book=${book.name}, selection=${selectionName})}" method="post">
+    <div id="delete" class="modal fade" >
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <form class="form-horizontal" accept-charset="utf-8"
+                      th:action="@{/books/{book}/{selection}/delete-selection(book=${book.name}, selection=${selectionName})}" method="post">
+                    <div class="modal-body">
+                        <h5 class="modal-title" th:text="${'Auswahl ' + selectionName + ' wirklich löschen?'}"></h5>
+                        <hr/>
+                        <button type="submit" class="btn btn-primary">Ja</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">
+                            Nein
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <form class="form-horizontal" accept-charset="utf-8"
+          th:action="@{/books/{book}/{selection}/selection(book=${book.name}, selection=${selectionName})}" method="post">
+        <div class="row">
+            <h4 th:text="${selectionName}"></h4>
+            <p>Kreuze alle Vokabeln an, die bei dieser Auswahl geübt werden sollen.</p>
+            <div class="col-12">
                 <div class="container">
                     <div class="row">
                         <div class="col-auto">Name der Auswahl: </div>
@@ -18,7 +36,6 @@
                     </div>
                 </div>
                 <div class="accordion" id="selectionAccordion">
-
                     <div class="accordion-item" th:each="section:${book.sections()}">
                         <div th:id="${'section_' + section.id}">
                             <h2 class="accordion-header" th:id="${'heading_' + section.id}">
@@ -45,19 +62,22 @@
                         </div>
                     </div>
                 </div>
-
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-auto">
+                <a class="btn btn-primary" href="#delete" data-bs-toggle="modal" data-bs-target="#delete">Löschen ...</a>
+            </div>
+            <div class="col">
+            </div>
+            <div class="col-auto">
                 <a class="btn btn-primary"
                    th:href="@{/books/{book}/{selection}(book=${book.name},selection=${selectionName})}">Abbrechen</a>
+            </div>
+            <div class="col-auto">
                 <button type="submit" class="btn btn-primary">Speichern</button>
-            </form>
-            <hr/>
-            <form class="form-horizontal" accept-charset="utf-8"
-                  th:action="@{/books/{book}/{selection}/delete-selection(book=${book.name}, selection=${selectionName})}" method="post">
-                <fieldset>
-                    <button type="submit" class="btn btn-primary">Diese Auswahl löschen</button>
-                </fieldset>
-            </form>
+            </div>
         </div>
-    </div>
+    </form>
 </th:block>
 </html>
