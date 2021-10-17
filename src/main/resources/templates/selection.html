@@ -68,11 +68,11 @@
                     <div class="accordion-item" th:each="section:${book.sections()}">
                         <div th:id="${'section_' + section.id}">
                             <h2 class="accordion-header" th:id="${'heading_' + section.id}">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" th:data-bs-target="${'#body_' + section.id}"
+                                <button th:class="${'accordion-button' + (currentSection == section.id ? '' : ' collapsed')}" type="button" data-bs-toggle="collapse" th:data-bs-target="${'#body_' + section.id}"
                                         th:aria-expanded="${currentSection == section.id}" th:aria-controls="${'body_' + section.id}" >
                                     <th:text th:text="${section.title + ' '}"></th:text>
                                     <span>&nbsp;</span>
-                                    <span th:id="${'counter_' + section.id}">x/y</span>
+                                    <span th:id="${'counter_' + section.id}">(x/y)</span>
                                 </button>
                             </h2>
                             <div th:id="${'body_' + section.id}" th:class="${'accordion-collapse collapse' + (currentSection == section.id ? ' show' : '')}" aria-labelledby="${'heading_' + section.id}"
