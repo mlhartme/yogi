@@ -4,6 +4,26 @@
       layout:decorate="~{layout.html}">
 <th:block layout:fragment="content"
           th:with="statistics=${book.statistics(@userFiles)}, quality=${statistics.quality(book, book.loadSelection(@userFiles, selection))}">
+    <div id="about" class="modal fade" >
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Über Yogi</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Yogi ist ein Vokabel Trainer.</p>
+                    <p>Von Michael, für Jakob und Benjamin. Mit Bildern von Benjamin.</p>
+                    <p>Yogi ist <a href="https://github.com/mlhartme/yogi">OpenSource</a>, d.h. jeder kann daran mitarbeiten.</p>
+                    <p th:text="${'Aktuelle version: ' + yogiVersion}"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <form th:action="@{/books/{book}/{selection}/start(book=${book.name}, selection=${selection})}" method="post">
         <div class="row gx-1">
             <div class="col-auto">
@@ -27,7 +47,7 @@
                                     <img src="/static/yogi.png" width="32"/>
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="systemMenuButton">
-                                    <li><p class="dropdown-item" data-bs-toggle="tooltip" th:title="${yogiVersion}">Yogi - Vokabel Trainer</p></li>
+                                    <li><a class="btn btn-primary" href="#about" data-bs-toggle="modal" data-bs-target="#about">Über Yogi ...</a></li>
                                     <hr class="dropdown-divider">
                                     <li><a class="dropdown-item" th:href="@{/books/{book}/{selection}/protocols/(book=${book.name}, selection=${selection})}">Protokolle</a></li>
                                     <li><a class="dropdown-item" th:href="@{/logout}" th:text="${T(net.mlhartme.yogi.YogiSecurity).username() + ' abmelden'}"></a></li>
