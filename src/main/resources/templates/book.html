@@ -31,27 +31,33 @@
             </div>
             <div class="col">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-auto">
+                    <div class="row row-cols-sm-2 row-cols-1">
+                        <div class="col order-sm-last">
+                            <div class="container gx-0">
+                                <div class="row gx-0">
+                                    <div class="col">
+                                    </div>
+                                    <div class="col-auto">
+                                        <div class="dropdown">
+                                            <button class="btn btn-warning dropdown-toggle" type="button" id="systemMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <img src="/static/yogi.png" width="32"/>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="systemMenuButton">
+                                                <li><a class="dropdown-item" href="#about" data-bs-toggle="modal" data-bs-target="#about">Über Yogi ...</a></li>
+                                                <hr class="dropdown-divider">
+                                                <li><a class="dropdown-item" th:href="@{/books/{book}/{selection}/protocols/(book=${book.name}, selection=${selection})}">Protokolle</a></li>
+                                                <li><a class="dropdown-item" th:href="@{/logout}" th:text="${T(net.mlhartme.yogi.YogiSecurity).username() + ' abmelden'}"></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col order-sm-first">
                             <button class="btn btn-warning dropdown-toggle" type="button" id="bookMenuButton" data-bs-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false" th:text="${book.name}"></button>
                             <div class="dropdown-menu" aria-labelledby="bookMenuButton">
                                 <a th:each="book:${library}" class="dropdown-item" th:href="@{/books/{book}/(book=${book.name})}" th:text="${book.name}"></a>
-                            </div>
-                        </div>
-                        <div class="col">
-                        </div>
-                        <div class="col-auto">
-                            <div class="dropdown">
-                                <button class="btn btn-warning dropdown-toggle" type="button" id="systemMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="/static/yogi.png" width="32"/>
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="systemMenuButton">
-                                    <li><a class="dropdown-item" href="#about" data-bs-toggle="modal" data-bs-target="#about">Über Yogi ...</a></li>
-                                    <hr class="dropdown-divider">
-                                    <li><a class="dropdown-item" th:href="@{/books/{book}/{selection}/protocols/(book=${book.name}, selection=${selection})}">Protokolle</a></li>
-                                    <li><a class="dropdown-item" th:href="@{/logout}" th:text="${T(net.mlhartme.yogi.YogiSecurity).username() + ' abmelden'}"></a></li>
-                                </ul>
                             </div>
                         </div>
                     </div>
