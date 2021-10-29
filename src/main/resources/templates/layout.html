@@ -96,7 +96,6 @@ window.addEventListener('popstate', function (event) {
 function updateSection(self) {
   var root = self
   while (true) {
-    console.log("check " + root)
     if (root.id.startsWith("section_")) {
       id = root.id.substring(8)
       break; // found it
@@ -114,6 +113,28 @@ function updateSection(self) {
   console.log("count: " + allInputs.length)
   console.log("selected: " + selected);
   document.getElementById("counter_" + id).innerHTML = "(" + selected + "/" + allInputs.length + ")"
+}
+
+function multiClick(element) {
+  const first = parseInt(element.getAttribute("data-yogi-first"), 10);
+  const last = parseInt(element.getAttribute("data-yogi-last"), 10);
+  console.log("select " + element)
+  console.log("select " + first + " to " + last)
+  let stopAt = selectedInput(last) !== true
+  for (let i = last; i>= first; i--) {
+      let checkbox = selectedInput(i);
+      if (stopAt === (checkbox.checked === true)) {
+          break;
+      }
+      checkbox.click()
+  }
+}
+function selectedInput(n) {
+    let checkboxes = document.getElementsByName("select_" + n)
+    if (checkboxes.length != 1) {
+        throw "not found or ambiguous: " + n
+    }
+    return checkboxes[0]
 }
 
 function initSections() {

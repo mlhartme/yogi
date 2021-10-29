@@ -79,6 +79,9 @@ public class Book implements Comparable<Book> {
     }
 
     public static record Section(int id, String title, IntSet selection) {
+        public int first() {
+            return selection.iterator().next();
+        }
     }
 
     public List<Section> sections() {
