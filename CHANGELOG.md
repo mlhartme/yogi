@@ -5,7 +5,7 @@
 * new ui
   * new books page
   * new navigation
-  * unified selections
+  * unified selections, with multi-select
   * favicon
 * implementation tweaks
   * application properties: yogi.lib, yogi.config

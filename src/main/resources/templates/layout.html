@@ -103,27 +103,23 @@ function updateSection(self) {
     root = root.parentElement
   }
   var allInputs = root.getElementsByTagName('input')
-  console.log("id: " + id + " length: " + allInputs + " " + allInputs.length)
   var selected = 0
   for (let input of allInputs) {
     if (input.checked === true) {
       selected++;
     }
   }
-  console.log("count: " + allInputs.length)
-  console.log("selected: " + selected);
   document.getElementById("counter_" + id).innerHTML = "(" + selected + "/" + allInputs.length + ")"
 }
 
 function multiClick(element) {
   const first = parseInt(element.getAttribute("data-yogi-first"), 10);
   const last = parseInt(element.getAttribute("data-yogi-last"), 10);
-  console.log("select " + element)
-  console.log("select " + first + " to " + last)
-  let stopAt = selectedInput(last) !== true
+  let stopOn = selectedInput(last).checked !== true
+  console.log("select " + first + " to " + last + ", stopOn " + stopOn)
   for (let i = last; i>= first; i--) {
       let checkbox = selectedInput(i);
-      if (stopAt === (checkbox.checked === true)) {
+      if (stopOn === (checkbox.checked === true)) {
           break;
       }
       checkbox.click()
@@ -138,7 +134,6 @@ function selectedInput(n) {
 }
 
 function initSections() {
-  console.log("init")
   for (var i = 1; true; i++) {
     var element = document.getElementById("section_" + i);
     console.info("check " + element)
