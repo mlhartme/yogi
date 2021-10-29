@@ -81,15 +81,15 @@
                                     <ul class="list-group">
                                         <li class="list-group-item" th:each="idx:${section.selection}">
                                             <div class="row">
+                                                <div class="col" th:text="${book.left(idx)}"></div>
+                                                <div class="col" th:text="${book.right(idx)}"></div>
+                                                <div class="col-auto" th:with="quality=${statistics.quality(book.left(idx))}">
+                                                    <span data-bs-toggle="tooltip" th:title="${quality + ' % ' + statistics.tries(book.left(idx))}" th:style="${statistics.style(quality)}">&#x25cf; </span>
+                                                </div>
                                                 <div class="col-auto" th:with="selected=${selection.contains(idx)}">
                                                     <input class="form-check-input" type="checkbox"
                                                            th:name="${'select_' + idx}" th:value="${idx}" onchange="updateSection(this)" th:checked="${selected}">
                                                 </div>
-                                                <div class="col-auto" th:with="quality=${statistics.quality(book.left(idx))}">
-                                                    <span data-bs-toggle="tooltip" th:title="${quality + ' % ' + statistics.tries(book.left(idx))}" th:style="${statistics.style(quality)}">&#x25cf; </span>
-                                                </div>
-                                                <div class="col" th:text="${book.left(idx)}"></div>
-                                                <div class="col" th:text="${book.right(idx)}"></div>
                                             </div>
                                         </li>
                                     </ul>
