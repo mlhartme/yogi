@@ -8,7 +8,8 @@
   * unified selections, with multi-select
   * favicon
 * implementation tweaks
-  * application properties: yogi.lib, yogi.config
+  * renamed package net.mlhartme to de.schmizzolin. Reserved de.schmizzolin on Maven central
+  * added application properties: yogi.lib, yogi.config
   * renamed *.log to *.protocol
   * renamed .enabled to freigeschaltet.selection
   * update parent 1.5.0 to 1.5.1
