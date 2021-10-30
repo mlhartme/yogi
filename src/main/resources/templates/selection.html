@@ -86,12 +86,12 @@
                                                 </div>
                                                 <div class="col" th:text="${book.right(idx)}"></div>
                                                 <div class="col-auto" th:with="quality=${statistics.quality(book.left(idx))}">
-                                                    <i data-bs-toggle="tooltip"
+                                                    <i class="fakebtn" data-bs-toggle="tooltip"
                                                           th:title="${quality + ' % ' + statistics.tries(book.left(idx))}"
                                                           data-bs-delay="{ 'show': 500, 'hide': 100 }"
                                                           th:data-yogi-first="${section.first}" th:data-yogi-last="${idx}"
                                                           onclick="multiClick(this)"
-                                                          th:style="${'cursor: pointer; ' + statistics.style(quality)}">&#x25b3;</i>
+                                                          th:style="${statistics.style(quality)}">&#x25b3;</i>
                                                 </div>
                                                 <div class="col-auto" th:with="selected=${selection.contains(idx)}">
                                                     <input class="form-check-input" type="checkbox"
