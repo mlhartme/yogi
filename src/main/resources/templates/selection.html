@@ -81,9 +81,7 @@
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item p-1" th:each="idx:${section.selection}">
                                             <div class="row">
-                                                <div class="col">
-                                                    <p th:text="${book.left(idx)}"></p>
-                                                </div>
+                                                <div class="col" th:text="${book.left(idx)}"></div>
                                                 <div class="col" th:text="${book.right(idx)}"></div>
                                                 <div class="col-auto" th:with="quality=${statistics.quality(book.left(idx))}">
                                                     <i class="fakebtn" data-bs-toggle="tooltip"

@@ -1,6 +1,6 @@
 # Yogi
 
-Vocabulary trainer. For Germans to learn e.g. English. Implemented with springboot, thymeleaf and bootstrap.
+Vocabulary trainer. For Germans to learn e.g. English. Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 
 ## Build and run locally
 
