@@ -81,14 +81,12 @@
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item p-1" th:each="idx:${section.selection}">
                                             <div class="row">
-                                                <div class="col" th:text="${book.left(idx)}"></div>
+                                                <div class="col">
+                                                    <p th:text="${book.left(idx)}"></p>
+                                                </div>
                                                 <div class="col" th:text="${book.right(idx)}"></div>
                                                 <div class="col-auto" th:with="quality=${statistics.quality(book.left(idx))}">
-                                                    <button type="button" class="btn btn-ligth btn-sm" data-bs-toggle="tooltip"
-                                                            th:title="${quality + ' % ' + statistics.tries(book.left(idx))}"
-                                                            th:data-yogi-first="${section.first}" th:data-yogi-last="${idx}"
-                                                            onclick="multiClick(this)"
-                                                            th:style="${statistics.style(quality)}"><i style="font-size: larger">&#x25b2;</i></button>
+                                                    <p>O&#x25b2;Xx1</p>
                                                 </div>
                                                 <div class="col-auto" th:with="selected=${selection.contains(idx)}">
                                                     <input class="form-check-input" type="checkbox"
