@@ -13,26 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.mlhartme.yogi;
+package net.schmizzolin.yogi;
 
-import net.oneandone.sushi.fs.Node;
-import net.oneandone.sushi.fs.World;
-import org.junit.jupiter.api.Test;
+public class Achievement {
+    public final int before;
+    public final int after;
 
-import java.io.IOException;
+    public final String answerMin;
+    public final String answerMax;
+    public final String answerAvg;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+    public Achievement(int before, int after, String min, String max, String avg) {
+        this.before = before;
+        this.after = after;
 
-public class BookTest {
-    @Test
-    public void load() throws IOException {
-        World world;
-        Book book;
-
-        world = World.create();
-        for (Node file : world.guessProjectHome(getClass()).join("src/test/etc/books").find("*.yogi")) {
-            book = Book.load(file, new byte[0]);
-            assertTrue(book.size() > 0);
-        }
+        this.answerMin = min;
+        this.answerMax = max;
+        this.answerAvg = avg;
     }
 }

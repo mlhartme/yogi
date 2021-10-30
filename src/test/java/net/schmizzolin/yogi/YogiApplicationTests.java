@@ -13,22 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.mlhartme.yogi;
+package net.schmizzolin.yogi;
 
-public class Achievement {
-    public final int before;
-    public final int after;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
-    public final String answerMin;
-    public final String answerMax;
-    public final String answerAvg;
+@WebMvcTest
+public class YogiApplicationTests {
 
-    public Achievement(int before, int after, String min, String max, String avg) {
-        this.before = before;
-        this.after = after;
+	@Test
+	public void contextLoads() {
+	}
 
-        this.answerMin = min;
-        this.answerMax = max;
-        this.answerAvg = avg;
-    }
 }
+

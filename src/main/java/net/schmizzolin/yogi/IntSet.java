@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.mlhartme.yogi;
+package net.schmizzolin.yogi;
 
 import net.oneandone.sushi.util.Separator;
 

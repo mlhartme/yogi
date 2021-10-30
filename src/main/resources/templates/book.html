@@ -46,7 +46,7 @@
                                                 <li><a class="dropdown-item" href="#about" data-bs-toggle="modal" data-bs-target="#about">Über Yogi ...</a></li>
                                                 <hr class="dropdown-divider">
                                                 <li><a class="dropdown-item" th:href="@{/books/{book}/{selection}/protocols/(book=${book.name}, selection=${selection})}">Protokolle</a></li>
-                                                <li><a class="dropdown-item" th:href="@{/logout}" th:text="${T(net.mlhartme.yogi.YogiSecurity).username() + ' abmelden'}"></a></li>
+                                                <li><a class="dropdown-item" th:href="@{/logout}" th:text="${T(net.schmizzolin.yogi.YogiSecurity).username() + ' abmelden'}"></a></li>
                                             </ul>
                                         </div>
                                     </div>
