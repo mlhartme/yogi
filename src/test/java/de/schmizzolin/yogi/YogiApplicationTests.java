@@ -13,26 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.schmizzolin.yogi;
+package de.schmizzolin.yogi;
 
-import net.oneandone.sushi.fs.Node;
-import net.oneandone.sushi.fs.World;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
-import java.io.IOException;
+@WebMvcTest
+public class YogiApplicationTests {
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+	@Test
+	public void contextLoads() {
+	}
 
-public class BookTest {
-    @Test
-    public void load() throws IOException {
-        World world;
-        Book book;
-
-        world = World.create();
-        for (Node file : world.guessProjectHome(getClass()).join("src/test/etc/books").find("*.yogi")) {
-            book = Book.load(file, new byte[0]);
-            assertTrue(book.size() > 0);
-        }
-    }
 }
+

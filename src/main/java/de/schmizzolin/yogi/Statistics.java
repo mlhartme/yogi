@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.schmizzolin.yogi;
+package de.schmizzolin.yogi;
 
 import net.oneandone.sushi.fs.file.FileNode;
 
