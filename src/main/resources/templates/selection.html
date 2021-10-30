@@ -77,9 +77,9 @@
                             </h2>
                             <div th:id="${'body_' + section.id}" th:class="${'accordion-collapse collapse' + (currentSection == section.id ? ' show' : '')}" aria-labelledby="${'heading_' + section.id}"
                                  data-bs-parent="#selectionAccordion">
-                                <div class="accordion-body container-fluid">
-                                    <ul class="list-group">
-                                        <li class="list-group-item" th:each="idx:${section.selection}">
+                                <div class="accordion-body container-fluid py-0">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item p-1" th:each="idx:${section.selection}">
                                             <div class="row">
                                                 <div class="col" th:text="${book.left(idx)}"></div>
                                                 <div class="col" th:text="${book.right(idx)}"></div>
