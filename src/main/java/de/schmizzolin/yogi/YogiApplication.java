@@ -32,7 +32,7 @@ public class YogiApplication {
 
     @Bean
     public World world() throws IOException {
-        return World.createMinimal();
+        return World.create();
     }
 
     @Bean
