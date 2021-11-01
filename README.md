@@ -51,6 +51,10 @@ Rules
   * it is cases sensitive
   * punctation has to be matched exactly
     * make sure the question punctation matches the punctation in the answer
+* 3 times in english - e.g:
+   bend, bent, bent = hinunterbeugen (3 Zeiten)
+
+
 
 
 ## Server setup

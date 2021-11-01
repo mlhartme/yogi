@@ -86,7 +86,7 @@
                                                 <div class="col-auto" th:with="quality=${statistics.quality(book.left(idx))}">
                                                     <i class="fakebtn" data-bs-toggle="tooltip"
                                                           th:title="${quality + ' % ' + statistics.tries(book.left(idx))}"
-                                                          data-bs-delay="{ 'show': 500, 'hide': 100 }"
+                                                          data-bs-delay="500"
                                                           th:data-yogi-first="${section.first}" th:data-yogi-last="${idx}"
                                                           onclick="multiClick(this)"
                                                           th:style="${statistics.style(quality)}">&#x25b3;</i>
