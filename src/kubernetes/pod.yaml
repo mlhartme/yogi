@@ -8,7 +8,10 @@ spec:
   volumes:
     - name: yogi-etc
       hostPath:
-        path: '/data/etc'
+        path: '/storage/yogi/etc'
+    - name: yogi-run
+      hostPath:
+        path: '/storage/yogi/run'
   containers:
   - image: yogi:latest
     name: main
@@ -16,3 +19,5 @@ spec:
     volumeMounts:
       - mountPath: "/usr/local/yogi/etc"
         name: yogi-etc
+      - mountPath: "/usr/local/yogi/run"
+        name: yogi-run
