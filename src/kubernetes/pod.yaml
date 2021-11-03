@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: yogi
+  labels:
+    app: yogi
+spec:
+  containers:
+  - image: yogi:latest
+    name: main
+    imagePullPolicy: IfNotPresent
