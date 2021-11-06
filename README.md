@@ -34,9 +34,9 @@ ${yogi.lib}                 persistent stage
       - 2.protocol          Übung 2
       - ...
 
-The docker container also create
+The docker container also creates
 
-/usr/local/yogi/run
+<cwd>       (/usr/local/yogi/run)
   - work    Tomcat work mkdir
   - logs    Tomcat access logs
 
