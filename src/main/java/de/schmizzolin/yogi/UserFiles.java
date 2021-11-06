@@ -24,8 +24,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/** Persistent session state per use */
+/** Persistent session state per user */
 public class UserFiles {
+    /* <yogi.lib>/<username> */
     private final FileNode root;
 
     public UserFiles(FileNode lib) throws IOException {

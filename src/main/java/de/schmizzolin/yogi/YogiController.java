@@ -48,9 +48,9 @@ public class YogiController {
     private final Library library;
     private final String version;
 
-    public YogiController(World world, UserFiles userFiles, @Value("${yogi.config}") String config) throws IOException {
+    public YogiController(World world, UserFiles userFiles, @Value("${yogi.etc}") String etc) throws IOException {
         this.userFiles = userFiles;
-        this.library = Library.load(world.file(config).join("books").checkDirectory());
+        this.library = Library.load(world.file(etc).join("books").checkDirectory());
         this.version = world.resource("yogi.version").readString().trim();
     }
 

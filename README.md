@@ -20,11 +20,13 @@ Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 
 ## Directory structure for running application
 
-${yogi.config}
-  - books                   available books
+${yogi.etc}
   - user.properties
-
-${yogi.lib}                 persistent stageÜbungsprotokolle
+  - books                   available books
+     - <book-1.yogi>
+     - <book-1.png>
+     - ...
+${yogi.lib}                 persistent stage
   - <user>                  userFiles
     - <book>
       - *.selection         Arbitrary Selection

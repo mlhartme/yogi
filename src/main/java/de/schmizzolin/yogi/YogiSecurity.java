@@ -40,8 +40,8 @@ import java.util.Properties;
 public class YogiSecurity extends WebSecurityConfigurerAdapter {
     private final FileNode userProperties;
 
-    public YogiSecurity(World world, @Value("${yogi.config}") String config) {
-        userProperties = world.file(config).join("user.properties");
+    public YogiSecurity(World world, @Value("${yogi.etc}") String etc) {
+        userProperties = world.file(etc).join("user.properties");
     }
 
     @Override

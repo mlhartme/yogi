@@ -9,7 +9,7 @@
   * favicon
 * implementation tweaks
   * renamed package net.mlhartme to de.schmizzolin. Reserved de.schmizzolin on Maven central
-  * added application properties: yogi.lib, yogi.config
+  * added application properties: yogi.lib, yogi.etc
   * renamed *.log to *.protocol
   * renamed .enabled to freigeschaltet.selection
   * update parent 1.5.0 to 1.5.1
