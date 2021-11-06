@@ -9,6 +9,9 @@ spec:
     - name: yogi-etc
       hostPath:
         path: '/storage/yogi/etc'
+    - name: yogi-lib
+      hostPath:
+        path: '/storage/yogi/lib'
     - name: yogi-run
       hostPath:
         path: '/storage/yogi/run'
@@ -19,5 +22,7 @@ spec:
     volumeMounts:
       - mountPath: "/usr/local/yogi/etc"
         name: yogi-etc
+      - mountPath: "/usr/local/yogi/lib"
+        name: yogi-lib
       - mountPath: "/usr/local/yogi/run"
         name: yogi-run
