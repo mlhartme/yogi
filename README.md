@@ -57,21 +57,3 @@ Rules
    bend, bent, bent = hinunterbeugen (3 Zeiten)
 
 
-
-
-## Server setup
-
-TODO: service still needed?
-
-To create a systemd service on a Linux box
-
-* install docker and docker-compose
-* `scp -r src/systemd yourhost:~/yogi/`
-* on *yourhost*
-  * `mkdir ~/yogi/run`
-  * setup `~/yogi/etc` with a ´books` subdirectory and your books
-  * `ln -s ~/yogi/systemd/yogi.service /etc/systemd/system
-  * `systemctl daemon-reload`
-  * `systemctl start yogi`
-  * `systemctl enable yogi`
-
