@@ -11,11 +11,11 @@ Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 * point your browser to `http://localhost:8080` and login with the credentials from src/test/user.properties
 * stop with ctrl-c
 
-## Run with Kubernetes
+## Run in Kubernetes via Helm
 
-* setup kubernetes, e.g. via minikube
+* setup helm
 * `mvn clean package -Pk8s`
-* `helm install target/helm`
+* `helm install yogi target/helm`
 
 
 ## Directory structure for running application
