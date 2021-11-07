@@ -136,17 +136,55 @@
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <version>3.2.0</version>
+                        <executions>
+                            <execution>
+                                <id>regex-property</id>
+                                <goals>
+                                    <goal>regex-property</goal>
+                                </goals>
+                                <configuration>
+                                    <name>image.version</name>
+                                    <value>${project.version}</value>
+                                    <regex>-SNAPSHOT</regex>
+                                    <replacement>-${maven.build.timestamp}</replacement>
+                                    <failIfNoMatch>false</failIfNoMatch>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-resources</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/helm</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>src/helm</directory>
+                                            <filtering>true</filtering>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
                         <groupId>io.fabric8</groupId>
                         <artifactId>docker-maven-plugin</artifactId>
                         <version>0.37.0</version>
                         <configuration>
                             <images>
                                 <image>
-                                    <name>yogi:%t</name>
+                                    <name>yogi:${image.version}</name>
                                     <build>
-                                        <tags>
-                                            <tag>latest</tag>
-                                        </tags>
                                         <dockerFile>${basedir}/src/docker/Dockerfile</dockerFile>
                                         <assembly>
                                             <descriptor>${basedir}/src/docker/assembly.xml</descriptor>

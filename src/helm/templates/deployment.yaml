@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yogi
+  labels:
+    app: yogi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: yogi
+  template:
+    metadata:
+      # https://helm.sh/docs/howto/charts_tips_and_tricks/#automatically-roll-deployments
+      annotations:
+        rollme: {{ randAlphaNum 5 | quote }}
+      labels:
+        app: yogi
+    spec:
+      volumes:
+        - name: yogi-etc
+          hostPath:
+            path: '/storage/yogi/etc'
+        - name: yogi-lib
+          hostPath:
+            path: '/storage/yogi/lib'
+        - name: yogi-run
+          hostPath:
+            path: '/storage/yogi/run'
+      containers:
+      - name: main
+        image: yogi:latest
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            cpu: 2
+          requests:
+            cpu: 200m
+        env:
+          - name: OPTS
+            value: "-Dserver.tomcat.basedir=/usr/local/yogi/run -Dserver.tomcat.accesslog.enabled=true -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,quiet=n,address=8000"
+        volumeMounts:
+          - mountPath: "/usr/local/yogi/etc"
+            name: yogi-etc
+          - mountPath: "/usr/local/yogi/lib"
+            name: yogi-lib
+          - mountPath: "/usr/local/yogi/run"
+            name: yogi-run
