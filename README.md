@@ -13,7 +13,7 @@ Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 
 ## Run in Kubernetes via Helm
 
-* setup helm
+* setup Helm, Kubernetes, ...
 * TODO: configure helm values
 * `mvn clean package -Phelm`
 * `helm install yogi target/helm`
