@@ -11,11 +11,11 @@ Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 * point your browser to `http://localhost:8080` and login with the credentials from src/test/user.properties
 * stop with ctrl-c
 
-## Run locally with Docker
+## Run with Kubernetes
 
-* setup docker
-* `mvn clean package -Pdocker`
-* ./docker-run.sh
+* setup kubernetes, e.g. via minikube
+* `mvn clean package -Pk8s`
+* `helm install target/helm`
 
 
 ## Directory structure for running application

@@ -132,7 +132,7 @@
 
     <profiles>
         <profile>
-            <id>docker</id>
+            <id>k8s</id>
             <build>
                 <plugins>
                     <plugin>
