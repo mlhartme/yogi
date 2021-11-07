@@ -14,6 +14,7 @@ Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 ## Run in Kubernetes via Helm
 
 * setup helm
+* TODO: configure helm values
 * `mvn clean package -Pk8s`
 * `helm install yogi target/helm`
 

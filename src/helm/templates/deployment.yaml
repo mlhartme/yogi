@@ -20,13 +20,13 @@ spec:
       volumes:
         - name: yogi-etc
           hostPath:
-            path: '/storage/yogi/etc'
+            path: '{{ .Values.storage }}/etc'
         - name: yogi-lib
           hostPath:
-            path: '/storage/yogi/lib'
+            path: '{{ .Values.storage }}/lib'
         - name: yogi-run
           hostPath:
-            path: '/storage/yogi/run'
+            path: '{{ .Values.storage }}/run'
       containers:
       - name: main
         image: yogi:latest
