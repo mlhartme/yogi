@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.4.0 (pending)
+## 1.4.0 (2021-11-07)
 
 * new ui
   * new books page
