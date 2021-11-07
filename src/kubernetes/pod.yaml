@@ -21,7 +21,7 @@ spec:
     imagePullPolicy: IfNotPresent
     env:
       - name: OPTS
-        value: "-Dserver.tomcat.basedir=. -Dserver.tomcat.accesslog.enabled=true -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,quiet=n,address=8000"
+        value: "-Dserver.tomcat.basedir=/usr/local/yogi/run -Dserver.tomcat.accesslog.enabled=true -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,quiet=n,address=8000"
     volumeMounts:
       - mountPath: "/usr/local/yogi/etc"
         name: yogi-etc
