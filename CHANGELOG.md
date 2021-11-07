@@ -10,7 +10,8 @@
 * implementation tweaks
   * renamed package net.mlhartme to de.schmizzolin. Reserved de.schmizzolin on Maven central
   * added application properties: yogi.lib, yogi.etc
-  * replaced publish.sh and src/systemd by kubernetes deployments in src/kubernetes
+  * replaced publish.sh, docker-run.sh and src/systemd by kubernetes deployments in src/kubernetes;
+    run yogi with spring-boot:run or kubernetes, not docker
   * renamed *.log to *.protocol
   * renamed .enabled to freigeschaltet.selection
   * update parent 1.5.0 to 1.5.1
