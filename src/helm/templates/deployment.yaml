@@ -29,7 +29,7 @@ spec:
             path: '{{ .Values.storage }}/run'
       containers:
       - name: main
-        image: yogi:latest
+        image: {{ .Values.repositoryTag }}
         imagePullPolicy: IfNotPresent
         resources:
           limits:

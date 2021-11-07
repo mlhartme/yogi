@@ -7,10 +7,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - yogi.schmizzolin.de
+        - {{ .Values.domain }}
       secretName: schmizzolin-tls
   rules:
-    - host: yogi.schmizzolin.de
+    - host: {{ .Values.domain }}
       http:
         paths:
           - path: /(.*)

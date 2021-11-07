@@ -15,7 +15,7 @@ Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 
 * setup helm
 * TODO: configure helm values
-* `mvn clean package -Pk8s`
+* `mvn clean package -Phelm`
 * `helm install yogi target/helm`
 
 

@@ -152,7 +152,7 @@
 
     <profiles>
         <profile>
-            <id>k8s</id>
+            <id>helm</id>
             <build>
                 <plugins>
                     <plugin>

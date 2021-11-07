@@ -1,2 +1,3 @@
+repositoryTag: "yogi:${image.version}"
 storage: "/storage/yogi"
-
+domain: "yogi.schmizzolin.de"
