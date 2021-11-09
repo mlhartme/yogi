@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.1 (pending)
+
+* helm chart
+  * load etc from configured git repository
+
+
 ## 1.4.0 (2021-11-07)
 
 * new ui
