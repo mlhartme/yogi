@@ -19,14 +19,25 @@ spec:
     spec:
       volumes:
         - name: yogi-etc
-          hostPath:
-            path: '{{ .Values.storage }}/etc'
+          emptyDir: {}
         - name: yogi-lib
           hostPath:
             path: '{{ .Values.storage }}/lib'
         - name: yogi-run
           hostPath:
             path: '{{ .Values.storage }}/run'
+      initContainers:
+      - image: "k8s.gcr.io/git-sync/git-sync:v3.3.4"
+        name: git-clone
+        args:
+          - "--branch=main"
+          - "--repo={{ .Values.etcUrl }}"
+          - "--root=/from-git"
+          - "--dest=current"
+          - "--one-time"
+        volumeMounts:
+          - name: yogi-etc
+            mountPath: /from-git
       containers:
       - name: main
         image: {{ .Values.repositoryTag }}
@@ -42,6 +53,8 @@ spec:
         volumeMounts:
           - mountPath: "/usr/local/yogi/etc"
             name: yogi-etc
+            readOnly: true
+            subPath: "current/{{ .Values.etcSubpath }}"
           - mountPath: "/usr/local/yogi/lib"
             name: yogi-lib
           - mountPath: "/usr/local/yogi/run"
