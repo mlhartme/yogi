@@ -10,5 +10,5 @@ etcSubpath: "src/test/etc"
 # name of the tls secret or empty to run without tls (i.e. http only)
 tls:
 
-# host path for persistent data or empty for emptyDir volume
+# host path for persistent data or empty to use emptyDir volumes instead
 storage:
