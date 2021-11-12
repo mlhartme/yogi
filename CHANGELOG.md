@@ -4,7 +4,9 @@
 
 * helm chart
   * load etc from configured git repository
-
+  * adjusted default values to run out of the box
+    * tls is optional now, run http only if not specified
+    * storage is optional now, run in emptyDirs if not specified
 
 ## 1.4.0 (2021-11-07)
 

@@ -1,11 +1,14 @@
 # usually not changes
 repositoryTag: "yogi:${image.version}"
 
-# host path for persistent data
-storage: "/storage/yogi"
-
 # domain yogi is running at
-domain: "yogi.schmizzolin.de"
+domain: "minikube"
 
-# name of the tls certificate
-tls: "schmizzolin-tls"
+etcUrl: "https://github.com/mlhartme/yogi.git"
+etcSubpath: "src/test/etc"
+
+# name of the tls secret or empty to run without tls (i.e. http only)
+tls:
+
+# host path for persistent data or empty for emptyDir volume
+storage:

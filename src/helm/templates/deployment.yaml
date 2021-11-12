@@ -20,12 +20,19 @@ spec:
       volumes:
         - name: yogi-etc
           emptyDir: {}
+{{ if .Values.storage }}
         - name: yogi-lib
           hostPath:
             path: '{{ .Values.storage }}/lib'
         - name: yogi-run
           hostPath:
             path: '{{ .Values.storage }}/run'
+{{ else }}
+        - name: yogi-lib
+          emptyDir: {}
+        - name: yogi-run
+          emptyDir: {}
+{{ end }}
       initContainers:
       - image: "k8s.gcr.io/git-sync/git-sync:v3.3.4"
         name: git-clone
