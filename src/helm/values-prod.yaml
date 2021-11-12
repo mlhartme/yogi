@@ -1,0 +1,14 @@
+# usually not changes
+repositoryTag: "yogi:${image.version}"
+
+# host path for persistent data
+storage: "/storage/yogi"
+
+etcUrl: "https://github.com/mlhartme/yogi.git"
+etcSubpath: "src/test/etc"
+
+# domain yogi is running at
+domain: "yogi.schmizzolin.de"
+
+# name of the tls certificate
+tls: "schmizzolin-tls"
