@@ -5,6 +5,9 @@ repositoryTag: "yogi:${image.version}"
 domain: "minikube"
 
 etcUrl: "https://github.com/mlhartme/yogi.git"
+etcBranch: "main"
+# optional name of a cert secret for ssh urls, see https://github.com/kubernetes/git-sync/blob/release-3.x/docs/ssh.md
+etcCreds:
 etcSubpath: "src/test/etc"
 
 # name of the tls secret or empty to run without tls (i.e. http only)
