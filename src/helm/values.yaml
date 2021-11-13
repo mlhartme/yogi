@@ -4,6 +4,7 @@ repositoryTag: "yogi:${image.version}"
 # domain yogi is running at
 domain: "minikube"
 
+# git repository to load books and user configuration from
 etcUrl: "https://github.com/mlhartme/yogi.git"
 etcBranch: "main"
 # optional name of a cert secret for ssh urls, see https://github.com/kubernetes/git-sync/blob/release-3.x/docs/ssh.md
