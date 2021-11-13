@@ -39,6 +39,7 @@ spec:
             secretName: {{ .Values.etcCreds }}
             defaultMode: 0400
 {{ end }}
+      # see https://github.com/kubernetes/git-sync/blob/release-3.x/docs/ssh.md
       initContainers:
       - image: "k8s.gcr.io/git-sync/git-sync:v3.3.4"
         name: git-clone

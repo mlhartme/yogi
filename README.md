@@ -13,6 +13,7 @@ Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 
 ## Run in Kubernetes via Helm
 
+* see src/helm/values.yaml for available options
 * setup Helm, Kubernetes, ...
 * TODO: configure helm values
 * `mvn clean package -Phelm`
