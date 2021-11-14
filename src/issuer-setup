@@ -1,0 +1,23 @@
+#!/bin/sh
+file=file.txt
+email=michael@schmizzolin.de
+cat >$file <<PART1
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt
+spec:
+  acme:
+PART1
+echo "    email: $email" >>$file
+cat >>$file <<PART2
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letencrypt-issuer-account-key
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
+PART2
+kubectl apply -f $file
+rm $file
