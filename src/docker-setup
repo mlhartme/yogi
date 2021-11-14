@@ -1,0 +1,25 @@
+#!/bin/sh
+if [ "$#" -ne 1 ] ; then
+  echo "usage: docker-setup <host>"
+  exit 1
+fi
+set -e
+host=$1
+dir=$HOME/$host-docker
+mkdir $dir
+cd $dir
+scp "$host:~/.minikube/certs/*" .
+envfile=$dir/docker-env
+echo "export DOCKER_TLS=1" > $envfile
+echo "export DOCKER_HOST=tcp://localhost:2376" >> $envfile
+echo "export DOCKER_CERT_PATH=$dir" >> $envfile
+dockerenv="$(ssh $host minikube docker-env | grep DOCKER_)"
+run=$dir/run
+ip=$(echo "$dockerenv" | grep DOCKER_HOST | cut -f 2 -d = | cut -f 3 -d / | cut -f 1 -d :)
+echo "ip is $ip"
+echo "#!/bin/sh" >$run
+echo "set -e" >>$run
+echo "ssh -nNT -L localhost:2376:$ip:2376 $host" >>$run
+chmod a+x $run
+echo
+echo "done, created $dir"
