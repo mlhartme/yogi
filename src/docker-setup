@@ -1,5 +1,12 @@
 #!/bin/sh
+# Easiest would be DOCKER_HOST with ssh url, but that's not supported by fabric8 docker plugin.
+# Alternative would be a public docker daemon with authentication, but that's tedious to setup:
+# * genereate certs for the respective domain
+#   (see https://docs.docker.com/engine/security/protect-access/, remove passphrase with openssl rsa -in ca-key.pem -out new.key,
+#    copy to ~/.minikube/files/etc/docker/certs)
+# So this script if the best alternative I know:
 if [ "$#" -ne 1 ] ; then
+  echo "connects to a docker daemon within minikube on a remote machine"
   echo "usage: docker-setup <host>"
   exit 1
 fi

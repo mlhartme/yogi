@@ -1,6 +1,14 @@
 #!/bin/sh
+if [ "$#" -ne 1 ] ; then
+  echo "installs cert-manager and a letencrypt issuer into the current kubernetes context"
+  echo "usage: issuer-setup <email>"
+  exit 1
+fi
+set -e
+email=$1
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.6.0/cert-manager.yaml
+
 file=file.txt
-email=michael@schmizzolin.de
 cat >$file <<PART1
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
