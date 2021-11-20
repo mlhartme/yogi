@@ -1,9 +1,6 @@
 # usually not changes
 repositoryTag: "yogi:${image.version}"
 
-# domain yogi is running at
-domain: "minikube"
-
 # git repository to load books and user configuration from
 etcUrl: "https://github.com/mlhartme/yogi.git"
 etcBranch: "main"
@@ -17,6 +14,9 @@ etcSubpath: "src/test/etc"
 
 # name of the tls secret or empty to run without tls (i.e. http only)
 tls:
+
+# domain yogi is running at
+host:
 
 # host path for persistent data or empty to use emptyDir volumes instead
 storage:

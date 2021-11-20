@@ -7,7 +7,7 @@ etcSubpath: ""
 etcCreds: "git-creds"
 
 # domain yogi is running at
-domain: "yogi.schmizzolin.de"
+host: "yogi.schmizzolin.de"
 
 # name of the tls certificate
 tls: "schmizzolin-tls"

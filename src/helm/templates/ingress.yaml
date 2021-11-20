@@ -4,17 +4,23 @@ metadata:
   name: yogi-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$1
+{{ if .Values.tls }}
     cert-manager.io/cluster-issuer: letsencrypt
+{{ end }}
 spec:
 {{ if .Values.tls }}
   tls:
     - hosts:
-        - {{ .Values.domain }}
+        - {{ .Values.host }}
       secretName: {{ .Values.tls }}
 {{ end }}
   rules:
-    - host: {{ .Values.domain }}
+{{ if .Values.host }}
+    - host: {{ .Values.host }}
       http:
+{{ else }}
+    - http:
+{{ end }}
         paths:
           - path: /(.*)
             pathType: Prefix
