@@ -13,11 +13,14 @@ Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 
 ## Run in Kubernetes via Helm
 
-* see src/helm/values.yaml for available options
 * setup Helm, Kubernetes, ...
-* TODO: configure helm values
 * `mvn clean package -Phelm`
 * `helm install yogi target/helm`
+* kubectl port-forward service/yogi 8080:80
+* point your browser to `http://localhost:8080` and login with the credentials from src/test/user.properties
+
+
+See src/helm/values.yaml for available options
 
 
 ## Directory structure for running application
