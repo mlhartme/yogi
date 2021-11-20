@@ -52,7 +52,10 @@ public class YogiController {
         this.userFiles = userFiles;
         this.library = Library.load(world.file(etc).join("books").checkDirectory());
         this.version = world.resource("yogi.version").readString().trim();
-        System.out.println("started YogiController " + version);
+        System.out.println("started YogiController " + version + ", loaded " + library.size() + " books:");
+        for (Book b : library) {
+            System.out.println("  " + b.name + " - " + b.size() + " words");
+        }
     }
 
     @ModelAttribute("yogiVersion")

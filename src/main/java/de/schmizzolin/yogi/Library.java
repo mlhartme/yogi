@@ -43,6 +43,10 @@ public class Library implements Iterable<Book> {
         this.books = new ArrayList<>();
     }
 
+    public int size() {
+        return books.size();
+    }
+
     public Book get(String name) throws IOException {
         for (Book book : books) {
             if (book.name.equals(name)) {
