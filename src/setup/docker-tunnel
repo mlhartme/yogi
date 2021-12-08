@@ -1,13 +1,14 @@
 #!/bin/sh
+# I want to connect local docker to a remote docker host
 # Easiest would be DOCKER_HOST with ssh url, but that's not supported by fabric8 docker plugin.
 # Alternative would be a public docker daemon with authentication, but that's tedious to setup:
 # * genereate certs for the respective domain
 #   (see https://docs.docker.com/engine/security/protect-access/, remove passphrase with openssl rsa -in ca-key.pem -out new.key,
 #    copy to ~/.minikube/files/etc/docker/certs)
-# So this script if the best alternative I know:
+# So this script if the best alternative I found -- setup ssh tunnel
 if [ "$#" -ne 1 ] ; then
   echo "connects to a docker daemon within minikube on a remote machine"
-  echo "usage: docker-setup <host>"
+  echo "usage: docker-tunnel <host>"
   exit 1
 fi
 set -e
@@ -21,7 +22,7 @@ echo "export DOCKER_TLS=1" > $envfile
 echo "export DOCKER_HOST=tcp://localhost:2376" >> $envfile
 echo "export DOCKER_CERT_PATH=$dir" >> $envfile
 dockerenv="$(ssh $host minikube docker-env | grep DOCKER_)"
-run=$dir/run
+run=$dir/tunnel
 ip=$(echo "$dockerenv" | grep DOCKER_HOST | cut -f 2 -d = | cut -f 3 -d / | cut -f 1 -d :)
 echo "ip is $ip"
 echo "#!/bin/sh" >$run
@@ -30,3 +31,4 @@ echo "ssh -nNT -L localhost:2376:$ip:2376 $host" >>$run
 chmod a+x $run
 echo
 echo "done, created $dir"
+echo "run $dir/tunnel and source $dir/docker-env"
