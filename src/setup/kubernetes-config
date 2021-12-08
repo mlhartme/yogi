@@ -23,3 +23,5 @@ fi
 scp "$host:~/.kube/config" $dest
 sed "s/\(.*\)server:\(.*\)/\1server: https:\/\/$host:8443/g" $dest >$dest-tmp
 mv $dest-tmp $dest
+chmod 600 $dest
+echo "done, try 'kubectl cluster-info'"
