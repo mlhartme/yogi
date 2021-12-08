@@ -14,10 +14,12 @@ fi
 set -e
 host=$1
 dir=$HOME/.kube
+dest=$dir/config
 mkdir -p $dir
-cd $dest=$dir/config
 if [ -f $dest ] ; then
   echo "configuration already exists: $dest"
   exit 1
 fi
 scp "$host:~/.kube/config" $dest
+sed "s/\(.*\)server:\(.*\)/\1server: https:\/\/$host:8443/g" $dest >$dest-tmp
+mv $dest-tmp $dest
