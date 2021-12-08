@@ -1,0 +1,23 @@
+#!/bin/sh
+# I want to connect local docker to a remote docker host
+# Easiest would be DOCKER_HOST with ssh url, but that's not supported by fabric8 docker plugin.
+# Alternative would be a public docker daemon with authentication, but that's tedious to setup:
+# * genereate certs for the respective domain
+#   (see https://docs.docker.com/engine/security/protect-access/, remove passphrase with openssl rsa -in ca-key.pem -out new.key,
+#    copy to ~/.minikube/files/etc/docker/certs)
+# So this script if the best alternative I found -- setup ssh tunnel
+if [ "$#" -ne 1 ] ; then
+  echo "create ~/.kube/config-<host> to connect to remove minikube"
+  echo "usage: docker <host>"
+  exit 1
+fi
+set -e
+host=$1
+dir=$HOME/.kube
+mkdir -p $dir
+cd $dest=$dir/config
+if [ -f $dest ] ; then
+  echo "configuration already exists: $dest"
+  exit 1
+fi
+scp "$host:~/.kube/config" $dest
