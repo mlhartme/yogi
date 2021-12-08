@@ -7,8 +7,8 @@
 #    copy to ~/.minikube/files/etc/docker/certs)
 # So this script if the best alternative I found -- setup ssh tunnel
 if [ "$#" -ne 1 ] ; then
-  echo "connects to a docker daemon within minikube on a remote machine"
-  echo "usage: docker-tunnel <host>"
+  echo "create configuration ~/docker-<host> directory to connect to docker daemon within minikube on a remote machine"
+  echo "usage: docker <host>"
   exit 1
 fi
 set -e
