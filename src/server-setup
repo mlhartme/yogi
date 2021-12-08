@@ -1,0 +1,1 @@
+minikube start --apiserver-names=mops.schmizzolin.de --embed-certs=true --listen-address=0.0.0.0 --ports 10080:80,10443:443,18443:8443,12376:2376 --addons=ingress --mount --mount-string='/data:/storage'
