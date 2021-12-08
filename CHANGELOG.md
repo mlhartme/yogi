@@ -8,6 +8,8 @@
     * tls is optional now, run http only if not specified
     * storage is optional now, run in emptyDirs if not specified
 * print loaded books on startup
+* update java 16 to java 17 in Docker image
+
 
 ## 1.4.0 (2021-11-07)
 

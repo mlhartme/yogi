@@ -1,9 +1,9 @@
-FROM debian:sid-slim
+FROM debian:sid-20211201-slim
 ENV LANG de_DE.UTF-8
 ENV OPTS ""
 RUN mkdir -p /usr/share/man/man1 && \
     apt-get update && \
-    apt-get install -y --no-install-recommends procps curl locales locales-all openjdk-16-jdk-headless && \
+    apt-get install -y --no-install-recommends procps curl locales locales-all openjdk-17-jdk-headless && \
     mkdir /usr/local/yogi && \
     mkdir /usr/local/yogi/run
 
