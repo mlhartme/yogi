@@ -7,21 +7,35 @@
 #    copy to ~/.minikube/files/etc/docker/certs)
 # So this script if the best alternative I found -- setup ssh tunnel
 if [ "$#" -ne 1 ] ; then
-  echo "create ~/.kube/config-<host> to connect to remove minikube"
-  echo "usage: docker <host>"
+  echo "invalid arguments"
+  echo "creates configuration in ./.config to connect to remote docker and kubernetes"
+  echo "usage: remote-config <host>"
   exit 1
 fi
 set -e
 host=$1
-dir=$HOME/.kube
-dest=$dir/config
-mkdir -p $dir
-if [ -f $dest ] ; then
-  echo "configuration already exists: $dest"
-  exit 1
-fi
+dir=$(pwd)/.config
+mkdir $dir
+cd $dir
+
+# docker config
+
+scp "$host:~/.minikube/certs/*" . >$dir/scp.log
+envfile=$dir/docker-env
+echo "export DOCKER_TLS=1" > $envfile
+echo "export DOCKER_HOST=tcp://$host:2376" >> $envfile
+echo "export DOCKER_CERT_PATH=$dir" >> $envfile
+
+# kubernetes config
+
+dest=$dir/kube-config
 scp "$host:~/.kube/config" $dest
 sed "s/\(.*\)server:\(.*\)/\1server: https:\/\/$host:8443/g" $dest >$dest-tmp
 mv $dest-tmp $dest
 chmod 600 $dest
-echo "done, try 'kubectl cluster-info'"
+
+# success
+
+echo "done"
+echo " to point docker to $host: source $envfile"
+echo " to point kubernetes to $host: cp $dest"
