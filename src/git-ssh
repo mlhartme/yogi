@@ -5,6 +5,7 @@ set -ex
 dest=target/ssh
 secret=git-creds
 mkdir -p $dest
+# TODO: why -4 ?
 ssh-keyscan -4 mops.schmizzolin.de > $dest/known_hosts || (echo "ssh-keyscan failed"; exit 1)
 cp $HOME/.ssh/id_rsa $dest/
 ssh-keygen -p -f $dest/id_rsa
