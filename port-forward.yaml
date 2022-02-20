@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: port-forward
+  labels:
+    app: port-forward
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: port-forward
+  template:
+    metadata:
+      labels:
+        app: port-forward
+    spec:
+      hostNetwork: true
+      containers:
+      - name: http
+        image: alpine/socat:latest
+        args: 
+        - "TCP-LISTEN:80,fork,reuseaddr"
+        - "TCP:localhost:30476"
+      - name: https
+        image: alpine/socat:latest
+        args: 
+        - "TCP-LISTEN:443,fork,reuseaddr"
+        - "TCP:localhost:32129"
