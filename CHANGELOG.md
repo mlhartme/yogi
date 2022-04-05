@@ -9,6 +9,7 @@
     * storage is optional now, run in emptyDirs if not specified
 * print loaded books on startup
 * update java 16 to java 17 in Docker image
+* update springboot 2.5.6 to 2.5.12
 
 
 ## 1.4.0 (2021-11-07)
