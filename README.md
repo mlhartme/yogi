@@ -12,6 +12,17 @@ Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
   login with the credentials from src/test/etc/user.properties
 * stop with ctrl-c
 
+## Build and run locally with docker
+
+... with example vocabulary.
+
+* `mvn clean package -Phelm`
+* `docker run -it -p8080:8080 -v/Users/mhm/Projects/github.com/mlhartme/yogi:/usr/local/yogi/run yogi:1.4.1-20221009-163429`
+* point your browser to `http://localhost:8080` and
+  login with the credentials from src/test/etc/user.properties
+* stop with ctrl-c
+
+
 ## Run in Kubernetes via Helm
 
 * setup Helm, Kubernetes, ...
@@ -28,13 +39,13 @@ See src/helm/values.yaml for available options
 
 ## Directory structure for running application
 
-${yogi.etc}
+${yogi.etc}                 configuration -- system property, default is ./src/test/etc
   - user.properties
   - books                   available books
      - <book-1.yogi>
      - <book-1.png>
      - ...
-${yogi.lib}                 persistent stage
+${yogi.lib}                 persistent state -- system property, default is .yogilib
   - <user>                  userFiles
     - <book>
       - *.selection         Arbitrary Selection

@@ -1,4 +1,4 @@
-# usually not changes
+# usually not changed
 repositoryTag: "yogi:${image.version}"
 
 # git repository to load books and user configuration from
