@@ -15,7 +15,7 @@
 
     <properties>
         <maven.build.timestamp.format>yyyyMMdd-HHmmss</maven.build.timestamp.format>
-        <springboot.version>2.5.12</springboot.version>
+        <springboot.version>2.7.4</springboot.version>
     </properties>
 
     <scm>
@@ -66,7 +66,7 @@
         <dependency>
             <groupId>org.thymeleaf</groupId>
             <artifactId>thymeleaf-spring5</artifactId>
-            <version>3.0.12.RELEASE</version>
+            <version>3.0.15.RELEASE</version>
         </dependency>
         <dependency><!-- to support "temporals" in templates -->
             <groupId>org.thymeleaf.extras</groupId>
@@ -76,7 +76,7 @@
         <dependency>
             <groupId>nz.net.ultraq.thymeleaf</groupId>
             <artifactId>thymeleaf-layout-dialect</artifactId>
-            <version>2.5.2</version>
+            <version>2.5.3</version><!-- TODO: 3.1 -->
         </dependency>
 
         <dependency>
