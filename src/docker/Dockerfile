@@ -1,18 +1,12 @@
-FROM debian:sid-20211201-slim
-ENV LANG de_DE.UTF-8
+FROM debian:bullseye-20220912-slim
 ENV OPTS ""
-RUN mkdir -p /usr/share/man/man1 && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends procps curl locales locales-all openjdk-17-jdk-headless && \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends procps curl openjdk-17-jre-headless && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
     mkdir /usr/local/yogi && \
     mkdir /usr/local/yogi/run
-
-COPY maven/*-springboot.jar /usr/local/yogi/yogi.jar
-
 WORKDIR /usr/local/yogi/run
-
-RUN export RUN=/usr/local/yogi/yogi.sh && \
-    echo "#!/bin/sh" >$RUN && \
-    echo "exec java -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 \$OPTS -jar /usr/local/yogi/yogi.jar" >>$RUN && \
-    chmod a+x $RUN
-ENTRYPOINT ["/usr/local/yogi/yogi.sh"]
+COPY maven/*.jar /usr/local/yogi/app.jar
+ENV LANG=C.UTF-8
+ENTRYPOINT ["java", "-jar", "/usr/local/yogi/app.jar" ]

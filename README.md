@@ -16,8 +16,8 @@ Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 
 ... with example vocabulary.
 
-* `mvn clean package -Phelm`
-* `docker run -it -p8080:8080 -v/Users/mhm/Projects/github.com/mlhartme/yogi:/usr/local/yogi/run yogi:1.4.1-20221009-163429`
+* `mvn clean package -Pkubernetes`
+* `docker run -it -p8080:8080 -v/Users/mhm/Projects/github.com/mlhartme/yogi:/usr/local/yogi/run ghcr.io/mlhartme/yogi:1.4.1-20221009-165518`
 * point your browser to `http://localhost:8080` and
   login with the credentials from src/test/etc/user.properties
 * stop with ctrl-c
@@ -26,7 +26,7 @@ Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 ## Run in Kubernetes via Helm
 
 * setup Helm, Kubernetes, ...
-* `mvn clean package -Phelm`
+* `mvn clean package -Pkubernetes`
 * `helm install yogi target/helm`
 * if you have an ingress controller in your cluster: point your browser to http:<cluster-ip>/
   otherwise:

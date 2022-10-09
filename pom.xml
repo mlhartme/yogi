@@ -125,7 +125,6 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${springboot.version}</version>
                 <configuration>
-                    <classifier>springboot</classifier>
                     <jvmArguments>-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments>
                 </configuration>
                 <executions>
@@ -146,12 +145,11 @@
                 </configuration>
             </plugin>
         </plugins>
-
     </build>
 
     <profiles>
         <profile>
-            <id>helm</id>
+            <id>kubernetes</id>
             <build>
                 <plugins>
                     <plugin>
@@ -178,16 +176,14 @@
                     <plugin>
                         <groupId>io.fabric8</groupId>
                         <artifactId>docker-maven-plugin</artifactId>
-                        <version>0.37.0</version>
+                        <version>0.40.2</version>
                         <configuration>
                             <images>
                                 <image>
-                                    <name>yogi:${image.version}</name>
+                                    <name>ghcr.io/mlhartme/yogi:${image.version}</name>
                                     <build>
                                         <dockerFile>${basedir}/src/docker/Dockerfile</dockerFile>
-                                        <assembly>
-                                            <descriptor>${basedir}/src/docker/assembly.xml</descriptor>
-                                        </assembly>
+                                        <assembly><descriptorRef>artifact</descriptorRef></assembly>
                                     </build>
                                 </image>
                             </images>

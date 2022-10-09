@@ -2,6 +2,8 @@
 
 ## 1.4.1 (pending)
 
+* improved Dockerfile
+* use ghcr -- changed image name to ghcr.io/mlhartme/yogi
 * helm chart
   * load etc from configured git repository
   * adjusted default values to run out of the box
