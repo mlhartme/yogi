@@ -13,6 +13,7 @@
 * update java 16 to java 17 in Docker image
 * update springboot 2.5.6 to 2.7.4
 * update thymeleaf-dialect 2.5.3 to 3.1.0
+* update bootstrap 5.1.1 to 5.2.2
 * update parent pom to 1.6.0
 
 
