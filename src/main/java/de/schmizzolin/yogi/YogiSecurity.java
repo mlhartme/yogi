@@ -46,7 +46,7 @@ public class YogiSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable() // TODO: post logout and get rid of this ...
+        http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/static/**", "/webjars/**").permitAll()
                 .anyRequest().authenticated()

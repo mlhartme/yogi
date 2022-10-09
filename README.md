@@ -8,7 +8,8 @@ Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 ... with example vocabulary.
 
 * `mvn clean package spring-boot:run`
-* point your browser to `http://localhost:8080` and login with the credentials from src/test/user.properties
+* point your browser to `http://localhost:8080` and 
+  login with the credentials from src/test/etc/user.properties
 * stop with ctrl-c
 
 ## Run in Kubernetes via Helm
