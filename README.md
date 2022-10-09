@@ -31,7 +31,6 @@ Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 ## Run in Kubernetes via Helm
 
 * setup Helm, Kubernetes, ...
-* `mvn clean package -Pkubernetes`
 * `helm install yogi target/helm`
 * if you have an ingress controller in your cluster: point your browser to http:<cluster-ip>/
   otherwise:
