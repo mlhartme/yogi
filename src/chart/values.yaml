@@ -16,8 +16,8 @@ lib: "/storage/yogi/lib"
 
 # etc... values configure how to access yogi etc
 # git repository to load books and user configuration from
-etcUrl: "ssh://git@mops.schmizzolin.de/srv/git/yogi-etc.git"
-etcBranch: "master"
+etcUrl: "git@github.com:mlhartme/yogi-etc.git"
+etcBranch: "main"
 etcSubpath: ""
 # optional name of a cert secret for ssh urls; to create it:
 # * temporarily create ssh key without passphrase using ssh-keygen -p

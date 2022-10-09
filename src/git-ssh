@@ -2,15 +2,12 @@
 # Packages mit private key without passphase into a kubernetes secret
 # see https://github.com/kubernetes/git-sync/blob/release-3.x/docs/ssh.md
 
-set -ex
+set -
 dest=target/ssh
-secret=git-creds
 mkdir -p $dest
-# TODO: why -4 ?
-ssh-keyscan -4 mops.schmizzolin.de > $dest/known_hosts || (echo "ssh-keyscan failed"; exit 1)
-cp $HOME/.ssh/id_rsa $dest/
-ssh-keygen -p -f $dest/id_rsa
-kubectl create secret generic $secret --from-file=ssh=$dest/id_rsa --from-file=known_hosts=$dest/known_hosts
+ssh-keyscan -4 github.com > $dest/known_hosts || (echo "ssh-keyscan failed"; exit 1)
+# etckey was generated with   "ssh-keygen -t rsa"
+kubectl create secret generic git-creds --from-file=ssh=etckey/id_rsa --from-file=known_hosts=$dest/known_hosts
 rm -rf $dest
 echo done
 
