@@ -1,5 +1,5 @@
 FROM debian:bullseye-20220912-slim
-ENV OPTS ""
+ENV OPTS=""
 RUN apt-get update && \
     apt-get install -y --no-install-recommends procps curl openjdk-17-jre-headless && \
     apt-get clean && \
@@ -9,4 +9,4 @@ RUN apt-get update && \
 WORKDIR /usr/local/yogi/run
 COPY maven/*.jar /usr/local/yogi/app.jar
 ENV LANG=C.UTF-8
-ENTRYPOINT ["java", "-jar", "/usr/local/yogi/app.jar" ]
+ENTRYPOINT [ "sh", "-c", "exec java $OPTS -jar /usr/local/yogi/app.jar" ]

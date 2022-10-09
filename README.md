@@ -28,17 +28,14 @@ Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 * stop with ctrl-c
 
 
-## Run in Kubernetes via Helm
+## Run in Kubernetes via Helm - deploy to yogi.schmizzolin.de
 
 * setup Helm, Kubernetes, ...
-* `helm install yogi target/chart`
-* if you have an ingress controller in your cluster: point your browser to http:<cluster-ip>/
-  otherwise:
-  * kubectl port-forward service/yogi 8080:80
-  * point your browser to `http://localhost:8080`
-* login with the credentials from src/test/user.properties
+* ./src/git-ssh 
+* `helm upgrade yogi oci://ghcr.io/mlhartme/charts/yogi --version 1.4.1-20221009-191944`
+* point your browser to https://yogi.schmizzolin.de/
 
-See src/helm/values.yaml for available options
+See src/charts/values.yaml for available options
 
 
 ## Directory structure for running application

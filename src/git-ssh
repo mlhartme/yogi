@@ -1,4 +1,5 @@
 #!/bin/sh
+# Packages mit private key without passphase into a kubernetes secret
 # see https://github.com/kubernetes/git-sync/blob/release-3.x/docs/ssh.md
 
 set -ex

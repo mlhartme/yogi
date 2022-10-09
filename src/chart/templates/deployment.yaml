@@ -21,7 +21,7 @@ spec:
 {{ if .Values.run }}
         - name: yogi-run
           hostPath:
-            path: '{{ .Values.storage }}'
+            path: '{{ .Values.run }}'
 {{ else }}
         - name: yogi-run
           emptyDir: {}
@@ -77,7 +77,7 @@ spec:
             cpu: 200m
         env:
           - name: OPTS
-            value: "-Dserver.tomcat.basedir=/usr/local/yogi/run -Dserver.tomcat.accesslog.enabled=true -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,quiet=n,address=8000"
+            value: "-Dyogi.etc=/usr/local/yogi/etc -Dyogi.lib=/usr/local/yogi/lib -Dserver.tomcat.basedir=/usr/local/yogi/run -Dserver.tomcat.accesslog.enabled=true -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,quiet=n,address=8000"
         volumeMounts:
           - mountPath: "/usr/local/yogi/etc"
             name: yogi-etc
