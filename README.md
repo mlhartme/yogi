@@ -31,7 +31,7 @@ Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 ## Run in Kubernetes via Helm
 
 * setup Helm, Kubernetes, ...
-* `helm install yogi target/helm`
+* `helm install yogi target/chart`
 * if you have an ingress controller in your cluster: point your browser to http:<cluster-ip>/
   otherwise:
   * kubectl port-forward service/yogi 8080:80
@@ -56,10 +56,7 @@ ${yogi.lib}                 persistent state -- system property, default is .yog
       - 1.protocol          Übung 1
       - 2.protocol          Übung 2
       - ...
-
-The docker container also creates
-
-<cwd>       (/usr/local/yogi/run)
+<cwd>                       container sets working directory to /usr/local/yogi/run (TODO: yogi.run property)
   - work    Tomcat work mkdir
   - logs    Tomcat access logs
 

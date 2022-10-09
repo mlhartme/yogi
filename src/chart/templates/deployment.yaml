@@ -18,21 +18,24 @@ spec:
         app: yogi
     spec:
       volumes:
-        - name: yogi-etc
-          emptyDir: {}
-{{ if .Values.storage }}
-        - name: yogi-lib
-          hostPath:
-            path: '{{ .Values.storage }}/lib'
+{{ if .Values.run }}
         - name: yogi-run
           hostPath:
-            path: '{{ .Values.storage }}/run'
+            path: '{{ .Values.storage }}'
 {{ else }}
-        - name: yogi-lib
-          emptyDir: {}
         - name: yogi-run
           emptyDir: {}
 {{ end }}
+{{ if .Values.lib }}
+        - name: yogi-lib
+          hostPath:
+            path: '{{ .Values.lib }}'
+{{ else }}
+        - name: yogi-lib
+          emptyDir: {}
+{{ end }}
+        - name: yogi-etc
+          emptyDir: {}
 {{ if .Values.etcCreds }}
         - name: etc-secret
           secret:
