@@ -3,20 +3,25 @@
 Vocabulary trainer. For Germans to learn e.g. English. User interface is german.
 Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 
-## Build and run locally
+## Building
+
+`mvn clean package`
+
+(or `mvn clean package -P\!kubernetes` to build without Docker/Kubernetes stuff)
+
+## Run locally
 
 ... with example vocabulary.
 
-* `mvn clean package spring-boot:run`
+* `mvn spring-boot:run`
 * point your browser to `http://localhost:8080` and 
   login with the credentials from src/test/etc/user.properties
 * stop with ctrl-c
 
-## Build and run locally with docker
+## Run container locally
 
 ... with example vocabulary.
 
-* `mvn clean package -Pkubernetes`
 * `docker run -it -p8080:8080 -v/Users/mhm/Projects/github.com/mlhartme/yogi:/usr/local/yogi/run ghcr.io/mlhartme/yogi:1.4.1-20221009-165518`
 * point your browser to `http://localhost:8080` and
   login with the credentials from src/test/etc/user.properties
