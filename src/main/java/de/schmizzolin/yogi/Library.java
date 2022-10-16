@@ -26,6 +26,7 @@ import org.kohsuke.github.GHAsset;
 import org.kohsuke.github.GHRelease;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
+import org.kohsuke.github.GitHubBuilder;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -34,6 +35,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 public class Library implements Iterable<Book> {
     public static void main(String[] args) throws Exception {
@@ -48,10 +50,25 @@ public class Library implements Iterable<Book> {
         }
     }
     public static Library loadGithubRelease(World world, String repository, String token) throws IOException {
-        GHAsset asset = latest(GitHub.connect(), repository);
+        Properties p = new Properties();
+
+        token = resolveToken(world, token);
+        if (token != null) {
+            p.setProperty("oauth", token);
+        }
+        GHAsset asset = latest(GitHubBuilder.fromProperties(p).build(), repository);
         return download(world, asset.getUrl().toString(), token);
     }
 
+    private static String resolveToken(World world, String token) throws IOException {
+        if (token == null || token.trim().isEmpty()) {
+            return null;
+        }
+        if (token.startsWith("file:")) {
+            token = world.file(token.substring(5)).readString().trim();
+        }
+        return token;
+    }
     public static Library download(World world, String url, String token) throws IOException {
         HttpNode http;
         FileNode tmp;
@@ -64,7 +81,8 @@ public class Library implements Iterable<Book> {
         tmp = world.getTemp().createTempFile();
         try {
             HeaderList headers = HeaderList.of("Accept", "application/octet-stream");
-            if (token != null && !token.isEmpty()) {
+            token = resolveToken(world, token);
+            if (token != null) {
                 headers.add("Authorization", "Bearer " + token);
             }
             http = http.withHeaders(headers);

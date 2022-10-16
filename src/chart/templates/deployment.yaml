@@ -77,7 +77,7 @@ spec:
             cpu: 200m
         env:
           - name: OPTS
-            value: "-Dyogi.etc=/usr/local/yogi/etc -Dyogi.lib=/usr/local/yogi/lib -Dserver.tomcat.basedir=/usr/local/yogi/run -Dserver.tomcat.accesslog.enabled=true -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,quiet=n,address=8000"
+            value: "-Dyogi.library={{ .Values.library }} -Dyogi.libraryToken=file:/var/local/yogi/secrets/libraryToken -Dyogi.etc=/usr/local/yogi/etc -Dyogi.lib=/usr/local/yogi/lib -Dserver.tomcat.basedir=/usr/local/yogi/run -Dserver.tomcat.accesslog.enabled=true -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,quiet=n,address=8000"
         volumeMounts:
           - mountPath: "/usr/local/yogi/etc"
             name: yogi-etc
