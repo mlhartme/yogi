@@ -16,14 +16,118 @@
 package de.schmizzolin.yogi;
 
 import net.oneandone.sushi.fs.Node;
+import net.oneandone.sushi.fs.NodeInstantiationException;
+import net.oneandone.sushi.fs.World;
+import net.oneandone.sushi.fs.file.FileNode;
+import net.oneandone.sushi.fs.http.HttpNode;
+import net.oneandone.sushi.fs.http.MovedTemporarilyException;
+import net.oneandone.sushi.fs.http.model.HeaderList;
+import org.kohsuke.github.GHAsset;
+import org.kohsuke.github.GHRelease;
+import org.kohsuke.github.GHRepository;
+import org.kohsuke.github.GitHub;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 public class Library implements Iterable<Book> {
+    public static void main(String[] args) throws Exception {
+        World world;
+        String token;
+
+        world = World.create();
+        token = world.getHome().join(".github").readProperties().getProperty("oauth");
+        run(world, "mlhartme/yogi-etc", token);
+    }
+    public static void run(World world, String repository, String token) throws IOException {
+        GitHub github = GitHub.connect();
+        List<Book> books;
+
+        GHAsset asset = latest(github, repository);
+        books = download(world, asset.getUrl().toString(), token);
+        for (Book b : books) {
+            System.out.println("book " + b.name);
+        }
+    }
+
+    public static List<Book> download(World world, String url, String token) throws IOException {
+        HttpNode http;
+        FileNode tmp;
+        List<Book> result;
+
+        result = new ArrayList<>();
+        try {
+            http = (HttpNode) world.node(url);
+        } catch (NodeInstantiationException|URISyntaxException e) {
+            throw new IOException(url + ": " + e.getMessage());
+        }
+        tmp = world.getTemp().createTempFile();
+        try {
+            HeaderList headers = HeaderList.of("Accept", "application/octet-stream");
+            if (token != null) {
+                headers.add("Authorization", "Bearer " + token);
+            }
+            http = http.withHeaders(headers);
+            try {
+                http.copyFile(tmp);
+            } catch (IOException e) {
+                if (rootCause(e) instanceof MovedTemporarilyException rc) {
+                    return download(world, rc.location, token);
+                } else {
+                    throw e;
+                }
+            }
+            Node<?> zip = tmp.openZip();
+            for (Node<?> f : zip.find("*.yogi")) {
+                Node<?> jpg = zip.join(f.getBasename() + ".jpg");
+                result.add(Book.load(f, jpg.readBytes()));
+            }
+        } finally {
+            tmp.deleteFile();
+        }
+        return result;
+    }
+
+    private static Throwable rootCause(Throwable e) {
+        while (e.getCause() != null) {
+            e = e.getCause();
+        }
+        return e;
+    }
+    public static GHAsset latest(GitHub github, String repository) throws IOException {
+        GHRepository repo;
+        GHAsset result;
+        Date date;
+
+        repo = github.getRepository(repository);
+        date = null;
+        result = null;
+        for (GHRelease release : repo.listReleases().toList()) {
+            var asset = getBookOpt(release);
+            if (asset != null) {
+                var d = asset.getCreatedAt();
+                if (date == null || d.compareTo(date) > 0) {
+                    date = d;
+                    result = asset;
+                }
+            }
+        }
+        return result;
+    }
+
+    public static GHAsset getBookOpt(GHRelease release) throws IOException {
+        for (GHAsset a : release.listAssets().toList()) {
+            if (a.getName().equals("books.jar")) {
+                return a;
+            }
+        }
+        return null;
+    }
     public static Library load(Node<?> base) throws IOException {
         Library result;
         byte[] jpg;
