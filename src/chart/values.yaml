@@ -5,8 +5,8 @@ repositoryTag: "ghcr.io/mlhartme/yogi:${image.version}"
 host: "yogi.schmizzolin.de"
 
 library: "mlhartme/yogi-etc"
-libraryToken: "${github.oauth}"
-userProperties: ${chartUserProperties}
+libraryToken:
+userProperties:
 
 # name of the tls secret or empty to run without tls (i.e. http only)
 tls: "yogi-schmizzolin-tls"
