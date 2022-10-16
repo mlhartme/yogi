@@ -46,21 +46,19 @@ public class Library implements Iterable<Book> {
     }
     public static void run(World world, String repository, String token) throws IOException {
         GitHub github = GitHub.connect();
-        List<Book> books;
+        Library library;
 
         GHAsset asset = latest(github, repository);
-        books = download(world, asset.getUrl().toString(), token);
-        for (Book b : books) {
+        library = download(world, asset.getUrl().toString(), token);
+        for (Book b : library.books) {
             System.out.println("book " + b.name);
         }
     }
 
-    public static List<Book> download(World world, String url, String token) throws IOException {
+    public static Library download(World world, String url, String token) throws IOException {
         HttpNode http;
         FileNode tmp;
-        List<Book> result;
 
-        result = new ArrayList<>();
         try {
             http = (HttpNode) world.node(url);
         } catch (NodeInstantiationException|URISyntaxException e) {
@@ -83,14 +81,10 @@ public class Library implements Iterable<Book> {
                 }
             }
             Node<?> zip = tmp.openZip();
-            for (Node<?> f : zip.find("*.yogi")) {
-                Node<?> jpg = zip.join(f.getBasename() + ".jpg");
-                result.add(Book.load(f, jpg.readBytes()));
-            }
+            return Library.load(zip);
         } finally {
             tmp.deleteFile();
         }
-        return result;
     }
 
     private static Throwable rootCause(Throwable e) {
