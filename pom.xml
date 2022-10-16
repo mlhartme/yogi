@@ -9,7 +9,7 @@
     </parent>
     <groupId>de.schmizzolin</groupId>
     <artifactId>yogi</artifactId>
-    <version>1.4.1-SNAPSHOT</version>
+    <version>1.5.0-SNAPSHOT</version>
     <name>Yogi</name>
     <description>Vocabulary Trainer</description>
 

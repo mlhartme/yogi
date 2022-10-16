@@ -48,9 +48,10 @@ public class YogiController {
     private final Library library;
     private final String version;
 
-    public YogiController(World world, UserFiles userFiles, @Value("${yogi.etc}") String etc) throws IOException {
+    public YogiController(World world, UserFiles userFiles,
+                          @Value("${yogi.library}") String libraryStr, @Value("${yogi.libraryToken}") String libraryToken) throws IOException {
         this.userFiles = userFiles;
-        this.library = Library.load(world.file(etc).join("books").checkDirectory());
+        this.library = Library.loadGithubRelease(world, libraryStr, libraryToken);
         this.version = world.resource("yogi.version").readString().trim();
         System.out.println("started YogiController " + version + ", loaded " + library.size() + " books:");
         for (Book b : library) {

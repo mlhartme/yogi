@@ -1,7 +1,8 @@
 # Changelog
 
-## 1.4.1 (pending)
+## 1.5.0 (pending)
 
+* load Libary from Github release.
 * improved Dockerfile
 * use ghcr -- changed image name to ghcr.io/mlhartme/yogi
 * helm chart

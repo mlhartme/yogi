@@ -42,17 +42,14 @@ public class Library implements Iterable<Book> {
 
         world = World.create();
         token = world.getHome().join(".github").readProperties().getProperty("oauth");
-        run(world, "mlhartme/yogi-etc", token);
-    }
-    public static void run(World world, String repository, String token) throws IOException {
-        GitHub github = GitHub.connect();
-        Library library;
-
-        GHAsset asset = latest(github, repository);
-        library = download(world, asset.getUrl().toString(), token);
+        var library = loadGithubRelease(world, "mlhartme/yogi", token);
         for (Book b : library.books) {
             System.out.println("book " + b.name);
         }
+    }
+    public static Library loadGithubRelease(World world, String repository, String token) throws IOException {
+        GHAsset asset = latest(GitHub.connect(), repository);
+        return download(world, asset.getUrl().toString(), token);
     }
 
     public static Library download(World world, String url, String token) throws IOException {
@@ -67,7 +64,7 @@ public class Library implements Iterable<Book> {
         tmp = world.getTemp().createTempFile();
         try {
             HeaderList headers = HeaderList.of("Accept", "application/octet-stream");
-            if (token != null) {
+            if (token != null && !token.isEmpty()) {
                 headers.add("Authorization", "Bearer " + token);
             }
             http = http.withHeaders(headers);

@@ -30,7 +30,7 @@ public class BookTest {
         Book book;
 
         world = World.create();
-        for (Node file : world.guessProjectHome(getClass()).join("src/test/etc/books").find("*.yogi")) {
+        for (Node file : world.guessProjectHome(getClass()).join("src/test/books").find("*.yogi")) {
             book = Book.load(file, new byte[0]);
             assertTrue(book.size() > 0);
         }
