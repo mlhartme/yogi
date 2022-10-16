@@ -145,6 +145,7 @@
             </activation>
             <properties>
                 <github.oauth>${env.YOGI_GITHUB_OAUTH}</github.oauth>
+                <chartUserProperties>${env.YOGI_USER_PROPERTIES}</chartUserProperties>
             </properties>
             <build>
                 <plugins>

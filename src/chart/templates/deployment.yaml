@@ -37,38 +37,6 @@ spec:
         - name: yogi-lib
           emptyDir: {}
 {{ end }}
-        - name: yogi-etc
-          emptyDir: {}
-{{ if .Values.etcCreds }}
-        - name: etc-secret
-          secret:
-            secretName: {{ .Values.etcCreds }}
-            defaultMode: 0400
-{{ end }}
-      # see https://github.com/kubernetes/git-sync/blob/release-3.x/docs/ssh.md
-      initContainers:
-      - image: "k8s.gcr.io/git-sync/git-sync:v3.3.4"
-        name: git-clone
-        args:
-          - "--branch={{ .Values.etcBranch }}"
-          - "--repo={{ .Values.etcUrl }}"
-          - "--root=/from-git"
-          - "--dest=current"
-          - "--one-time"
-{{ if .Values.etcCreds }}
-          - "--ssh"
-        securityContext:
-          runAsUser: 65533 # git-sync user
-{{ end }}
-        volumeMounts:
-          - name: yogi-etc
-            mountPath: /from-git
-{{ if .Values.etcCreds }}
-          - name: etc-secret
-            mountPath: /etc/git-secret
-      securityContext:
-        fsGroup: 65533 # to make SSH key readable
-{{ end }}
       containers:
       - name: main
         image: {{ .Values.repositoryTag }}
@@ -80,12 +48,8 @@ spec:
             cpu: 200m
         env:
           - name: OPTS
-            value: "-Dyogi.library={{ .Values.library }} -Dyogi.libraryToken=file:/usr/local/yogi/secrets/libraryToken -Dyogi.etc=/usr/local/yogi/etc -Dyogi.lib=/usr/local/yogi/lib -Dserver.tomcat.basedir=/usr/local/yogi/run -Dserver.tomcat.accesslog.enabled=true -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,quiet=n,address=8000"
+            value: "-Dyogi.library={{ .Values.library }} -Dyogi.libraryToken=file:/usr/local/yogi/secrets/libraryToken -Dyogi.user=/usr/local/yogi/secrets/userProperties -Dyogi.lib=/usr/local/yogi/lib -Dserver.tomcat.basedir=/usr/local/yogi/run -Dserver.tomcat.accesslog.enabled=true -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,quiet=n,address=8000"
         volumeMounts:
-          - mountPath: "/usr/local/yogi/etc"
-            name: yogi-etc
-            readOnly: true
-            subPath: "current/{{ .Values.etcSubpath }}"
           - mountPath: "/usr/local/yogi/lib"
             name: yogi-lib
           - mountPath: "/usr/local/yogi/run"
