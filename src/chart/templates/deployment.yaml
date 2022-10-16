@@ -18,6 +18,9 @@ spec:
         app: yogi
     spec:
       volumes:
+        - name: yogi-secrets
+          secret:
+            secretName: yogi-secrets
 {{ if .Values.run }}
         - name: yogi-run
           hostPath:
@@ -77,7 +80,7 @@ spec:
             cpu: 200m
         env:
           - name: OPTS
-            value: "-Dyogi.library={{ .Values.library }} -Dyogi.libraryToken=file:/var/local/yogi/secrets/libraryToken -Dyogi.etc=/usr/local/yogi/etc -Dyogi.lib=/usr/local/yogi/lib -Dserver.tomcat.basedir=/usr/local/yogi/run -Dserver.tomcat.accesslog.enabled=true -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,quiet=n,address=8000"
+            value: "-Dyogi.library={{ .Values.library }} -Dyogi.libraryToken=file:/usr/local/yogi/secrets/libraryToken -Dyogi.etc=/usr/local/yogi/etc -Dyogi.lib=/usr/local/yogi/lib -Dserver.tomcat.basedir=/usr/local/yogi/run -Dserver.tomcat.accesslog.enabled=true -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,quiet=n,address=8000"
         volumeMounts:
           - mountPath: "/usr/local/yogi/etc"
             name: yogi-etc
@@ -87,3 +90,6 @@ spec:
             name: yogi-lib
           - mountPath: "/usr/local/yogi/run"
             name: yogi-run
+          - mountPath: "/usr/local/yogi/secrets"
+            name: yogi-secrets
+            readOnly: true
