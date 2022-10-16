@@ -31,8 +31,8 @@ Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 ## Run in Kubernetes via Helm - deploy to yogi.schmizzolin.de
 
 * setup Helm, Kubernetes, ...
-* ./src/git-ssh 
-* `helm upgrade yogi oci://ghcr.io/mlhartme/charts/yogi --version 1.4.1-20221009-191944`
+* adjust .values-override.yaml as needed
+* `helm install yogi oci://ghcr.io/mlhartme/charts/yogi --version 1.4.1-20221009-191944`
 * point your browser to https://yogi.schmizzolin.de/
 
 See src/charts/values.yaml for available options
@@ -40,12 +40,7 @@ See src/charts/values.yaml for available options
 
 ## Directory structure for running application
 
-${yogi.etc}                 configuration -- system property, default is ./src/test/etc
-  - user.properties
-  - books                   available books
-     - <book-1.yogi>
-     - <book-1.png>
-     - ...
+${yogi.user}                user.properties
 ${yogi.lib}                 persistent state -- system property, default is .yogilib
   - <user>                  userFiles
     - <book>
@@ -57,6 +52,7 @@ ${yogi.lib}                 persistent state -- system property, default is .yog
   - work    Tomcat work mkdir
   - logs    Tomcat access logs
 
+Note that books are no longer represented in the filesystem, the are loaded from github releases.
 
 ## Books
 
