@@ -44,13 +44,19 @@ import java.util.Map;
 
 @Controller
 public class YogiController {
+    private final World world;
     private final UserFiles userFiles;
-    private final Library library;
+    private final String libraryStr;
+    private final String libraryToken;
+    private Library library;
     private final String version;
 
     public YogiController(World world, UserFiles userFiles,
                           @Value("${yogi.library}") String libraryStr, @Value("${yogi.libraryToken}") String libraryToken) throws IOException {
+        this.world = world;
         this.userFiles = userFiles;
+        this.libraryStr = libraryStr;
+        this.libraryToken = libraryToken;
         this.library = Library.loadGithubRelease(world, libraryStr, libraryToken);
         this.version = world.resource("yogi.version").readString().trim();
         System.out.println("started YogiController " + version + ", loaded " + library.size() + " books:");
@@ -68,6 +74,13 @@ public class YogiController {
     public String index(Model model) {
         model.addAttribute("login", true);
         return "index";
+    }
+
+    @RequestMapping("/reload")
+    public String reload() throws IOException {
+        System.out.println("reload ...");
+        this.library = Library.loadGithubRelease(world, libraryStr, libraryToken);
+        return "redirect:/logout";
     }
 
     @RequestMapping("/books")
