@@ -22,7 +22,7 @@ Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 
 ... with example vocabulary.
 
-* `docker run -it -p8080:8080 -v/Users/mhm/Projects/github.com/mlhartme/yogi:/usr/local/yogi/run ghcr.io/mlhartme/yogi:1.4.1-20221009-165518`
+* `docker run -it -p8080:8080 -v$(pwd)/src:/src -v$(pwd)/.yogilib:/.yogilib ghcr.io/mlhartme/yogi:latest`
 * point your browser to `http://localhost:8080` and
   login with the credentials from src/test/etc/user.properties
 * stop with ctrl-c

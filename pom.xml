@@ -195,6 +195,7 @@
                                 <image>ghcr.io/mlhartme/yogi</image>
                                 <tags>
                                     <tag>${image.tag}</tag>
+                                    <tag>latest</tag>
                                 </tags>
                             </to>
                             <container>
