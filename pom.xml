@@ -156,7 +156,7 @@
                                     <goal>regex-property</goal>
                                 </goals>
                                 <configuration>
-                                    <name>image.version</name>
+                                    <name>image.tag</name>
                                     <value>${project.version}</value>
                                     <regex>-SNAPSHOT</regex>
                                     <replacement>-${maven.build.timestamp}</replacement>
@@ -191,13 +191,10 @@
                         <artifactId>jib-maven-plugin</artifactId>
                         <version>3.3.1</version>
                         <configuration>
-                            <from>
-                                <image>openjdk:17-jdk-slim</image>
-                            </from>
                             <to>
                                 <image>ghcr.io/mlhartme/yogi</image>
                                 <tags>
-                                    <tag>${image.version}</tag>
+                                    <tag>${image.tag}</tag>
                                 </tags>
                             </to>
                             <container>
@@ -263,7 +260,7 @@
                                     <workingDirectory>${project.build.directory}</workingDirectory>
                                     <arguments>
                                         <argument>push</argument>
-                                        <argument>${project.artifactId}-${image.version}.tgz</argument>
+                                        <argument>${project.artifactId}-${image.tag}.tgz</argument>
                                         <argument>oci://ghcr.io/mlhartme/charts</argument>
                                     </arguments>
                                 </configuration>

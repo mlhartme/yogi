@@ -2,4 +2,4 @@ apiVersion: v2
 name: yogi
 description: A Helm chart for Kubernetes
 type: application
-version: ${image.version}
+version: ${image.tag}
