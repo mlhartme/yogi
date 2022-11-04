@@ -187,33 +187,32 @@
                         </executions>
                     </plugin>
                     <plugin>
-                        <groupId>io.fabric8</groupId>
-                        <artifactId>docker-maven-plugin</artifactId>
-                        <version>0.40.2</version>
+                        <groupId>com.google.cloud.tools</groupId>
+                        <artifactId>jib-maven-plugin</artifactId>
+                        <version>3.3.1</version>
                         <configuration>
-                            <images>
-                                <image>
-                                    <name>ghcr.io/mlhartme/${project.artifactId}:${image.version}</name>
-                                    <build>
-                                        <dockerFile>${basedir}/src/docker/Dockerfile</dockerFile>
-                                        <assembly><descriptorRef>artifact</descriptorRef></assembly>
-                                    </build>
-                                </image>
-                            </images>
+                            <from>
+                                <image>openjdk:17-jdk-slim</image>
+                            </from>
+                            <to>
+                                <image>ghcr.io/mlhartme/yogi</image>
+                                <tags>
+                                    <tag>${image.version}</tag>
+                                </tags>
+                            </to>
+                            <container>
+                                <mainClass>de.schmizzolin.yogi.YogiApplication</mainClass>
+                                <ports>
+                                    <port>8080</port>
+                                </ports>
+                            </container>
                         </configuration>
                         <executions>
                             <execution>
                                 <id>build-image</id>
                                 <phase>package</phase>
                                 <goals>
-                                    <goal>build</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>deploy-image</id>
-                                <phase>deploy</phase>
-                                <goals>
-                                    <goal>push</goal>
+                                    <goal>dockerBuild</goal>
                                 </goals>
                             </execution>
                         </executions>
