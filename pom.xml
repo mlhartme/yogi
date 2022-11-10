@@ -266,6 +266,30 @@
 
     <profiles>
         <profile>
+            <id>arch-amd</id>
+            <activation>
+                <property>
+                    <name>os.arch</name>
+                    <value>amd64</value>
+                </property>
+            </activation>
+            <properties>
+                <image.arch>amd64</image.arch>
+            </properties>
+        </profile>
+        <profile>
+            <id>arch-arm</id>
+            <activation>
+                <property>
+                    <name>os.arch</name>
+                    <value>aarch64</value>
+                </property>
+            </activation>
+            <properties>
+                <image.arch>arm64</image.arch>
+            </properties>
+        </profile>
+        <profile>
             <id>docker</id>
             <build>
                 <plugins>
@@ -280,7 +304,19 @@
                                     <goal>dockerBuild</goal>
                                 </goals>
                                 <configuration>
+                                    <to>
+                                        <image>local-yogi</image>
+                                        <tags>
+                                            <tag>latest</tag>
+                                        </tags>
+                                    </to>
                                     <from>
+                                        <platforms>
+                                            <platform>
+                                                <architecture>${image.arch}</architecture>
+                                                <os>linux</os>
+                                            </platform>
+                                        </platforms>
                                     </from>
                                 </configuration>
                             </execution>
