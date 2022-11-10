@@ -2,18 +2,17 @@
 repositoryTag: "ghcr.io/mlhartme/yogi:${image.tag}"
 
 # domain yogi is running at
-host: "yogi.schmizzolin.de"
+host: "localhost"
 
-library: "mlhartme/yogi-etc"
+library: "mlhartme/yogi-books"
 libraryToken:
 userProperties:
 
 # name of the tls secret or empty to run without tls (i.e. http only)
-tls: "yogi-schmizzolin-tls"
+tls: ""
 
+# where to persist yogi.run directory: host path for persistent data; or empty to use emptyDir volumes instead
+run: ""
 
-# where to store yogi.run directory: host path for persistent data; or empty to use emptyDir volumes instead
-run: "/storage/yogi/run"
-
-# where to store yogi.lib directory: host path for persistent data; or empty to use emptyDir volumes instead
-lib: "/storage/yogi/lib"
+# where to persist yogi.lib directory: host path for persistent data; or empty to use emptyDir volumes instead
+lib: ""

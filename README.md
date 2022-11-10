@@ -28,6 +28,8 @@ Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 
 ## Run in Kubernetes via Helm - deploy to yogi.schmizzolin.de
 
+TODO ... adjust for Minikube ...
+
 * setup Helm, Kubernetes, ...
 * adjust .values-override.yaml as needed
 * `helm install yogi oci://ghcr.io/mlhartme/charts/yogi --version 1.4.1-20221009-191944`
