@@ -7,8 +7,6 @@ Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 
 `mvn clean package`
 
-(or `mvn clean package -P\!kubernetes` to build without Docker/Kubernetes stuff)
-
 ## Run locally
 
 ... with example vocabulary.
@@ -22,9 +20,9 @@ Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 
 ... with example vocabulary.
 
-* `docker run -it -p8080:8080 -v$(pwd)/src:/src -v$(pwd)/.yogilib:/.yogilib ghcr.io/mlhartme/yogi:latest`
-* point your browser to `http://localhost:8080` and
-  login with the credentials from src/test/etc/user.properties
+* `mvn clean package -Pdocker`
+* `docker run -it -v$(pwd)/src/test/etc:/app/etc -v$(pwd)/.yogilib:/app/yogilib -p8080:8080 ghcr.io/mlhartme/yogi:latest`
+* point your browser to `http://localhost:8080` and login with the credentials from src/test/etc/user.properties
 * stop with ctrl-c
 
 
@@ -53,6 +51,16 @@ ${yogi.lib}                 persistent state -- system property, default is .yog
   - logs    Tomcat access logs
 
 Note that books are no longer represented in the filesystem, the are loaded from github releases.
+
+## Container directory structure
+
+/app
+  - classes
+  - libs
+  - resources
+/usr              (normal Linux)
+/etc              (normal Linux)
+...
 
 ## Books
 

@@ -188,6 +188,10 @@
                         </tags>
                     </to>
                     <container>
+                        <jvmFlags><!-- TODO: have a different application properties file instead-->
+                            <jvmFlag>-Dyogi.user=/app/etc/user.properties</jvmFlag>
+                            <jvmFlag>-Dyogi.lib=/app/yogilib</jvmFlag>
+                        </jvmFlags>
                         <mainClass>de.schmizzolin.yogi.YogiApplication</mainClass>
                         <ports>
                             <port>8080</port>
