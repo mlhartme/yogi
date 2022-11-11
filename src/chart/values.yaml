@@ -1,5 +1,5 @@
 # usually not changed
-repositoryTag: "ghcr.io/mlhartme/yogi:${image.tag}"
+repositoryTag: "local/yogi"
 
 # domain yogi is running at
 host: "localhost"

@@ -189,7 +189,7 @@
                     </to>
                     <container>
                         <jvmFlags><!-- TODO: have a different application properties file instead-->
-                            <jvmFlag>-Dyogi.user=/app/etc/user.properties</jvmFlag>
+                            <jvmFlag>-Dyogi.user=/app/etc/userProperties</jvmFlag>
                             <jvmFlag>-Dyogi.lib=/app/yogilib</jvmFlag>
                         </jvmFlags>
                         <mainClass>de.schmizzolin.yogi.YogiApplication</mainClass>
@@ -305,7 +305,7 @@
                                 </goals>
                                 <configuration>
                                     <to>
-                                        <image>local-yogi</image>
+                                        <image>local/yogi</image>
                                         <tags>
                                             <tag>latest</tag>
                                         </tags>

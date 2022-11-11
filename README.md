@@ -21,7 +21,7 @@ Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 ... with example vocabulary.
 
 * `mvn clean package -Pdocker`
-* `docker run -it -v$(pwd)/src/test/etc:/app/etc -v$(pwd)/.yogilib:/app/yogilib -p8080:8080 ghcr.io/mlhartme/yogi:latest`
+* `docker run -it -v$(pwd)/src/test/etc:/app/etc -v$(pwd)/.yogilib:/app/yogilib -p8080:8080 local-yogi`
 * point your browser to `http://localhost:8080` and login with the credentials from src/test/etc/user.properties
 * stop with ctrl-c
 

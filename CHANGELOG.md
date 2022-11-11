@@ -2,9 +2,9 @@
 
 ## 1.5.0 (pending)
 
-* load Libary from Github release.
+* load Library from Github release.
 * improved Dockerfile
-* use ghcr -- changed image name to ghcr.io/mlhartme/yogi
+* use Github Container Registry -- changed image name to ghcr.io/mlhartme/yogi
 * helm chart
   * load etc from configured git repository
   * adjusted default values to run out of the box
