@@ -9,3 +9,5 @@ releases:
     value: local/yogi
   - name: userProperties
     value: {{ readFile "src/test/etc/user.properties" | b64enc }}
+  - name: lib
+    value: {{ env "PWD" }}/.yogilib
