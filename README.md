@@ -28,8 +28,12 @@ Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 
 ## Run in local Kubernetes
 
-* setup Helm, Kubernetes, ...
-* `helm install yogi local/yogi
+I use helm for packaging and helmfile to make it actually usable/scriptable (I need ugly scripting for values without).
+
+* `brew install helm helmfile colima`
+* `colima start --kubernetes`
+* `helmfile init`
+* `helmfile apply`
 * `kubectl port-forward deployment/yogi 8080 8080`
 * point your browser to http://localhost:8080/
 

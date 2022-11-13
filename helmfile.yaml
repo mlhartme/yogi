@@ -1,0 +1,11 @@
+# to run yogi in a local Kubernetes
+releases:
+- name: yogi
+  kubeContext: colima
+  namespace: default
+  chart: target/chart
+  set:
+  - name: repositoryTag
+    value: local/yogi
+  - name: userProperties
+    value: {{ readFile "src/test/etc/user.properties" | b64enc }}
