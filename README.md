@@ -26,16 +26,12 @@ Implemented with Spring Boot 2.5, Thymeleaf and Bootstrap 5.
 * stop with ctrl-c
 
 
-## Run in Kubernetes via Helm - deploy to yogi.schmizzolin.de
-
-TODO ... adjust for Minikube ...
+## Run in local Kubernetes
 
 * setup Helm, Kubernetes, ...
-* adjust .values-override.yaml as needed
-* `helm install yogi oci://ghcr.io/mlhartme/charts/yogi --version 1.4.1-20221009-191944`
-* point your browser to https://yogi.schmizzolin.de/
-
-See src/charts/values.yaml for available options
+* `helm install yogi local/yogi
+* `kubectl port-forward deployment/yogi 8080 8080`
+* point your browser to http://localhost:8080/
 
 
 ## Directory structure for running application
