@@ -47,8 +47,8 @@ spec:
           requests:
             cpu: 200m
         env:
-          - name: OPTS
-            value: "-Dyogi.library={{ .Values.library }} -Dyogi.libraryToken=file:/app/etc/libraryToken -Dserver.tomcat.basedir=/usr/local/yogi/run -Dserver.tomcat.accesslog.enabled=true -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,quiet=n,address=8000"
+          - name: JAVA_TOOL_OPTIONS
+            value: "-Dyogi.library={{ .Values.library }} -Dyogi.libraryToken=file:/app/etc/libraryToken -Dserver.tomcat.basedir=/app/run -Dserver.tomcat.accesslog.enabled=true -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,quiet=n,address=8000"
         volumeMounts:
           - mountPath: "/app/yogilib"
             name: yogi-lib
